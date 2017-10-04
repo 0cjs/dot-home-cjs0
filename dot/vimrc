@@ -1,0 +1,553 @@
+" ===== Settings ======================================================
+" XXX This should gracefully degrade, a la
+" http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
+
+" nvi and vim
+set autoindent
+set shiftwidth=4
+set noexrc
+set nowarn
+set cedit=<C-E>
+
+" vim-only
+set display+=lastline
+set display+=uhex
+if exists("&colorcolumn")
+    set colorcolumn=81,82,83,84
+endif
+set nomodeline
+set scrolloff=4
+set hidden
+set hlsearch
+set ignorecase
+if exists("&wildignorecase")
+    set wildignorecase
+endif
+set smartcase
+set splitbelow
+set noequalalways
+set noswapfile
+set tags=./tags;
+set noicon
+set notitle
+set wildmode=longest,list
+set matchpairs=(:),{:},[:],<:>
+set iskeyword=@,-,48-57,_,192-255
+
+" We need to be careful with .viminfo to avoid leaking sensitive data.
+" Note that we blank it later if editing an encrypted file.
+set viminfo=!,%,'50,<0
+
+set ruler
+
+" special fixups for unusual Arch Linux defaults
+set nobackup
+filetype indent off
+
+" GUI
+set guifont=Droid\ Sans\ Mono\ 9
+map ggf :set guifont=Droid\ Sans\ Mono\ 
+
+set fileformats=unix
+if has('win32')
+    set fileformats=unix,dos
+endif
+set encoding=utf-8
+set fileencodings=ascii,utf-8,euc-jp,sjis,cp932,ucs-bom,latin1
+
+" Bash considers !! commands to be non-interactive shells,
+" so ensure that we get our shell functions (though not aliases).
+let $BASH_ENV=$HOME . "/.shrc"
+
+if has('win32')
+    set guifont=lucida_console
+endif
+
+filetype plugin off
+syntax off
+
+" ===== Colors ========================================================
+" Available ctermfg colours, in DarkFoo and LightFoo versions:
+" Black Blue Green Cyan Red Magenta Yellow Grey White
+"
+" N.B.: cterm settings must come after the ctermfg and ctermbg settings
+" because subsequent color settings wipe out cterm settings.
+
+" editing
+highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
+highlight Pmenu ctermbg=NONE ctermfg=4
+highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
+highlight ColorColumn ctermbg=lightgrey
+
+" syntax
+highlight Comment ctermfg=DarkRed
+highlight Constant ctermfg=DarkBlue
+highlight Special ctermfg=Black
+highlight Identifier ctermfg=DarkBlue
+highlight Statement ctermfg=Black
+highlight PreProc ctermfg=Black
+highlight Type ctermfg=Black
+
+" diffs
+highlight diffAdded	ctermfg=DarkBlue
+highlight diffRemoved	ctermfg=DarkRed
+highlight diffFile	ctermfg=DarkGreen
+highlight diffLine	ctermfg=DarkYellow
+
+" spelling
+highlight SpellBad	ctermfg=DarkRed ctermbg=none
+highlight SpellCap	ctermfg=none ctermbg=none
+highlight SpellRare	ctermfg=none ctermbg=none
+highlight SpellLocal	ctermfg=none ctermbg=none
+
+if &term == "kterm"
+    set highlight=sb,Sb,lu
+endif
+
+" highlighting changes
+map ghd :runtime syntax/diff.vim<CR>	" diff highlighting
+map ghS :syntax on<CR>
+map ghs :syntax off<CR>
+
+
+" ===== Graphical Environment =========================================
+
+set guicursor=a:blinkon0
+
+" ===== Key Mappings ==================================================
+
+" Re-read .vimrc file.
+map gcr :source $HOME/.vimrc<CR>
+
+" copy and paste with windowing system clipboard(s)
+map gc :call DisplayError("gc: Copy/paste functions")<CR>
+map gcc "+y
+map gcy "+y
+map gcl "+yl
+map gcw "+yw
+map gcW "+yW
+map gcY "+Y
+map gcf "+yf
+map gct "+yt
+map gc} "+y}
+map gc{ "+y{
+map gc$ "+y$
+map gcG "+yG
+map gcC "+y'a
+map gcF :1,$y +<CR>
+map gca :'a,.yank +<CR>
+map gcA :1,$yank +<CR>
+map gcv "+p
+map gcp "+p
+" "Paste into input mode" for local buffer
+map gci :setlocal invpaste paste?<CR>
+
+" gu - turn off search highlighting (like less(1) ESC-u)
+map gu :nohlsearch<CR>
+map gn :call DisplayError("Use gu instead.")<CR>	" XXX
+
+" Esc-s we leave undefined so that an accidental use of it in command
+" mode still saves the file.
+
+" ^N/^P - move to next/previous file
+map <C-N> :next<CR>
+map <C-P> :previous<CR>
+
+" g^N - split and move to next file in arg list (if present)
+map g<C-N> :split<CR>:next<CR>
+
+" ^W - instant move to next window
+map <C-W> <C-W><C-W>
+
+" Q - record
+noremap Q q
+
+" Make 'q' do nothing, so that when it prefixes a non-mapped key,
+" it just does what that key does. Ideally it should swallow the
+" next char, but I don't know how to do that.
+map q :<CR>
+
+" ZZ - write and quit all buffers (not just current one)
+" qc - close window
+" qw - quit (close) window or vim if last window
+" qq - quit vim (all windows) unless unwritten buffers
+" qQ - force quit (all windows)
+"
+map ZZ :xa<CR>
+map qc :close<CR>
+map qw :quit<CR>
+map qq :call QuitSmall()<CR>
+map qQ :quitall!<CR>
+map q<C-Q> :quitall!<CR>
+
+function! QuitSmall()
+    if &buftype == ""
+	" Regular buffer; quit editor if everything is written.
+	qall
+    else
+	" Temporary buffer; quit just that buffer (if written).
+	:quit
+    endif
+endfunction
+
+" qw - window commands
+noremap qw <C-W>
+
+"-----------------------------------------------------------------------
+" Formatting
+
+set nojoinspaces formatoptions=qn
+function! SetDefaultTextwidth()
+    if &textwidth == 0
+        set textwidth=70
+    endif
+endfunction
+" *f  This paragraph
+" *F  Cursor to end of paragraph
+" *d  Ignore first line ("definition")
+" *a  Cursor to mark
+map *f :call SetDefaultTextwidth()<CR>{gq}
+map *F :call SetDefaultTextwidth()<CR>gq}
+map *d :call SetDefaultTextwidth()<CR>{jjgq}
+map *a :call SetDefaultTextwidth()<CR>gq'a
+map *h :call DisplayError("Can't do hanging indents yet.")<CR>
+map ** :call DisplayError("Use just '*f' instead.")<CR>
+
+"-----------------------------------------------------------------------
+" General commands
+
+" ===== s/S commands
+" By default s and S are synonyms for cl and cc.
+
+" s/S - save and save all
+map s :w<CR>
+map S :wa<CR>
+
+" ===== g commands
+
+" g[67] - insert separation comment
+map g7 O<ESC>70i-<ESC>0
+map g6 O<ESC>4i <ESC>60A#<ESC>0
+
+
+" ga - autoindent
+" gA - show ASCII/Unicode value of char under cursor
+map     ga   :setlocal invai<CR>:setlocal ai?<CR>
+noremap gA   ga
+
+" gb - byte/word/line count
+" vim uses g^G
+map gb g<C-G>
+
+" gd - enable dos mode, and reload file
+map gd :set fileformats=unix,dos<CR>:e<CR>
+
+" ge - file encoding change/view
+map ge :set fileencoding=UTF-8<CR>
+map gE :set fileencoding
+
+" gF/gf fail/unfail a ruby test
+map gF :s/def test_/def FAILING_test_/<CR>
+map gf :s/def FAILING_test_/def test_/<CR>
+
+" gg - GUI options (see elsewhere)
+
+" gi - save and Install
+map gi :wall<CR>:!run-install-upwards<CR><CR>
+
+" gl  - line wrapping;      gL	    - word wrapping
+" g^L - toggle spellcheck;  g<ESC>l - "word processor" mode
+map gl      :setlocal invwrap <CR>:setlocal wrap?<CR>
+map gL      :setlocal invlbr  <CR>:setlocal lbr?<CR>
+map g<C-L>  :setlocal invspell<CR>:set spell?<CR>
+map g<ESC>l :call WordProcessorMode()<CR>
+
+function! WordProcessorMode()
+    setlocal wrap scrolloff=0 linebreak colorcolumn=
+    setlocal spell spelllang=en_us
+    set showbreak=⋅
+    " Up/down move screen lines, not file lines
+    noremap j gj
+    noremap k gk
+    echo "Word Processor mode."
+endfunction
+
+" gm - Maximize this window
+map gm :resize +999<CR>
+
+" gM - turn off matchpairs (for speed)
+map gM :set matchpairs=<CR>
+
+" go - sort (order) this paragraph
+map go {!}sort<CR>
+
+" gp - Preview markdown rendered in instant-markdown-d (must be running)
+"       https://github.com/suan/instant-markdown-d
+map gp :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
+
+" gP - ex-toggle paste
+map gP :call DisplayError("Use `gci` instead.")<CR>
+
+map gqb wbi`<ESC>ea`<ESC>		" quote word with backticks
+map gqB WBi`<ESC>Ea`<ESC>
+
+" gQ - quote e-mail at bottom
+"      (moves signature up to top, goes into append mode)
+map gQ d/^-- $<CR>Go<ESC>p{{
+
+" gr resize
+map gr :resize 
+
+" gR Run entire file in ruby.
+map gR :w !ruby<CR>
+
+" gs - unused
+map gs :call DisplayError("Use just 's' instead.")<CR>
+map gS :call DisplayError("Use just 'S' instead.")<CR>
+
+" gt - tab- and column-related functions
+map gtt :set tabstop=
+map gt2 :set tabstop=2<CR>:set shiftwidth=2<CR>
+map gt4 :set tabstop=4<CR>
+map gt8 :set tabstop=8<CR>
+map gte :set expandtab softtabstop=4<CR>
+map gts :set shiftwidth=
+map gtw :set textwidth=
+map gt5 :set textwidth=65<CR>
+map gt6 :set textwidth=60<CR>
+map gt7 :set textwidth=70<CR>
+map gtl :set invlist listchars=tab:→⋅,trail:□<CR>
+map gtc :setlocal colorcolumn=<CR>
+
+"""""" gv - Version Control commands """""""""""""""""""""""
+
+command! Scratch :new | :set buftype=nofile bufhidden=delete
+
+" gvd - diff current file
+map gvd :Scratch<CR>:r!dif #<CR>:runtime syntax/diff.vim<CR>
+
+" gvD - diff all files from current dir down
+map gvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
+
+" gvb - blame current file
+map gvb :Scratch<CR>:r!blame #<CR>
+
+" gvl - log current file
+map gvl :Scratch<CR>:r!log #<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" gw/gW - search forward/back for word nearest cursor
+noremap gw *
+noremap gW #
+
+" gN next error
+map gN :cnext<CR>
+
+" gX mark current file executable
+map gX :!chmod +x %<CR>
+
+" gZ run named-checkzone
+map gZ :!named-checkzone 
+
+
+" ===== Expansions/Abbreviations ==========================================
+
+" functions for use with ^r= to insert things
+function! It()
+    strftime("%H:%M")
+endfunction
+
+" ^I - insert (really append) stuff
+" (Don't use comments at the ends of these lines becuase for some reason
+" they appear when run from insert mode with ^O.)
+"
+" Todo: make a vim function that takes a shell command as the arg, runs it,
+" and strips the trailing newline off the output, so we don't need to use
+" the "echo -n" thing in all the mappings below.
+"
+" dates:  YYYY-MM-DD, date+time, time only, time only
+map <TAB>d	"=system('echo -n `i-date`')<CR>p
+map <TAB>D	"=system('echo -n `date "+%y%m%d" "$@"`')<CR>p
+map <TAB>t	"=system('echo -n `i-time`')<CR>p
+map <TAB>T	"=system('echo -n `date +\%H:\%M`')<CR>p
+map <TAB><C-T>	"=system('echo -n `date +\%H:\%M`')<CR>p
+"
+" password generation
+map <TAB>p	"=system('echo -n `makepw all`')<CR>p
+map <TAB>P	"=system('echo -n `makepw nopunc`')<CR>p
+
+" English
+"abbr sb substitution
+abbr coop coöp
+abbr cooperation coöperation
+
+" ===== Autocmd Cleanup ==================================================
+
+augroup redhat  " Remove annoying RH packager's idea of vim startup
+autocmd!
+augroup end     " Remove autocommands from default group so we start clean
+autocmd!
+
+" ===== Tab Settings =====================================================
+
+" Use spaces instead of tabs for any files that have no tabs
+" near the beginning (in the first thousand lines)
+function! ExpandTabCheck()
+    let s:tab = search("\t", "n")", 1000)
+    if s:tab == 0
+	setlocal expandtab
+	setlocal softtabstop=4
+    endif
+endfunction
+autocmd BufEnter * call ExpandTabCheck()
+
+" ===== TXT files ========================================================
+
+autocmd! BufNewFile		    *.txt setlocal fileformat=dos
+" The following line doesn't seem to work, thus the hack after it.
+"autocmd! BufReadPre,FileReadPre	    *.txt set fileforamts=dos,unix
+autocmd! BufReadPost,FileReadPost   *.txt call TXTFile()
+function! TXTFile()
+    set fileformats=unix,dos
+    edit
+endfunction
+
+" ===== Git Commit Messages ==========================================
+
+autocmd FileType gitcommit setlocal textwidth=70
+autocmd FileType gitcommit syntax on
+highlight gitcommitComment ctermfg=Gray
+highlight gitcommitOnBranch ctermfg=Gray
+highlight gitcommitHeader ctermfg=Gray
+highlight gitcommitType ctermfg=Gray
+highlight link gitcommitOverflow gitcommitSummary
+
+" ===== Markdown mode ================================================
+
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.md    setlocal sw=2
+
+" ===== YAML mode ===================================================
+
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.yml   setlocal sw=2
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.yaml  setlocal sw=2
+
+" ===== C mode ========================================================
+
+function! SetCCodeSettings()
+    setlocal iskeyword=@,48-57,_,192-255
+endfunction
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.c     call SetCCodeSettings()
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.h     call SetCCodeSettings()
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.cpp   call SetCCodeSettings()
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.hpp   call SetCCodeSettings()
+
+" ===== Go mode =======================================================
+
+function! SetGoCodeSettings()
+    setlocal noexpandtab
+    setlocal tabstop=4
+    setlocal iskeyword=@,48-57,_,192-255
+endfunction
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.go    call SetGoCodeSettings()
+" Override the changes made by ExpandTabCheck:
+autocmd! BufEnter 			    *.go    call SetGoCodeSettings()
+
+" ===== Haskell mode ==================================================
+
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.hs    so ~/.vim/haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   so ~/.vim/haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal so ~/.vim/haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   so ~/.vim/haskell.vim
+
+" ===== Encrypted file editing  =======================================
+
+" Edit gpg-encrypted ascii-armoured files
+autocmd! BufReadPre,FileReadPre      *.asc  setlocal viminfo= bin
+autocmd  BufReadPost,FileReadPost    *.asc  '[,']!gpg -q -d
+autocmd  BufReadPost,FileReadPost    *.asc  setlocal nobin
+autocmd! BufWritePre,FileWritePre    *.asc  setlocal bin
+autocmd  BufWritePre,FileWritePre    *.asc  '[,']!gpg -e
+autocmd  BufWritePost,FileWritePost  *.asc  undo
+autocmd  BufWritePost,FileWritePost  *.asc  setlocal nobin
+
+" ===== Explorer settings =============================================
+
+let g:explDetailedList=1
+let g:explDateFormat="%Y-%b-%d %H:%M"
+
+" ===== Buffer explorer plugin =====
+
+"let loaded_bufexplorer = 1
+let mapleader = "g"
+
+" ===== Taglist Plugin ==============================================
+
+let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
+
+" ===== StarlingCopyrightCheck ======================================
+
+map z. :call DisplayError("Try using zz instead.")<CR>
+
+function! DisplayError(s)
+    echohl ErrorMsg
+    " We don't use :echoerr here because that always adds a line with the
+    " current script line number; it's clearly intended for debugging.
+    echomsg a:s
+    echohl None
+endfunction
+
+function! StarlingCopyrightCheck()
+    let s:year = strftime("%Y")
+    let s:cmatch = search("Copyright.*Starling Software", "n")
+    let s:ymatch = search("Copyright.*" . s:year . ".*Starling Software", "n")
+    if s:cmatch > 0 && s:ymatch == 0
+	echohl ErrorMsg
+	echo "Warning: Starling copyright notice without current year (" .  s:year . ")."
+	echohl None
+    endif
+endfunction
+"autocmd  BufEnter * call StarlingCopyrightCheck()
+
+" ===== Inline substitutions =========================================
+function! FilterUnnamedBuffer(command)
+    # .. send unnamed buffer as stdin to command....
+endfunction
+
+" XXX extract common code here!
+"
+" Run expression through calc, using default options.
+:map gC y:silent call setreg('@', system("printf '%s' $(calc " . shellescape(@@) . ")"))<CR>:normal! gvp<CR><CR>
+" Run expression through calc then round to nearest even integer.
+:map gCR y:silent call setreg('@', system("printf '%.0f' $(calc " . shellescape(@@) . ")"))<CR>:normal! gvp<CR><CR>
+
+" ===== Digraphs =====================================================
+" Input with Ctrl-K followed by two chars.
+
+" Commonly used digraphs to remember:
+"
+"      .M ·   1m ○   0M ●	(but see custom digraphs below)
+"      OK ✓   /\ ×
+"      *X ×   :- ÷
+"      FA ∀   TE ∃   AN ∧   OR ∨   .: ∴
+"      (- ∈   -) ∋
+"      00 ∞
+" -1,-N,-M,NS	hyphen,en-dash,em-dash,nb-space
+" greek ends in *: G*‐Γ  g*‐γ
+" s/S = superscript/subscript: 1s=₁ 2S=²
+" Also see: http://www.alecjacobson.com/weblog/?p=443
+"
+" Bullet somehow seems to be a regular problem. 0m produces diamonds...
+" Check https://unicode-table.com/en/2022/
+
+" Custom digraphs
+"
+digraph  .m  183    " · U+00b7 Middle dot (easier to type than `.M`)
+digraph  .M 8226    " • U+2022 Bullet (now that we use .m for Middle Dot)
+digraph  SB 8226    " • U+2022 Bullet
+                    "   Don't use ● 0M Black Circle as a bullet;
+                    "   that doesn't work in some fonts.
+digraph  ns 2099    " ࠳ Latin Subscript Small Letter N
+digraph \|- 8866    " ⊢ Right Tack
+digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
+digraph  om 8997    " ⌥ Option Key (Mac)
