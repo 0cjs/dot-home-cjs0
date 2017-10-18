@@ -73,6 +73,8 @@ syntax off
 " N.B.: cterm settings must come after the ctermfg and ctermbg settings
 " because subsequent color settings wipe out cterm settings.
 
+set background=light
+
 " editing
 highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
 highlight Pmenu ctermbg=NONE ctermfg=4
