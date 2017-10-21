@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#
+#  update-dh-local - add usual stuff to ~/.home/local
+#
+#  This creates the directories and repo if necessary and ensures that
+#  typical information, commmon to all systems, is there. E.g., the
+#  SSH known_hosts entries for localhost.
+#
+
+die() { echo 1>&2 "$(basename "$0"):" "$@"; exit 1; }
+
+l=~/.home/local
+s="$l/dot/ssh"
+kh="$s/known_hosts.inb4"
+
+mkdir -p "$s"
+[[ -d  $l/.git ]] || {
+    [[ -e $l/.git ]] && die "$l/.git is not a directory"
+    git init "$l"
+}
+
+# SSH accepts any matching line in known_hosts as authentication, so we
+# don't care about conflicting with other "localhost" lines.
+#
+grep -q -s "localhost" "$kh" || {
+    for i in /etc/ssh/ssh_host*_key.pub; do
+        { echo -n 'localhost.,localhost,127.0.0.1, '; cat $i; } >>"$kh"
+    done
+}
+
+echo 1>&2 "Remember to commit changes to $l"
