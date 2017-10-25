@@ -55,10 +55,6 @@ endif
 set encoding=utf-8
 set fileencodings=ascii,utf-8,euc-jp,sjis,cp932,ucs-bom,latin1
 
-" Bash considers !! commands to be non-interactive shells,
-" so ensure that we get our shell functions (though not aliases).
-let $BASH_ENV=$HOME . "/.shrc"
-
 if has('win32')
     set guifont=lucida_console
 endif
