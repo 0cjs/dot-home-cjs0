@@ -1,0 +1,8 @@
+;----------------------------------------------------------------------
+; These are fairly common choices for experienced developers, which
+; is why we distribute them with the minimal configuration, but early
+; enough that they are likely to be overridden by other users'
+; preferred settings.
+
+[merge]
+    defaultToUpstream = true    # Now default in Git >= 2.1 or so
