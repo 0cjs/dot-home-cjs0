@@ -1,0 +1,18 @@
+# cjs minimal early bash config
+
+prepath() {
+    local errcode=1 qecho=echo
+    while true; do case "$1" in
+        -n)     errcode=0;  shift;;     # no error codes
+        -q)     qecho=':';  shift;;     # quiet mode
+        *)      break;;
+    esac; done
+    # Bad params always produces message and error code
+    [[ -z $1 ]] && { echo 1>&2 "Usage: prepath DIR"; return 1; }
+
+    [[ -d $1 ]] || { $qecho 1>&2 "$1 is not a directory."; return $errcode; }
+    dir="$(command cd "$1"; pwd -P)"
+    grep -q ":$dir:" < <(echo ":$PATH:") \
+        && { $qecho 1>&2 "$dir already in path."; return 0; }
+    PATH="$dir:$PATH"
+}
