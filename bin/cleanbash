@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#
+#  cleanbash - start a bash within a very clean environment
+#
+#  This leaves you without even $HOME and the like, though bash
+#  builtins such as ~ will still work. To see all that:
+#
+#      cleanbash -c declare
+#
+
+exec env -i /bin/bash --login --noprofile --norc "$@"
