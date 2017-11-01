@@ -17,7 +17,9 @@ Usage: prepath [-n] [-q] DIR
 
     [[ -d $1 ]] || { $qecho 1>&2 "$1 is not a directory."; return $errcode; }
     dir="$(command cd "$1"; pwd -P)"
-    grep -q ":$dir:" < <(echo ":$PATH:") \
-        && { $qecho 1>&2 "$dir already in path."; return 0; }
-    PATH="$dir:$PATH"
+    if ! [[ :$PATH: =~ :$dir: ]]; then
+        PATH="$dir:$PATH"
+    else
+        $qecho 1>&2 "$dir already in path."
+    fi
 }
