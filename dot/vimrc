@@ -365,9 +365,9 @@ endfunction
 " the "echo -n" thing in all the mappings below.
 "
 " dates:  YYYY-MM-DD, date+time, time only, time only
-map <TAB>d	"=system('echo -n `i-date`')<CR>p
+map <TAB>d	"=system('. ~/.bashrc && echo -n `i-date`')<CR>p
 map <TAB>D	"=system('echo -n `date "+%y%m%d" "$@"`')<CR>p
-map <TAB>t	"=system('echo -n `i-time`')<CR>p
+map <TAB>t	"=system('. ~/.bashrc && echo -n `i-time`')<CR>p
 map <TAB>T	"=system('echo -n `date +\%H:\%M`')<CR>p
 map <TAB><C-T>	"=system('echo -n `date +\%H:\%M`')<CR>p
 "
