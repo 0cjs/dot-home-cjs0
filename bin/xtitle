@@ -1,0 +1,35 @@
+#!/bin/bash
+
+case "$TERM" in
+    xterm*)	: ;;
+    rxvt*)	: ;;
+    screen*)	: ;;
+    *)		echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
+esac
+
+host=" $(uname -n | sed -e 's/\..*//') "
+case $(echo $host) in
+    priv|prod|stage|t?)
+	first=$(uname -n | sed -e 's/\..*//')
+	second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
+	host=" $first.$second "
+esac
+name=""
+dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
+
+echo_name=false
+while true; do case "$1" in
+    -e) shift; echo_name=true;;
+    -d) shift; dir="";;
+    -h)	shift; host="";;
+    -*) echo 2>&1 "$(basename $0): Unkown option: $1"; exit 2;;
+     *) break;;
+esac; done
+[ -n "$*" ] && name="$*"
+
+esc=$(echo -n _ | tr _ '\033')
+bel=$(echo -n _ | tr _ '\007')
+
+echo >/dev/tty -n "$esc]0;$name $host $dir$bel"
+$echo_name && echo "$name"
+exit 0
