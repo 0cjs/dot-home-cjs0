@@ -1,5 +1,17 @@
 #!/bin/bash
 
+usage() {
+    cat >&2 <<____
+$(basename "$0") [-e] [-d] [-h] [NAME]
+  Sets xterm terminal title to "[NAME] HOST DIR".
+
+  -e  echo name (for use with \`export XTITLE=\$(xtitle -e "\$@")\`)
+  -d  override dir (default: current working directory)
+  -h  set host (default: current host)
+____
+    exit 2
+}
+
 case "$TERM" in
     xterm*)	: ;;
     rxvt*)	: ;;
@@ -22,7 +34,7 @@ while true; do case "$1" in
     -e) shift; echo_name=true;;
     -d) shift; dir="";;
     -h)	shift; host="";;
-    -*) echo 2>&1 "$(basename $0): Unkown option: $1"; exit 2;;
+    -*) echo 2>&1 "$(basename $0): Unkown option: $1"; usage;;
      *) break;;
 esac; done
 [ -n "$*" ] && name="$*"
