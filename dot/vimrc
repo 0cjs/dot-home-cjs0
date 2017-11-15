@@ -549,3 +549,12 @@ digraph  ns 2099    " ࠳ Latin Subscript Small Letter N
 digraph \|- 8866    " ⊢ Right Tack
 digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥ Option Key (Mac)
+
+" ----------------------------------------------------------------------
+" External Program Settings
+
+"   Add `-i` to the shell command flags (used with ! etc.) to run the
+"   shell as "interactive" so that we have all our functions, aliases,
+"   etc. available.
+"
+set shellcmdflag=-i\ -c
