@@ -555,6 +555,9 @@ digraph  om 8997    " ⌥ Option Key (Mac)
 
 "   Add `-i` to the shell command flags (used with ! etc.) to run the
 "   shell as "interactive" so that we have all our functions, aliases,
-"   etc. available.
+"   etc. available. Note that `set shellcmdflag=-i\ -c` doesn't work
+"   here: when using that for some reason vim appears to receive a
+"   SIGSTOP on subshell exit and you're left at the shell prompt
+"   whence you ran vim.
 "
-set shellcmdflag=-i\ -c
+set shell=/bin/bash\ -i
