@@ -10,7 +10,7 @@ $(basename "$0") [-e] [-d] [-h] [NAME]
   to set \$XTITLE=NAME in the environment so that subsequent calls can
   change the displayed dir but keep the previously set NAME.
 
-  -e  echo name (for use by \`xt()\` function)
+  -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
   -d  override dir (default: current working directory)
   -h  set host (default: current host)
   -x  print definition of \`xt()\` function
@@ -19,7 +19,7 @@ ____
 }
 
 print_xt() {
-    echo 'xt() { export XTITLE=$($HOME/.local/bin/xtitle -e "$@"); }'
+    echo 'xt() { eval $($HOME/.local/bin/xtitle -e "$@"); }'
 }
 
 case "$TERM" in
@@ -39,9 +39,9 @@ esac
 name=""
 dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
-echo_name=false
+echo_xtitle=false
 while true; do case "$1" in
-    -e) shift; echo_name=true;;
+    -e) shift; echo_xtitle=true;;
     -d) shift; dir="";;
     -h)	shift; host="";;
     -x) shift; print_xt; exit 0;;
@@ -54,5 +54,5 @@ esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
 echo >/dev/tty -n "$esc]0;$name $host $dir$bel"
-$echo_name && echo "$name"
+$echo_xtitle && echo "export XTITLE='$name'"
 exit 0
