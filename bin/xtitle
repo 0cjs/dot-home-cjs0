@@ -5,10 +5,12 @@ usage() {
     cat >&2 <<____
 $(basename "$0") [-e] [-d] [-h] [NAME]
   Sets xterm terminal title to "[NAME] HOST DIR".
+  NAME defaults to contents of the \$XTITLE environment variable.
 
-  This is normally used through the \`xt()\` function (printed with \`-x\`)
-  to set \$XTITLE=NAME in the environment so that subsequent calls can
-  change the displayed dir but keep the previously set NAME.
+  This is normally used through the \`xt()\` function (printed with
+  \`-x\`) to set \$XTITLE=NAME in the environment so that subsequent
+  calls that don't specify a name keep the previously set one, but
+  update the host and current directory.
 
   -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
   -d  override dir (default: current working directory)
@@ -36,7 +38,6 @@ case $(echo $host) in
 	second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
 	host=" $first.$second "
 esac
-name=""
 dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
 echo_xtitle=false
@@ -48,11 +49,11 @@ while true; do case "$1" in
     -*) echo 2>&1 "$(basename $0): Unkown option: $1"; usage;;
      *) break;;
 esac; done
-[ -n "$*" ] && name="$*"
+[[ $# -gt 0 ]] && XTITLE="$*"
 
 esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
-echo >/dev/tty -n "$esc]0;$name $host $dir$bel"
-$echo_xtitle && echo "export XTITLE='$name'"
+echo >/dev/tty -n "$esc]0;$XTITLE $host $dir$bel"
+$echo_xtitle && echo "export XTITLE='$XTITLE'"
 exit 0
