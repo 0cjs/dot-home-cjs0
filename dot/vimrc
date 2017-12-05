@@ -142,7 +142,6 @@ map gci :setlocal invpaste paste?<CR>
 
 " gu - turn off search highlighting (like less(1) ESC-u)
 map gu :nohlsearch<CR>
-map gn :call DisplayError("Use gu instead.")<CR>	" XXX
 
 " Esc-s we leave undefined so that an accidental use of it in command
 " mode still saves the file.
@@ -338,9 +337,6 @@ map gvl :Scratch<CR>:r!log #<CR>
 " gw/gW - search forward/back for word nearest cursor
 noremap gw *
 noremap gW #
-
-" gN next error
-map gN :cnext<CR>
 
 " gX mark current file executable
 map gX :!chmod +x %<CR>
