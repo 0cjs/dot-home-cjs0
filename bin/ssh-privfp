@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+usage() {
+    cat 1>&2 <<____
+Usage: $(basename "$0") FILE
+  Print SSH public key fingerprint from private key FILE.
+____
+    exit 2
+}
+
+[[ -r $1 ]] || usage
+
+#   Ideally we'd just like to do
+#       ssh-keygen -l -f <(ssh-keygen -y -f "$1")   
+#   but ssh-keygen is quite fussy and apparently doesn't want to read a
+#   public key from anything but a regular file.
+
+declare -r pub=$(tempfile -p privfp -s .pub )
+trap 'rm -f "$pub"' 0
+ssh-keygen -y -f "$1" >"$pub"
+ssh-keygen -l -f "$pub"
