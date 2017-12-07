@@ -14,7 +14,8 @@ while true; do case "$1" in
     -*)     usage;;
     *)      break;;
 esac; done
-[[ -r $1 ]] || usage
+[[ -n $1 ]] || usage
+[[ -r $1 ]] || { echo 1>&2 "$(basename "$0"): can't read $1"; exit 1; }
 
 #   Ideally we'd just like to do
 #       ssh-keygen -l -f <(ssh-keygen -y -f "$1")   
