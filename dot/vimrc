@@ -75,7 +75,7 @@ set background=light
 highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
 highlight Pmenu ctermbg=NONE ctermfg=4
 highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
-highlight ColorColumn ctermbg=lightgrey
+highlight ColorColumn ctermbg=lightyellow
 
 " syntax
 highlight Comment ctermfg=DarkRed
