@@ -6,3 +6,9 @@
 
 [merge]
     defaultToUpstream = true    # Now default in Git >= 2.1 or so
+
+[push]
+    # This defaults to `no` in v2.11 which would let you accidentally
+    # push a commit that uses a submodule commit not yet available to
+    # anybody else.
+    recurseSubmodules = check
