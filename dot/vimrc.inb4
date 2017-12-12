@@ -104,7 +104,7 @@ endif
 
 " highlighting changes
 map ghd :runtime syntax/diff.vim<CR>	" diff highlighting
-map ghS :syntax on<CR>
+map ghS :syntax enable<CR>
 map ghs :syntax off<CR>
 
 
