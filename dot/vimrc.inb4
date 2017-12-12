@@ -80,7 +80,7 @@ highlight ColorColumn ctermbg=lightyellow
 
 " syntax
 highlight Comment ctermfg=DarkGray
-highlight Constant ctermfg=DarkGreen
+highlight Constant ctermfg=DarkYellow
 highlight Special ctermfg=Black
 highlight Identifier ctermfg=DarkBlue
 highlight Statement ctermfg=Black
