@@ -78,8 +78,8 @@ highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
 highlight ColorColumn ctermbg=lightyellow
 
 " syntax
-highlight Comment ctermfg=DarkRed
-highlight Constant ctermfg=DarkBlue
+highlight Comment ctermfg=DarkGray
+highlight Constant ctermfg=DarkGreen
 highlight Special ctermfg=Black
 highlight Identifier ctermfg=DarkBlue
 highlight Statement ctermfg=Black
