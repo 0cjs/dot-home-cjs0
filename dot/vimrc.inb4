@@ -64,7 +64,8 @@ syntax off
 
 " ===== Colors ========================================================
 " Available ctermfg colours, in DarkFoo and LightFoo versions:
-" Black Blue Green Cyan Red Magenta Yellow Grey White
+"     Black Blue Green Cyan Red Magenta Yellow Grey White
+" See them with `:runtime syntax/colortest.vim`
 "
 " N.B.: cterm settings must come after the ctermfg and ctermbg settings
 " because subsequent color settings wipe out cterm settings.
