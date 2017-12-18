@@ -316,6 +316,8 @@ map gt6 :set textwidth=60<CR>
 map gt7 :set textwidth=70<CR>
 map gtl :set invlist listchars=tab:→⋅,trail:□<CR>
 map gtc :setlocal colorcolumn=<CR>
+map gtv :set virtualedit=<CR>
+map gtV :set virtualedit=all<CR>
 
 """""" gv - Version Control commands """""""""""""""""""""""
 
