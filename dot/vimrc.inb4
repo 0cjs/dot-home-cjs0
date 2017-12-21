@@ -93,6 +93,13 @@ highlight diffRemoved	ctermfg=DarkRed
 highlight diffFile	ctermfg=DarkGreen
 highlight diffLine	ctermfg=DarkYellow
 
+"   Git commit messages
+highlight gitcommitComment ctermfg=Gray
+highlight gitcommitOnBranch ctermfg=Gray
+highlight gitcommitHeader ctermfg=Gray
+highlight gitcommitType ctermfg=Gray
+highlight link gitcommitOverflow gitcommitSummary
+
 " spelling
 highlight SpellBad	ctermfg=DarkRed ctermbg=none
 highlight SpellCap	ctermfg=none ctermbg=none
@@ -403,11 +410,6 @@ endfunction
 
 autocmd FileType gitcommit setlocal textwidth=70
 autocmd FileType gitcommit syntax on
-highlight gitcommitComment ctermfg=Gray
-highlight gitcommitOnBranch ctermfg=Gray
-highlight gitcommitHeader ctermfg=Gray
-highlight gitcommitType ctermfg=Gray
-highlight link gitcommitOverflow gitcommitSummary
 
 " ===== Markdown mode ================================================
 
