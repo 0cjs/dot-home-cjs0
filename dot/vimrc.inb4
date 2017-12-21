@@ -59,7 +59,7 @@ if has('win32')
     set guifont=lucida_console
 endif
 
-filetype plugin off
+filetype on
 syntax off
 
 " ===== Colors ========================================================
