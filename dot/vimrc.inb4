@@ -194,22 +194,11 @@ noremap qw <C-W>
 "-----------------------------------------------------------------------
 " Formatting
 
-set nojoinspaces formatoptions=qn
-function! SetDefaultTextwidth()
-    if &textwidth == 0
-        set textwidth=70
-    endif
-endfunction
-" *f  This paragraph
-" *F  Cursor to end of paragraph
-" *d  Ignore first line ("definition")
-" *a  Cursor to mark
-map *f :call SetDefaultTextwidth()<CR>{gq}
-map *F :call SetDefaultTextwidth()<CR>gq}
-map *d :call SetDefaultTextwidth()<CR>{jjgq}
-map *a :call SetDefaultTextwidth()<CR>gq'a
-map *h :call DisplayError("Can't do hanging indents yet.")<CR>
-map ** :call DisplayError("Use just '*f' instead.")<CR>
+set nojoinspaces
+"   Turn off autowrap (formatoptions=t) so textwidth used only for autoformat.
+set formatoptions=qn
+set textwidth=70
+"   See `gt` mappings for changing textwidth.
 
 "-----------------------------------------------------------------------
 " General commands
