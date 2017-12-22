@@ -275,15 +275,18 @@ map gM :set matchpairs=<CR>
 " go - sort (order) this paragraph
 map go {!}sort<CR>
 
-" gp - Preview markdown rendered in instant-markdown-d (must be running)
-"       https://github.com/suan/instant-markdown-d
-map gp :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
-" gP - ex-toggle paste
-map gP :call DisplayError("Use `gci` instead.")<CR>
+"   gp - Format current pagagraph (very frequently used, so short is good)
+"   gP - Preview markdown rendered in instant-markdown-d (must be running)
+"        https://github.com/suan/instant-markdown-d
+"   Overrides: gp gP  to paste but leave cursor after pasted text
+"   Not sure if I want to move these elsewhere and start trying to use those.
+map gp gqap
+map gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
 map gqb wbi`<ESC>ea`<ESC>		" quote word with backticks
 map gqB WBi`<ESC>Ea`<ESC>
+map gqp gqap
 
 " gQ - quote e-mail at bottom
 "      (moves signature up to top, goes into append mode)
