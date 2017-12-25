@@ -3,7 +3,7 @@
 
 usage() {
     cat >&2 <<____
-$(basename "$0") [-e] [-d] [-h] [NAME]
+$(basename "$0") [-e] [NAME]
   Sets xterm terminal title to "[NAME] HOST DIR".
   NAME defaults to contents of the \$XTITLE environment variable.
 
@@ -13,8 +13,6 @@ $(basename "$0") [-e] [-d] [-h] [NAME]
   update the host and current directory.
 
   -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
-  -d  override dir (default: current working directory)
-  -h  set host (default: current host)
   -x  print definition of \`xt()\` function
 ____
     exit 2
@@ -43,8 +41,6 @@ dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 echo_xtitle=false
 while true; do case "$1" in
     -e) shift; echo_xtitle=true;;
-    -d) shift; dir="";;
-    -h)	shift; host="";;
     -x) shift; print_xt; exit 0;;
     -*) echo 2>&1 "$(basename $0): Unkown option: $1"; usage;;
      *) break;;
