@@ -22,6 +22,13 @@ print_xt() {
     echo 'xt() { eval $($HOME/.local/bin/xtitle -e "$@"); }'
 }
 
+set_keyinfo() {
+    declare -g keyinfo=''
+    keyinfo="$(ssh-add -l 2>&1 | sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
+    local keycount=$(ssh-add -l 2>/dev/null | wc -l)
+    [[ $keycount -gt 1 ]] && keyinfo="+$(($keycount-1))"
+}
+
 case "$TERM" in
     xterm*)	: ;;
     rxvt*)	: ;;
@@ -37,6 +44,7 @@ case $(echo $host) in
 	host=" $first.$second "
 esac
 dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
+set_keyinfo
 
 echo_xtitle=false
 while true; do case "$1" in
@@ -50,6 +58,6 @@ esac; done
 esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
-echo >/dev/tty -n "$esc]0;$XTITLE $host $dir$bel"
+echo >/dev/tty -n "$esc]0;$XTITLE  $host  [$keyinfo]  $dir$bel"
 $echo_xtitle && echo "export XTITLE='$XTITLE'"
 exit 0
