@@ -165,8 +165,11 @@ map g<C-N> :split<CR>:next<CR>
 " ^W - instant move to next window
 map <C-W> <C-W><C-W>
 
-" Q - record
-noremap Q q
+"   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
+"   Q@ - (followed by register) record for later execution with `@<reg`>`/`@@`
+"   Overrides: Q (alone) to go into record mode
+map     Q  :call DisplayError("Q not mapped")<CR>
+noremap Q@ q
 
 " Make 'q' do nothing, so that when it prefixes a non-mapped key,
 " it just does what that key does. Ideally it should swallow the
@@ -288,10 +291,6 @@ map gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 map gqb wbi`<ESC>ea`<ESC>		" quote word with backticks
 map gqB WBi`<ESC>Ea`<ESC>
 map gqp gqap
-
-" gQ - quote e-mail at bottom
-"      (moves signature up to top, goes into append mode)
-map gQ d/^-- $<CR>Go<ESC>p{{
 
 " gr resize
 map gr :resize 
