@@ -10,6 +10,7 @@ set nowarn
 set cedit=<C-E>
 
 " vim-only
+set timeoutlen=5000
 set display+=lastline
 set display+=uhex
 if exists("&colorcolumn")
