@@ -26,7 +26,7 @@ set_keyinfo() {
     declare -g keyinfo=''
     keyinfo="$(ssh-add -l 2>&1 | sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
     local keycount=$(ssh-add -l 2>/dev/null | wc -l)
-    [[ $keycount -gt 1 ]] && keyinfo="+$(($keycount-1))"
+    [[ $keycount -gt 1 ]] && keyinfo="$keyinfo+$(($keycount-1))"
 }
 
 case "$TERM" in
