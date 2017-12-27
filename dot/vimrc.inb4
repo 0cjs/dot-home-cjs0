@@ -288,9 +288,25 @@ map go {!}sort<CR>
 map gp gqap
 map gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
-map gqb wbi`<ESC>ea`<ESC>		" quote word with backticks
-map gqB WBi`<ESC>Ea`<ESC>
+"----------------------------------------------------------------------
+"   gq - formatting and putting quotes or similar around text
+"   Overrides: `gq` format commands that are not useful or nonsensical
+"       (mostly smaller-than-line movement commands)
+
+"   gqp - format paragraph short alias
 map gqp gqap
+
+"   gqv␣ - "quote" visually selected area by putting ␣ on either side of it
+map gqv' xi''<ESC>P
+map gqv" xi""<ESC>P
+map gqv` xi``<ESC>P
+map gqv_ xi__<ESC>P
+
+"   gqw␣, gqW␣ - select word and quote with gqv␣
+map gqw viwgqv
+map gqW viWgqv
+
+"----------------------------------------------------------------------
 
 " gr resize
 map gr :resize 
