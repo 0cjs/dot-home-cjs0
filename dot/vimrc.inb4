@@ -121,6 +121,12 @@ map ghd :runtime syntax/diff.vim<CR>	" diff highlighting
 map ghs :syntax enable<CR>
 map ghS :syntax off<CR>
 
+"   From https://stackoverflow.com/a/37040415/107294
+noremap gh? :call SynGroup()<CR>
+function! SynGroup()
+    let l:s = synID(line('.'), col('.'), 1)
+    echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfun
 
 " ===== Graphical Environment =========================================
 
