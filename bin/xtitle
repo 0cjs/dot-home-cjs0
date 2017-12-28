@@ -23,9 +23,13 @@ print_xt() {
 }
 
 set_keyinfo() {
-    declare -g keyinfo=''
+    declare -g keyinfo='no keys'
+    #   We must check return code because ssh-add produces output to
+    #   stdout when there are no keys in the agent (return code 1) or
+    #   it can't be contacted (return code 2).
+    ssh-add -l >/dev/null 2>&1 || return
+    local -r keycount=$(ssh-add -l 2>/dev/null | wc -l)
     keyinfo="$(ssh-add -l 2>&1 | sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
-    local keycount=$(ssh-add -l 2>/dev/null | wc -l)
     [[ $keycount -gt 1 ]] && keyinfo="$keyinfo+$(($keycount-1))"
 }
 
