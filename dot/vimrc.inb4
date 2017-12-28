@@ -101,6 +101,10 @@ highlight gitcommitHeader ctermfg=Gray
 highlight gitcommitType ctermfg=Gray
 highlight link gitcommitOverflow gitcommitSummary
 
+" markdown
+highlight markdownCode  ctermfg=DarkBlue
+highlight link markdownCodeBlock markdownCode
+
 " spelling
 highlight SpellBad	ctermfg=DarkRed ctermbg=none
 highlight SpellCap	ctermfg=none ctermbg=none
@@ -433,7 +437,9 @@ autocmd FileType gitcommit syntax on
 
 " ===== Markdown mode ================================================
 
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.md    setlocal sw=2
+autocmd Filetype markdown setlocal sw=2
+autocmd FileType markdown setlocal textwidth=70
+autocmd FileType markdown syntax on
 
 " ===== YAML mode ===================================================
 
