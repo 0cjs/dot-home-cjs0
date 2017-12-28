@@ -323,22 +323,38 @@ map gR :w !ruby<CR>
 map gs :call DisplayError("Use just 's' instead.")<CR>
 map gS :call DisplayError("Use just 'S' instead.")<CR>
 
-" gt - tab- and column-related functions
-map gtt :set tabstop=
-map gt2 :set tabstop=2<CR>:set shiftwidth=2<CR>
-map gt4 :set tabstop=4<CR>
-map gt8 :set tabstop=8<CR>
-map gte :set expandtab softtabstop=4<CR>
-map gts :set shiftwidth=
-map gtw :set textwidth=
-map gt5 :set textwidth=65<CR>
-map gt6 :set textwidth=60<CR>
-map gt7 :set textwidth=70<CR>
-map gtl :set invlist listchars=tab:→⋅,trail:□<CR>
-map gtc :setlocal colorcolumn=<CR>
-map gtv :set virtualedit=<CR>
-map gtV :set virtualedit=all<CR>
+" ----------------------------------------------------------------------
+"  gt - column-related (tab-like) functions and tab pages
+"  gT - tab and tabstop functions
+"  Overrides: `gt`, `gT`: next and prev tab page
 
+"  next/prev tab page
+noremap gtn		gt
+noremap gtp		gT
+noremap gtN   :tabnew<CR>
+
+noremap gTs   :set tabstop=
+noremap gT2   :set tabstop=2 shiftwidth=2<CR>
+noremap gT4   :set tabstop=4<CR>
+noremap gT8   :set tabstop=8<CR>
+
+noremap gte   :set expandtab softtabstop=4<CR>
+noremap gts   :set shiftwidth=
+noremap gt2   :set shiftwidth=2<CR>
+noremap gt4   :set shiftwidth=4<CR>
+noremap gt8   :set shiftwidth=8<CR>
+
+noremap gtw   :set textwidth=
+noremap gt5   :set textwidth=65<CR>
+noremap gt6   :set textwidth=60<CR>
+noremap gt7   :set textwidth=70<CR>
+noremap gtc   :setlocal colorcolumn=<CR>
+
+noremap gtl   :set invlist listchars=tab:→⋅,trail:□<CR>
+noremap gtv   :set virtualedit=<CR>
+noremap gtV   :set virtualedit=all<CR>
+
+" ----------------------------------------------------------------------
 """""" gv - Version Control commands """""""""""""""""""""""
 
 command! Scratch :new | :set buftype=nofile bufhidden=delete
