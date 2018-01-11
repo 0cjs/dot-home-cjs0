@@ -78,6 +78,7 @@ highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
 highlight Pmenu ctermbg=NONE ctermfg=4
 highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
 highlight ColorColumn ctermbg=lightyellow
+highlight Underlined ctermfg=Black	" Remove magenta on Underlined text
 
 " syntax
 highlight Comment ctermfg=DarkGray
@@ -87,6 +88,8 @@ highlight Identifier ctermfg=DarkBlue
 highlight Statement ctermfg=Black
 highlight PreProc ctermfg=Black
 highlight Type ctermfg=Black
+highlight Title ctermfg=Blue cterm=bold
+highlight Subtitle ctermfg=Blue
 
 " diffs
 highlight diffAdded	ctermfg=DarkBlue
@@ -101,9 +104,24 @@ highlight gitcommitHeader ctermfg=Gray
 highlight gitcommitType ctermfg=Gray
 highlight link gitcommitOverflow gitcommitSummary
 
-" markdown
-highlight markdownCode  ctermfg=DarkBlue
+"   HTML
+highlight htmlLink term=underline ctermfg=DarkGreen guifg=DarkGreen
+highlight link htmlH3 Subtitle
+highlight link htmlH4 Subtitle
+highlight link htmlH5 Subtitle
+highlight link htmlH6 Subtitle
+
+"   markdown
+highlight markdownCode  ctermfg=Brown
 highlight link markdownCodeBlock markdownCode
+highlight link markdownHeadingDelimiter Subtitle
+highlight link markdownHeadingRule Title
+highlight markdownLinkText term=underline cterm=underline
+highlight link markdownUrl htmlLink
+"   XXX This hack turns of all error highlighting in Markdown files, but
+"   it's acceptable because the only syntax match for markdownError is
+"   "\w\@<=_\w\@=", which is the one thing we don't consider an error.
+highlight link markdownError Normal
 
 " spelling
 highlight SpellBad	ctermfg=DarkRed ctermbg=none
@@ -119,11 +137,13 @@ endif
 "   Overrides: gh  start select mode (Win/Mac-like selection that I never use)
 map ghd :runtime syntax/diff.vim<CR>	" diff highlighting
 map ghs :syntax enable<CR>
-map ghS :syntax off<CR>
+map ghS :syntax clear<CR>
 
-"   From https://stackoverflow.com/a/37040415/107294
-noremap gh? :call SynGroup()<CR>
+"   Display of color and highlighting information
+noremap gh? :runtime syntax/colortest.vim<CR>
+noremap gh/ :call SynGroup()<CR>
 function! SynGroup()
+    "   From https://stackoverflow.com/a/37040415/107294
     let l:s = synID(line('.'), col('.'), 1)
     echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
 endfun
