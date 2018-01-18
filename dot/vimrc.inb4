@@ -316,16 +316,17 @@ map go {!}sort<CR>
 "        https://github.com/suan/instant-markdown-d
 "   Overrides: gp gP  to paste but leave cursor after pasted text
 "   Not sure if I want to move these elsewhere and start trying to use those.
-map gp gqap
-map gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
+noremap gp gqap
+noremap gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
 "----------------------------------------------------------------------
 "   gq - formatting and putting quotes or similar around text
 "   Overrides: `gq` format commands that are not useful or nonsensical
 "       (mostly smaller-than-line movement commands)
 
-"   gqp - format paragraph short alias
-map gqp gqap
+"   gqp - format short aliases: paragraph and to mark a
+noremap gqp gqap
+noremap gqa gq'a
 
 "   gqv␣ - "quote" visually selected area by putting ␣ on either side of it
 map gqv' xi''<ESC>P
