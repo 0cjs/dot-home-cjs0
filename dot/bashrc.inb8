@@ -1,0 +1,5 @@
+#   cjs final configuration
+
+#   Ensure that ~/.local/bin is at the front of the path,
+#   even if other stuff got put in front of it during setup.
+prepath -f -n -q $HOME/.local/bin
