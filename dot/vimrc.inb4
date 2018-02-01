@@ -329,14 +329,14 @@ noremap gqp gqap
 noremap gqa gq'a
 
 "   gqv␣ - "quote" visually selected area by putting ␣ on either side of it
-map gqv' xi''<ESC>P
-map gqv" xi""<ESC>P
-map gqv` xi``<ESC>P
-map gqv_ xi__<ESC>P
+noremap gqv' xi''<ESC>P
+noremap gqv" xi""<ESC>P
+noremap gqv` xi``<ESC>P
+noremap gqv_ xi__<ESC>P
 
 "   gqw␣, gqW␣ - select word and quote with gqv␣
-map gqw viwgqv
-map gqW viWgqv
+noremap gqw viwgqv
+noremap gqW viWgqv
 
 "----------------------------------------------------------------------
 
