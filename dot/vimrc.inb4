@@ -74,6 +74,7 @@ syntax off
 set background=light
 
 " editing
+highlight NonText ctermfg=DarkGray
 highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
 highlight Pmenu ctermbg=NONE ctermfg=4
 highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
@@ -294,7 +295,7 @@ map g<ESC>l :call WordProcessorMode()<CR>
 function! WordProcessorMode()
     setlocal wrap scrolloff=0 linebreak colorcolumn=
     setlocal spell spelllang=en_us
-    set showbreak=⋅
+    set showbreak=┊
     " Up/down move screen lines, not file lines
     noremap j gj
     noremap k gk
