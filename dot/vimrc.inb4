@@ -333,6 +333,10 @@ noremap gqv' xi''<ESC>P
 noremap gqv" xi""<ESC>P
 noremap gqv` xi``<ESC>P
 noremap gqv_ xi__<ESC>P
+noremap gqv( xi()<ESC>P
+noremap gqv[ xi[]<ESC>P
+noremap gqv{ xi[]<ESC>P
+noremap gqv< xi<><ESC>P
 
 "   gqw␣, gqW␣ - select word and quote with gqv␣
 noremap gqw viwgqv
