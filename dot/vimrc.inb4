@@ -340,8 +340,9 @@ noremap gqv{ xi[]<ESC>P
 noremap gqv< xi<><ESC>P
 
 "   gqw␣, gqW␣ - select word and quote with gqv␣
-noremap gqw viwgqv
-noremap gqW viWgqv
+"   (These are intentionally not `noremap` because they call `gqv`.)
+map gqw viwgqv
+map gqW viWgqv
 
 "----------------------------------------------------------------------
 
