@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+#   homeinst - install stuff in homedir
+#
+set -o pipefail
+
+die() { echo 2>&1 "$(basename "$0"):" "$@"; exit 1; }
+
+install_nodejs() {
+    local url=$(
+        curl -s https://nodejs.org/en/download/ \
+        | sed -ne 's/.*"\(https:[^"]*-linux-x64[^"]*\)".*/\1/p'
+        )
+    [[ -n $url ]] || die "Can't find latest stable nodejs version"
+    local tarball=~/Downloads/"$(basename "$url")"
+    if [[ -r $tarball ]]; then
+        echo "Skipping download; found $tarball"
+    else
+        curl --create-dirs -o "$tarball" "$url"
+    fi
+    cd ~/.local/ || die "Can't cd ~/.local/"
+    tar --strip-components=1 -xf "$tarball"
+}
+
+case "$1" in
+    nodejs)     install_nodejs;;
+    *)          die "Unknown option '$1'";;
+esac
