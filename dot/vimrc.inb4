@@ -492,8 +492,8 @@ autocmd FileType markdown syntax on
 
 " ===== YAML mode ===================================================
 
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.yml   setlocal sw=2
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.yaml  setlocal sw=2
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.yml   setlocal sw=4
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.yaml  setlocal sw=4
 
 " ===== C mode ========================================================
 
