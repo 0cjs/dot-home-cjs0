@@ -43,7 +43,7 @@ set_keyinfo() {
     [[ $keycount -ge 1 ]] || return
     keyinfo="$(echo "$key0" | \
 	sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
-    [[ $keycount -gt 1 ]] && keyinfo="$keyinfo+$(($keycount-1))"
+    [[ $keycount -gt 1 ]] && keyinfo="$(($keycount-1))+$keyinfo"
 }
 
 case "$TERM" in
