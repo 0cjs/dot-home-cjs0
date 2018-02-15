@@ -74,7 +74,7 @@ while true; do case "$1" in
 esac; done
 [[ $# -gt 0 ]] && XTITLE="$*"
 
-keyinfo=-
+keyinfo='?'
 $get_keyinfo && set_keyinfo
 
 esc=$(echo -n _ | tr _ '\033')
