@@ -54,12 +54,12 @@ case "$TERM" in
     *)		echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
 esac
 
-host=" $(uname -n | sed -e 's/\..*//') "
+host="$(uname -n | sed -e 's/\..*//')"
 case $(echo $host) in
     priv|prod|stage|t?)
 	first=$(uname -n | sed -e 's/\..*//')
 	second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
-	host=" $first.$second "
+	host="$first.$second"
 esac
 dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
@@ -80,6 +80,6 @@ $get_keyinfo && set_keyinfo
 esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
-echo >/dev/tty -n "$esc]0;$XTITLE  $host  [$keyinfo]  $dir$bel"
+echo >/dev/tty -n "$esc]0;$XTITLE   $host   [$keyinfo]  $dir$bel"
 $echo_xtitle && echo "export XTITLE='$XTITLE'"
 exit 0
