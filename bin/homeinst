@@ -7,13 +7,18 @@ set -o pipefail
 die() { echo 2>&1 "$(basename "$0"):" "$@"; exit 1; }
 
 install_nodejs() {
+    # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
         curl -s https://nodejs.org/en/download/ \
         | sed -ne 's/.*"\(https:[^"]*-linux-x64[^"]*\)".*/\1/p'
         )
     [[ -n $url ]] || die "Can't find latest stable nodejs version"
-    echo "Latest version is $(basename "$url")"
-    local tarball=~/Downloads/"$(basename "$url")"
+    local filename="$(basename "$url")"
+    local version="${filename#node-}"
+          version="${version%%-*}"
+    echo "Latest version: $version"
+    [[ $(node --version) = $version ]] && { echo "No update needed."; return; }
+    local tarball=~/Downloads/"$filename"
     if [[ -r $tarball ]]; then
         echo "Skipping download; found $tarball"
     else
