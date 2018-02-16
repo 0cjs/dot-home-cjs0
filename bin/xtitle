@@ -80,6 +80,7 @@ $get_keyinfo && set_keyinfo
 esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
-echo >/dev/tty -n "$esc]0;$XTITLE   $host   [$keyinfo]  $dir$bel"
+blank='        '
+echo >/dev/tty -n "$esc]0;${XTITLE:-$blank} | $host | [$keyinfo] | $dir$bel"
 $echo_xtitle && echo "export XTITLE='$XTITLE'"
 exit 0
