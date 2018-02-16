@@ -12,6 +12,7 @@ install_nodejs() {
         | sed -ne 's/.*"\(https:[^"]*-linux-x64[^"]*\)".*/\1/p'
         )
     [[ -n $url ]] || die "Can't find latest stable nodejs version"
+    echo "Latest version is $(basename "$url")"
     local tarball=~/Downloads/"$(basename "$url")"
     if [[ -r $tarball ]]; then
         echo "Skipping download; found $tarball"
