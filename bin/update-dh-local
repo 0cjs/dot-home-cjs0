@@ -17,6 +17,8 @@ mkdir -p "$s"
 [[ -d  $l/.git ]] || {
     [[ -e $l/.git ]] && die "$l/.git is not a directory"
     git init "$l"
+    git -C "$l" commit --allow-empty \
+        -m '.home/local: dot-home config for only this host'
 }
 
 # SSH accepts any matching line in known_hosts as authentication, so we
