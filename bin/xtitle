@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 
 usage() {
     cat >&2 <<____
@@ -26,40 +25,40 @@ print_xt() {
 set_keyinfo() {
     declare -g keyinfo='no keys'
 
-    #	`ssh-add -l` may take hundreds of milliseconds if it's talking
-    #	to a forwarded agent over a slow connection. If this is being
-    #	used in the Bash $PROMPT_COMMAND, long delays can be painful.
-    #	Thus, ensure we get all the info we need in a single call.
+    #   `ssh-add -l` may take hundreds of milliseconds if it's talking
+    #   to a forwarded agent over a slow connection. If this is being
+    #   used in the Bash $PROMPT_COMMAND, long delays can be painful.
+    #   Thus, ensure we get all the info we need in a single call.
     local -a keylist; local line
     while read line; do keylist+=("$line"); done < <(ssh-add -l 2>/dev/null)
     local keycount="${#keylist[@]}" key0="${keylist[0]}"
 
-    #	Hack. `ssh-add` prints the error message on stdout if the agent
-    #	has no identities loaded. We really should be checking the error
-    #  	code, but that's difficult to do when `ssh-add` is running in a
-    #	subshell, so instead just check the message, which we hope doesn't
-    #	change between different versions of `ssh-add`.
+    #   Hack. `ssh-add` prints the error message on stdout if the agent
+    #   has no identities loaded. We really should be checking the error
+    #   code, but that's difficult to do when `ssh-add` is running in a
+    #   subshell, so instead just check the message, which we hope doesn't
+    #   change between different versions of `ssh-add`.
     [[ $key0 = 'The agent has no identities.' ]] && keycount=0
 
     [[ $keycount -ge 1 ]] || return
     keyinfo="$(echo "$key0" | \
-	sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
+        sed -e 's,.*/,,' -e 's,[- ].*,,' -e '2,$d')"
     [[ $keycount -gt 1 ]] && keyinfo="$(($keycount-1))+$keyinfo"
 }
 
 case "$TERM" in
-    xterm*)	: ;;
-    rxvt*)	: ;;
-    screen*)	: ;;
-    *)		echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
+    xterm*)     : ;;
+    rxvt*)      : ;;
+    screen*)    : ;;
+    *)          echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
 esac
 
 host="$(uname -n | sed -e 's/\..*//')"
 case $(echo $host) in
     priv|prod|stage|t?)
-	first=$(uname -n | sed -e 's/\..*//')
-	second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
-	host="$first.$second"
+        first=$(uname -n | sed -e 's/\..*//')
+        second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
+        host="$first.$second"
 esac
 dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
