@@ -23,7 +23,8 @@ print_xt() {
 }
 
 set_keyinfo() {
-    declare -g keyinfo='no keys'
+    declare -g keyinfo='no keys' 2>/dev/null || keyinfo='no keys'
+                                              # Bash <4.2 has no `declare -g`
 
     #   `ssh-add -l` may take hundreds of milliseconds if it's talking
     #   to a forwarded agent over a slow connection. If this is being
