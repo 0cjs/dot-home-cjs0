@@ -25,8 +25,6 @@ if exists("&wildignorecase")
     set wildignorecase
 endif
 set smartcase
-set splitbelow
-set noequalalways
 set noswapfile
 set tags=./tags;
 set noicon
@@ -45,20 +43,12 @@ set ruler
 set nobackup
 filetype indent off
 
-" GUI
-set guifont=Droid\ Sans\ Mono\ 9
-map ggf :set guifont=Droid\ Sans\ Mono\ 
-
 set fileformats=unix
 if has('win32')
     set fileformats=unix,dos
 endif
 set encoding=utf-8
 set fileencodings=ascii,utf-8,euc-jp,sjis,cp932,ucs-bom,latin1
-
-if has('win32')
-    set guifont=lucida_console
-endif
 
 filetype on
 syntax off
@@ -152,13 +142,73 @@ endfun
 " ===== Graphical Environment =========================================
 
 set guicursor=a:blinkon0
+set guifont=Droid\ Sans\ Mono\ 9
+if has('win32')
+    set guifont=lucida_console
+endif
 
-" ===== Key Mappings ==================================================
+noremap ggf :set guifont=Droid\ Sans\ Mono\ 
+
+" ===== Window/Tab Management ====================================
+
+"   s/S - save current/save all (in this section for lack of better place)
+"   Overrides: s/S as duplicates of cl/cc
+noremap s :w<CR>
+noremap S :wa<CR>
+
+"   ^N/^P - move to next/previous file
+"   Overrides: move to next/previous line
+noremap <C-N> :next<CR>
+noremap <C-P> :previous<CR>
+
+set splitbelow
+set noequalalways
+
+"   qw - window commands
+noremap qw <C-W>
+
+"   ^W - instant move to next window
+map <C-W> <C-W><C-W>
+
+"   gm - Maximize this window
+noremap gm :resize +999<CR>
+
+"   g^N - split and move to next file in arg list (if present)
+noremap g<C-N> :split<CR>:next<CR>
+
+"   Make 'q' do nothing, so that when it prefixes a non-mapped key,
+"   it just does what that key does. Ideally it should swallow the
+"   next char, but I don't know how to do that.
+noremap q :<CR>
+
+"   ZZ - write and quit all buffers (not just current one)
+"   qc - close window
+"   qw - quit (close) window or vim if last window
+"   qq - quit vim (all windows) unless unwritten buffers
+"   qQ - force quit (all windows)
+noremap ZZ :xa<CR>
+noremap qc :close<CR>
+noremap qw :quit<CR>
+noremap qq :call QuitSmall()<CR>
+noremap qQ :quitall!<CR>
+noremap q<C-Q> :quitall!<CR>
+
+function! QuitSmall()
+    if &buftype == ""
+	" Regular buffer; quit editor if everything is written.
+	qall
+    else
+	" Temporary buffer; quit just that buffer (if written).
+	:quit
+    endif
+endfunction
+
+" ===== Misc. Key Mappings ==================================================
 
 " Re-read .vimrc file.
 map gcr :source $HOME/.vimrc<CR>
 
-" copy and paste with windowing system clipboard(s)
+" copy and paste with GUI system clipboard(s)
 map gc :call DisplayError("gc: Copy/paste functions")<CR>
 map gcc "+y
 map gcy "+y
@@ -187,52 +237,11 @@ map gu :nohlsearch<CR>
 " Esc-s we leave undefined so that an accidental use of it in command
 " mode still saves the file.
 
-" ^N/^P - move to next/previous file
-map <C-N> :next<CR>
-map <C-P> :previous<CR>
-
-" g^N - split and move to next file in arg list (if present)
-map g<C-N> :split<CR>:next<CR>
-
-" ^W - instant move to next window
-map <C-W> <C-W><C-W>
-
 "   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
 "   Q@ - (followed by register) record for later execution with `@<reg`>`/`@@`
 "   Overrides: Q (alone) to go into record mode
 map     Q  :call DisplayError("Q not mapped")<CR>
 noremap Q@ q
-
-" Make 'q' do nothing, so that when it prefixes a non-mapped key,
-" it just does what that key does. Ideally it should swallow the
-" next char, but I don't know how to do that.
-map q :<CR>
-
-" ZZ - write and quit all buffers (not just current one)
-" qc - close window
-" qw - quit (close) window or vim if last window
-" qq - quit vim (all windows) unless unwritten buffers
-" qQ - force quit (all windows)
-"
-map ZZ :xa<CR>
-map qc :close<CR>
-map qw :quit<CR>
-map qq :call QuitSmall()<CR>
-map qQ :quitall!<CR>
-map q<C-Q> :quitall!<CR>
-
-function! QuitSmall()
-    if &buftype == ""
-	" Regular buffer; quit editor if everything is written.
-	qall
-    else
-	" Temporary buffer; quit just that buffer (if written).
-	:quit
-    endif
-endfunction
-
-" qw - window commands
-noremap qw <C-W>
 
 "-----------------------------------------------------------------------
 " Formatting
@@ -245,13 +254,6 @@ set textwidth=70
 
 "-----------------------------------------------------------------------
 " General commands
-
-" ===== s/S commands
-" By default s and S are synonyms for cl and cc.
-
-" s/S - save and save all
-map s :w<CR>
-map S :wa<CR>
 
 " ===== g commands
 
@@ -301,9 +303,6 @@ function! WordProcessorMode()
     noremap k gk
     echo "Word Processor mode."
 endfunction
-
-" gm - Maximize this window
-map gm :resize +999<CR>
 
 " gM - turn off matchpairs (for speed)
 map gM :set matchpairs=<CR>
