@@ -164,34 +164,54 @@ noremap <C-P> :previous<CR>
 set splitbelow
 set noequalalways
 
-"   qw - window commands
-noremap qw <C-W>
+"   We take over `q` as a prefix for all the stuff in this section.
+"   Thus, disable `q` alone or with an unknown char following to avoid
+"   accidentally turning on the 'record typed chars to register' mode
+"   because sometimes doing that would be very confusing. (It's a
+"   lesser-used command that we move elsewhere.)
+noremap q :call DisplayError("Use `Q@` to record to register")<CR>
 
-"   ^W - instant move to next window
-map <C-W> <C-W><C-W>
+"   Window create/move commands
+"   These tend to follow `q` with a right-hand key.
+"
+"   q{np}   move to next/previous window, or window given by count
+"   q{hjkl} move to window, just like Ctrl-W{hjkl}
+"   qr      resize
+"   qm      Maximize this window
+"   q^N     split and move to next file in arg list (if present)
+"
+noremap qn      <C-w>w
+noremap qp      <C-w>W
+noremap qh      <C-W>h
+noremap qj      <C-W>j
+noremap qk      <C-W>k
+noremap ql      <C-W>l
+noremap qr      :resize 
+noremap qm      :resize +999<CR>
+noremap q<C-N>  :split<CR>:next<CR>
 
-"   gm - Maximize this window
-noremap gm :resize +999<CR>
-
-"   g^N - split and move to next file in arg list (if present)
-noremap g<C-N> :split<CR>:next<CR>
-
-"   Make 'q' do nothing, so that when it prefixes a non-mapped key,
-"   it just does what that key does. Ideally it should swallow the
-"   next char, but I don't know how to do that.
-noremap q :<CR>
-
+"   Window close/delete (including quit) commands
+"   These tend to follow `q` with a left-hand key.
+"
 "   ZZ - write and quit all buffers (not just current one)
 "   qc - close window
 "   qw - quit (close) window or vim if last window
 "   qq - quit vim (all windows) unless unwritten buffers
 "   qQ - force quit (all windows)
+"
 noremap ZZ :xa<CR>
 noremap qc :close<CR>
 noremap qw :quit<CR>
 noremap qq :call QuitSmall()<CR>
 noremap qQ :quitall!<CR>
 noremap q<C-Q> :quitall!<CR>
+
+"   Misc. commands on `q`
+"
+"   qr      Re-read .vimrc file.
+"
+map qR :source $HOME/.vimrc<CR>
+
 
 function! QuitSmall()
     if &buftype == ""
@@ -204,9 +224,6 @@ function! QuitSmall()
 endfunction
 
 " ===== Misc. Key Mappings ==================================================
-
-" Re-read .vimrc file.
-map gcr :source $HOME/.vimrc<CR>
 
 " copy and paste with GUI system clipboard(s)
 map gc :call DisplayError("gc: Copy/paste functions")<CR>
@@ -344,9 +361,6 @@ map gqw viwgqv
 map gqW viWgqv
 
 "----------------------------------------------------------------------
-
-" gr resize
-map gr :resize 
 
 " gR Run entire file in ruby.
 map gR :w !ruby<CR>
