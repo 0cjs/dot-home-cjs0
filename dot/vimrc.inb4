@@ -69,7 +69,7 @@ highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
 highlight Pmenu ctermbg=NONE ctermfg=4
 highlight PmenuSel ctermbg=NONE ctermfg=4 cterm=reverse
 highlight ColorColumn ctermbg=lightyellow
-highlight Underlined ctermfg=Black	" Remove magenta on Underlined text
+highlight Underlined ctermfg=Black      " Remove magenta on Underlined text
 
 " syntax
 highlight Comment ctermfg=DarkGray
@@ -83,10 +83,10 @@ highlight Title ctermfg=Blue cterm=bold
 highlight Subtitle ctermfg=Blue
 
 " diffs
-highlight diffAdded	ctermfg=DarkBlue
-highlight diffRemoved	ctermfg=DarkRed
-highlight diffFile	ctermfg=DarkGreen
-highlight diffLine	ctermfg=DarkYellow
+highlight diffAdded     ctermfg=DarkBlue
+highlight diffRemoved   ctermfg=DarkRed
+highlight diffFile      ctermfg=DarkGreen
+highlight diffLine      ctermfg=DarkYellow
 
 "   Git commit messages
 highlight gitcommitComment ctermfg=Gray
@@ -115,10 +115,10 @@ highlight link markdownUrl htmlLink
 highlight link markdownError Normal
 
 " spelling
-highlight SpellBad	ctermfg=DarkRed ctermbg=none
-highlight SpellCap	ctermfg=none ctermbg=none
-highlight SpellRare	ctermfg=none ctermbg=none
-highlight SpellLocal	ctermfg=none ctermbg=none
+highlight SpellBad      ctermfg=DarkRed ctermbg=none
+highlight SpellCap      ctermfg=none ctermbg=none
+highlight SpellRare     ctermfg=none ctermbg=none
+highlight SpellLocal    ctermfg=none ctermbg=none
 
 if &term == "kterm"
     set highlight=sb,Sb,lu
@@ -126,7 +126,7 @@ endif
 
 " highlighting changes
 "   Overrides: gh  start select mode (Win/Mac-like selection that I never use)
-map ghd :runtime syntax/diff.vim<CR>	" diff highlighting
+map ghd :runtime syntax/diff.vim<CR>    " diff highlighting
 map ghs :syntax enable<CR>
 map ghS :syntax clear<CR>
 
@@ -215,11 +215,11 @@ map qR :source $HOME/.vimrc<CR>
 
 function! QuitSmall()
     if &buftype == ""
-	" Regular buffer; quit editor if everything is written.
-	qall
+        " Regular buffer; quit editor if everything is written.
+        qall
     else
-	" Temporary buffer; quit just that buffer (if written).
-	:quit
+        " Temporary buffer; quit just that buffer (if written).
+        :quit
     endif
 endfunction
 
@@ -308,7 +308,7 @@ map gf :s/def FAILING_test_/def test_/<CR>
 " gi - save and Install
 map gi :wall<CR>:!run-install-upwards<CR><CR>
 
-" gl  - line wrapping;      gL	    - word wrapping
+" gl  - line wrapping;      gL      - word wrapping
 " g^L - toggle spellcheck;  g<ESC>l - "word processor" mode
 map gl      :setlocal invwrap <CR>:setlocal wrap?<CR>
 map gL      :setlocal invlbr  <CR>:setlocal lbr?<CR>
@@ -379,8 +379,8 @@ map gS :call DisplayError("Use just 'S' instead.")<CR>
 "  Overrides: `gt`, `gT`: next and prev tab page
 
 "  next/prev tab page
-noremap gtn		gt
-noremap gtp		gT
+noremap gtn   gt
+noremap gtp   gT
 noremap gtN   :tabnew<CR>
 
 noremap gTs   :set tabstop=
@@ -450,15 +450,15 @@ endfunction
 " the "echo -n" thing in all the mappings below.
 "
 " dates:  YYYY-MM-DD, date+time, time only, time only
-map <TAB>d	"=system('. ~/.bashrc && echo -n `i-date`')<CR>p
-map <TAB>D	"=system('echo -n `date "+%y%m%d" "$@"`')<CR>p
-map <TAB>t	"=system('. ~/.bashrc && echo -n `i-time`')<CR>p
-map <TAB>T	"=system('echo -n `date +\%H:\%M`')<CR>p
-map <TAB><C-T>	"=system('echo -n `date +\%H:\%M`')<CR>p
+map <TAB>d      "=system('. ~/.bashrc && echo -n `i-date`')<CR>p
+map <TAB>D      "=system('echo -n `date "+%y%m%d" "$@"`')<CR>p
+map <TAB>t      "=system('. ~/.bashrc && echo -n `i-time`')<CR>p
+map <TAB>T      "=system('echo -n `date +\%H:\%M`')<CR>p
+map <TAB><C-T>  "=system('echo -n `date +\%H:\%M`')<CR>p
 "
 " password generation
-map <TAB>p	"=system('echo -n `makepw all`')<CR>p
-map <TAB>P	"=system('echo -n `makepw nopunc`')<CR>p
+map <TAB>p      "=system('echo -n `makepw all`')<CR>p
+map <TAB>P      "=system('echo -n `makepw nopunc`')<CR>p
 
 " English
 "abbr sb substitution
@@ -479,17 +479,17 @@ autocmd!
 function! ExpandTabCheck()
     let s:tab = search("\t", "n")", 1000)
     if s:tab == 0
-	setlocal expandtab
-	setlocal softtabstop=4
+        setlocal expandtab
+        setlocal softtabstop=4
     endif
 endfunction
 autocmd BufEnter * call ExpandTabCheck()
 
 " ===== TXT files ========================================================
 
-autocmd! BufNewFile		    *.txt setlocal fileformat=dos
+autocmd! BufNewFile                 *.txt setlocal fileformat=dos
 " The following line doesn't seem to work, thus the hack after it.
-"autocmd! BufReadPre,FileReadPre	    *.txt set fileforamts=dos,unix
+"autocmd! BufReadPre,FileReadPre            *.txt set fileforamts=dos,unix
 autocmd! BufReadPost,FileReadPost   *.txt call TXTFile()
 function! TXTFile()
     set fileformats=unix,dos
@@ -531,7 +531,7 @@ function! SetGoCodeSettings()
 endfunction
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.go    call SetGoCodeSettings()
 " Override the changes made by ExpandTabCheck:
-autocmd! BufEnter 			    *.go    call SetGoCodeSettings()
+autocmd! BufEnter                           *.go    call SetGoCodeSettings()
 
 " ===== Haskell mode ==================================================
 
@@ -582,9 +582,9 @@ function! StarlingCopyrightCheck()
     let s:cmatch = search("Copyright.*Starling Software", "n")
     let s:ymatch = search("Copyright.*" . s:year . ".*Starling Software", "n")
     if s:cmatch > 0 && s:ymatch == 0
-	echohl ErrorMsg
-	echo "Warning: Starling copyright notice without current year (" .  s:year . ")."
-	echohl None
+        echohl ErrorMsg
+        echo "Warning: Starling copyright notice without current year (" .  s:year . ")."
+        echohl None
     endif
 endfunction
 "autocmd  BufEnter * call StarlingCopyrightCheck()
@@ -606,13 +606,13 @@ endfunction
 
 " Commonly used digraphs to remember:
 "
-"      .M ·   1m ○   0M ●	(but see custom digraphs below)
+"      .M ·   1m ○   0M ●       (but see custom digraphs below)
 "      OK ✓   /\ ×
 "      *X ×   :- ÷
 "      FA ∀   TE ∃   AN ∧   OR ∨   .: ∴
 "      (- ∈   -) ∋
 "      00 ∞
-" -1,-N,-M,NS	hyphen,en-dash,em-dash,nb-space
+" -1,-N,-M,NS   hyphen,en-dash,em-dash,nb-space
 " greek ends in *: G*‐Γ  g*‐γ
 " s/S = superscript/subscript: 1s=₁ 2S=²
 " Also see: http://www.alecjacobson.com/weblog/?p=443
