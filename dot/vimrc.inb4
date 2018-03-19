@@ -251,6 +251,10 @@ map gci :setlocal invpaste paste?<CR>
 " gu - turn off search highlighting (like less(1) ESC-u)
 map gu :nohlsearch<CR>
 
+"   Help us unlearn deprecated mappings
+noremap gr      :call DisplayError("gr: Use `qr` instead")<CR>
+noremap g<C-N>  :call DisplayError("gr: Use `q^N` instead")<CR>
+
 " Esc-s we leave undefined so that an accidental use of it in command
 " mode still saves the file.
 
