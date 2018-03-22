@@ -176,7 +176,7 @@ noremap q :call DisplayError("Use `Q@` to record to register")<CR>
 "
 "   q{np}   move to next/previous window, or window given by count
 "   q{hjkl} move to window, just like Ctrl-W{hjkl}
-"   qr      resize
+"   q{rR}   resize larger/smaller
 "   qm      Maximize this window
 "   q^N     split and move to next file in arg list (if present)
 "
@@ -186,7 +186,8 @@ noremap qh      <C-W>h
 noremap qj      <C-W>j
 noremap qk      <C-W>k
 noremap ql      <C-W>l
-noremap qr      :resize 
+noremap qr      :resize +
+noremap qR      :resize -
 noremap qm      :resize +999<CR>
 noremap q<C-N>  :split<CR>:next<CR>
 
@@ -208,10 +209,8 @@ noremap q<C-Q> :quitall!<CR>
 
 "   Misc. commands on `q`
 "
-"   qr      Re-read .vimrc file.
-"
-map qR :source $HOME/.vimrc<CR>
-
+"   qz      Re-read .vimrc file.
+noremap qz      :source $HOME/.vimrc<CR>
 
 function! QuitSmall()
     if &buftype == ""
