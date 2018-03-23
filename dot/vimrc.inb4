@@ -201,26 +201,17 @@ noremap q<C-N>  :split<CR>:next<CR>
 "   qQ - force quit (all windows)
 "
 noremap ZZ :xa<CR>
+noremap qA :quitall!<CR>
 noremap qc :close<CR>
-noremap qw :quit<CR>
-noremap qq :call QuitSmall()<CR>
-noremap qQ :quitall!<CR>
-noremap q<C-Q> :quitall!<CR>
+noremap qq :quit<CR>
+noremap qQ :quitall<CR>
+noremap qw :close<CR>
 
 "   Misc. commands on `q`
 "
 "   qz      Re-read .vimrc file.
 noremap qz      :source $HOME/.vimrc<CR>
 
-function! QuitSmall()
-    if &buftype == ""
-        " Regular buffer; quit editor if everything is written.
-        qall
-    else
-        " Temporary buffer; quit just that buffer (if written).
-        :quit
-    endif
-endfunction
 
 " ===== Misc. Key Mappings ==================================================
 
