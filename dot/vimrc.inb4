@@ -200,12 +200,12 @@ noremap q<C-N>  :split<CR>:next<CR>
 "   qq - quit vim (all windows) unless unwritten buffers
 "   qQ - force quit (all windows)
 "
-noremap ZZ :xa<CR>
-noremap qA :quitall!<CR>
-noremap qc :close<CR>
-noremap qq :quit<CR>
-noremap qQ :quitall<CR>
-noremap qw :close<CR>
+noremap ZZ      :xa<CR>
+noremap qA      :quitall!<CR>
+noremap qc      :close<CR>
+noremap qq      :quit<CR>
+noremap qQ      :quitall<CR>
+noremap qw      :close<CR>
 
 "   Misc. commands on `q`
 "
