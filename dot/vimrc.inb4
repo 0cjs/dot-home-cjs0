@@ -202,10 +202,10 @@ noremap q<C-N>  :split<CR>:next<CR>
 "
 noremap ZZ      :xa<CR>
 noremap qA      :quitall!<CR>
-noremap qc      :close<CR>
-noremap qq      :quit<CR>
+noremap qc      <C-W>c
+noremap qq      <C-W>q
 noremap qQ      :quitall<CR>
-noremap qw      :close<CR>
+noremap qw      <C-W>c
 
 "   Misc. commands on `q`
 "
