@@ -1,3 +1,9 @@
+" ===== General Notes =================================================
+
+"   We try here to avoid clobbering useful standard key mappings.
+"   When considering a new mapping, check `:help index` to see
+"   if it's already used.
+
 " ===== Settings ======================================================
 " XXX This should gracefully degrade, a la
 " http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
@@ -636,7 +642,10 @@ digraph  .M 8226    " • U+2022 Bullet (now that we use .m for Middle Dot)
 digraph  SB 8226    " • U+2022 Bullet
                     "   Don't use ● 0M Black Circle as a bullet;
                     "   that doesn't work in some fonts.
-digraph  ns 2099    " ࠳ Latin Subscript Small Letter N
+digraph  is 7522    " ࠳ Latin Subscript Small Letter I
+digraph  iS 8305    " ࠳ Latin Superscript Small Letter I
+digraph  ns 8345    " ࠳ Latin Subscript Small Letter N
+digraph  nS 8319    " ࠳ Latin Superscript Small Letter N
 digraph \|- 8866    " ⊢ Right Tack
 digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥ Option Key (Mac)
