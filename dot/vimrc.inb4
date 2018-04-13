@@ -23,7 +23,6 @@ if exists("&colorcolumn")
     set colorcolumn=81,82,83,84
 endif
 set nomodeline
-set scrolloff=4
 set hidden
 set hlsearch
 set ignorecase
@@ -227,6 +226,15 @@ noremap qz      :source $HOME/.vimrc<CR>
 
 
 " ===== Misc. Key Mappings ==================================================
+
+"   Additional movement commands
+"
+"   g{ey}   Scroll count*10 + 6 lines up/down in the buffer
+"
+"   Overrides: `ge` backward to end of word
+"
+noremap ge  6<C-Y>
+noremap gy  6<C-E>
 
 " copy and paste with GUI system clipboard(s)
 map gc :call DisplayError("gc: Copy/paste functions")<CR>
