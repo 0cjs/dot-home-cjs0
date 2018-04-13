@@ -197,7 +197,7 @@ noremap qR      :resize -
 noremap qm      :resize +999<CR>
 noremap q<C-N>  :split<CR>:next<CR>
 
-"   Window close/delete (including quit) commands
+"   Window close/delete (including quit) and buffer management commands
 "   These tend to follow `q` with a left-hand key.
 "
 "   ZZ - write and quit all buffers (not just current one)
@@ -206,9 +206,15 @@ noremap q<C-N>  :split<CR>:next<CR>
 "   qq - quit vim (all windows) unless unwritten buffers
 "   qQ - force quit (all windows)
 "
+"   qd      Allow DOS format and reload file
+"   q{e}    Change encoding to UTF-8 or prefix to view/change
+"
 noremap ZZ      :xa<CR>
 noremap qA      :quitall!<CR>
 noremap qc      <C-W>c
+noremap qd      :set fileformats=unix,dos<CR>:e<CR>
+noremap qe      :set fileencoding=UTF-8<CR>
+noremap qE      :set fileencoding
 noremap qq      <C-W>q
 noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
@@ -217,6 +223,7 @@ noremap qw      <C-W>c
 "
 "   qz      Re-read .vimrc file.
 noremap qz      :source $HOME/.vimrc<CR>
+
 
 
 " ===== Misc. Key Mappings ==================================================
@@ -304,13 +311,6 @@ noremap gA   ga
 " gb - byte/word/line count
 " vim uses g^G
 map gb g<C-G>
-
-" gd - enable dos mode, and reload file
-map gd :set fileformats=unix,dos<CR>:e<CR>
-
-" ge - file encoding change/view
-map ge :set fileencoding=UTF-8<CR>
-map gE :set fileencoding
 
 " gF/gf fail/unfail a ruby test
 map gF :s/def test_/def FAILING_test_/<CR>
