@@ -427,6 +427,11 @@ noremap gtl   :set invlist listchars=tab:→⋅,trail:□<CR>
 noremap gtv   :set virtualedit=<CR>
 noremap gtV   :set virtualedit=all<CR>
 
+"   Markdown configuration (see :help comments)
+"   (Also see `autocmd FileType markdown`)
+noremap gtm   :set comments=fb:*,fb:-,b:>
+
+
 " ----------------------------------------------------------------------
 """""" gv - Version Control commands """""""""""""""""""""""
 
@@ -529,6 +534,8 @@ autocmd FileType gitcommit syntax on
 autocmd Filetype markdown setlocal sw=2
 autocmd FileType markdown setlocal textwidth=70
 autocmd FileType markdown syntax on
+                          " Also see `gtm` mapping
+autocmd FileType markdown set comments=fb:*,fb:-,b:>
 
 " ===== YAML mode ===================================================
 
