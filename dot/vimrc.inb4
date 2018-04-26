@@ -242,7 +242,7 @@ noremap qz      :source $HOME/.vimrc<CR>
 noremap ge  6<C-Y>
 noremap gy  6<C-E>
 "            yank, start search, insert " register contents
-vnoremap g/  y/<C-R>"<CR>
+vnoremap g/  y/\V<C-R>"<CR>
 
 " copy and paste with GUI system clipboard(s)
 map gc :call DisplayError("gc: Copy/paste functions")<CR>
