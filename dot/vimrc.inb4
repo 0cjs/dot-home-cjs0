@@ -112,6 +112,11 @@ highlight markdownCode  ctermfg=Brown
 highlight link markdownCodeBlock markdownCode
 highlight link markdownHeadingDelimiter Subtitle
 highlight link markdownHeadingRule Title
+"   `[foo]:` reference def; `[foo]` reference use; link assoc. w/reference
+"   XXX markdownIdDeclaration defaults to link to `Type`, but despite the
+"       setting above, Type is Green, not Black when editing `.md` files (due
+"       to system override?) so clearly I need to sort out how my HL defs work
+highlight markdownIdDeclaration term=underline cterm=underline
 highlight markdownLinkText term=underline cterm=underline
 highlight link markdownUrl htmlLink
 "   XXX This hack turns of all error highlighting in Markdown files, but
