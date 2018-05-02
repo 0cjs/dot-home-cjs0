@@ -28,7 +28,12 @@ install_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
+install_pythonz() {
+    curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+}
+
 case "$1" in
     nodejs)     install_nodejs;;
+    pythonz)    install_pythonz;;
     *)          die "Unknown option '$1'";;
 esac
