@@ -539,6 +539,9 @@ autocmd FileType gitcommit syntax on
 
 " ===== Markdown mode ================================================
 
+"   Some vim installations set syntax=modula2 for *.md files
+autocmd BufNewFile,BufFilePre,BufRead       *.md set filetype=markdown
+
 autocmd Filetype markdown setlocal sw=2
 autocmd FileType markdown setlocal textwidth=70
 autocmd FileType markdown syntax on
