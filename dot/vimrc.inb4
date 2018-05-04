@@ -376,9 +376,11 @@ noremap gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 "   Overrides: `gq` format commands that are not useful or nonsensical
 "       (mostly smaller-than-line movement commands)
 
-"   gqp - format short aliases: paragraph and to mark a
-noremap gqp gqap
+"   g{q,w}p - format short aliases: paragraph and to mark a
 noremap gqa gq'a
+noremap gqp gqap
+noremap gwa gw'a
+noremap gwp gwap
 
 "   gqv␣ - "quote" visually selected area by putting ␣ on either side of it
 noremap gqv' xi''<ESC>P
