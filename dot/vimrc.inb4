@@ -212,6 +212,7 @@ noremap q<C-N>  :split<CR>:next<CR>
 "
 "   qd      Allow DOS format and reload file
 "   q{e}    Change encoding to UTF-8 or prefix to view/change
+"   qX      Chmod current file to be executable
 "
 noremap ZZ      :xa<CR>
 noremap qA      :quitall!<CR>
@@ -222,6 +223,7 @@ noremap qE      :set fileencoding
 noremap qq      <C-W>q
 noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
+noremap qX      :!chmod +x %<CR>
 
 "   Misc. commands on `q`
 "
@@ -462,9 +464,6 @@ map gvl :Scratch<CR>:r!log #<CR>
 map gvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" gX mark current file executable
-map gX :!chmod +x %<CR>
 
 " gZ run named-checkzone
 map gZ :!named-checkzone 
