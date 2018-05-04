@@ -223,7 +223,7 @@ noremap qE      :set fileencoding
 noremap qq      <C-W>q
 noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
-noremap qX      :!chmod +x %<CR>
+noremap qX      :!chmod +x '%'<CR>
 
 "   Misc. commands on `q`
 "
