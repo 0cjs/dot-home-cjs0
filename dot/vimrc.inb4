@@ -368,7 +368,7 @@ map go {!}sort<CR>
 "        https://github.com/suan/instant-markdown-d
 "   Overrides: gp gP  to paste but leave cursor after pasted text
 "   Not sure if I want to move these elsewhere and start trying to use those.
-noremap gp gqap
+noremap gp gwap
 noremap gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
 "----------------------------------------------------------------------
