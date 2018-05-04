@@ -463,10 +463,6 @@ map gvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" gw/gW - search forward/back for word nearest cursor
-noremap gw *
-noremap gW #
-
 " gX mark current file executable
 map gX :!chmod +x %<CR>
 
