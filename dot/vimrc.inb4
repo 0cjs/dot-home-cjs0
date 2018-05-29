@@ -236,13 +236,13 @@ noremap qz      :source $HOME/.vimrc<CR>
 
 "   Additional movement commands
 "
-"   g{ey}   Scroll count*10 + 6 lines up/down in the buffer
+"   g{ey}   Scroll count*10 + 6 lines down/up in the buffer
 "   g/      Search for visually selected text
 "
 "   Overrides: `ge` backward to end of word
 "
-noremap ge  6<C-Y>
-noremap gy  6<C-E>
+noremap ge  6<C-E>
+noremap gy  6<C-Y>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
 
