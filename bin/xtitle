@@ -56,7 +56,11 @@ set_ckssh_keyinfo() {
 
     keycount=$(ssh-add -l 2>/dev/null \
         | grep -v 'The agent has no identities.' | wc -l)
-    keyinfo="$keyinfo=$keycount"
+    case $keycount in
+        0)  keyinfo="(--$keyinfo--)";;
+        1)  keyinfo="[$keyinfo]";;
+        *)  keyinfo="[++$keyinfo++]";;
+    esac
 }
 
 case "$TERM" in
