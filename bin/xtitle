@@ -47,6 +47,18 @@ set_keyinfo() {
     [[ $keycount -gt 1 ]] && keyinfo="$(($keycount-1))+$keyinfo"
 }
 
+set_ckssh_keyinfo() {
+    declare -g keyinfo='no keys' 2>/dev/null || keyinfo='no keys'
+                                              # Bash <4.2 has no `declare -g`
+
+    keyinfo="$(ckssh.py ckset 2>/dev/null)"
+    [[ -z $keyinfo ]] && keyinfo='?'
+
+    keycount=$(ssh-add -l 2>/dev/null \
+        | grep -v 'The agent has no identities.' | wc -l)
+    keyinfo="$keyinfo=$keycount"
+}
+
 case "$TERM" in
     xterm*)     : ;;
     rxvt*)      : ;;
@@ -75,7 +87,7 @@ esac; done
 [[ $# -gt 0 ]] && XTITLE="$*"
 
 keyinfo='?'
-$get_keyinfo && set_keyinfo
+$get_keyinfo && set_ckssh_keyinfo
 
 esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
