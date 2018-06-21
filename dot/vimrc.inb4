@@ -32,8 +32,6 @@ endif
 set smartcase
 set noswapfile
 set tags=./tags;
-set noicon
-set notitle
 set wildmode=longest,list
 set matchpairs=(:),{:},[:],<:>
 set iskeyword=@,-,48-57,_,192-255
@@ -160,6 +158,12 @@ endif
 noremap ggf :set guifont=Droid\ Sans\ Mono\ 
 
 " ===== Window/Tab Management ====================================
+
+"   Configuration:
+"   - Status line only when more than one window open
+"   - Do not set (X11) window icon title
+set laststatus=1
+set notitle noicon
 
 "   s/S - save current/save all (in this section for lack of better place)
 "   Overrides: s/S as duplicates of cl/cc
