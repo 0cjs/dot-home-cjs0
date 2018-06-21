@@ -162,7 +162,7 @@ noremap ggf :set guifont=Droid\ Sans\ Mono\
 "   Configuration:
 "   - Status line only when more than one window open
 "   - Do not set (X11) window icon title
-set laststatus=1
+set laststatus=2
 set notitle noicon
 
 "   s/S - save current/save all (in this section for lack of better place)
