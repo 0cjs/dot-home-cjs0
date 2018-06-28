@@ -677,6 +677,7 @@ digraph  is 7522    " ࠳ Latin Subscript Small Letter I
 digraph  iS 8305    " ࠳ Latin Superscript Small Letter I
 digraph  ns 8345    " ࠳ Latin Subscript Small Letter N
 digraph  nS 8319    " ࠳ Latin Superscript Small Letter N
+digraph  -^ 8593    " ↑ Upwards Arrow (alternative to -!)
 digraph \|- 8866    " ⊢ Right Tack
 digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥ Option Key (Mac)
