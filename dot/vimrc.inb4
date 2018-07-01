@@ -539,7 +539,7 @@ endfunction
 
 " ===== Git Commit Messages ==========================================
 
-autocmd FileType gitcommit setlocal textwidth=70
+autocmd FileType gitcommit setlocal textwidth=70 fileencoding=UTF-8
 autocmd FileType gitcommit syntax on
 
 " ===== Markdown mode ================================================
