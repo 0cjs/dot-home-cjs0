@@ -135,8 +135,8 @@ endif
 " highlighting changes
 "   Overrides: gh  start select mode (Win/Mac-like selection that I never use)
 map ghd :runtime syntax/diff.vim<CR>    " diff highlighting
-map ghs :syntax enable<CR>
-map ghS :syntax clear<CR>
+map ghs :syntax clear<CR>
+map ghS :syntax enable<CR>
 
 "   Display of color and highlighting information
 noremap gh? :runtime syntax/colortest.vim<CR>
