@@ -448,11 +448,14 @@ noremap gt4   :set shiftwidth=4<CR>
 noremap gt8   :set shiftwidth=8<CR>
 
 noremap gtw   :set textwidth=
-noremap gt5   :set textwidth=65<CR>
+noremap gt5   :set textwidth=50<CR>
+noremap gt%   :set textwidth=55<CR>
 noremap gt6   :set textwidth=60<CR>
+noremap gt^   :set textwidth=65<CR>
 noremap gt7   :set textwidth=70<CR>
 noremap gt&   :set textwidth=75<CR>
-noremap gt*   :set textwidth=79<CR>
+noremap gt8   :set textwidth=79<CR>
+noremap gt*   :set textwidth=80<CR>
 noremap gtc   :setlocal colorcolumn=<CR>
 
 noremap gtl   :set invlist listchars=tab:→⋅,trail:□<CR>
