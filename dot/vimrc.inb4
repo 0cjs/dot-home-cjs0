@@ -229,11 +229,27 @@ noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
 noremap qX      :!chmod +x '%'<CR>
 
+"   Version control commands
+"
+"   qvb     blame current file
+"   qvc     Find next conflict marker
+"           (Replace with <https://github.com/rhysd/conflict-marker.vim>?)
+"   qvd     diff current file
+"   qvD     diff all files from current dir down
+"   qvl     log current file
+
+"   Create command to open a new scratch buffer.
+command! Scratch :new | :set buftype=nofile bufhidden=delete
+noremap qvd :Scratch<CR>:r!dif #<CR>:runtime syntax/diff.vim<CR>
+noremap qvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
+noremap qvb :Scratch<CR>:r!blame #<CR>
+noremap qvl :Scratch<CR>:r!log #<CR>
+noremap qvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
+
 "   Misc. commands on `q`
 "
 "   qz      Re-read .vimrc file.
 noremap qz      :source $HOME/.vimrc<CR>
-
 
 
 " ===== Misc. Key Mappings ==================================================
@@ -449,27 +465,6 @@ noremap gtm   :set comments=fb:*,fb:-,b:>
 
 
 " ----------------------------------------------------------------------
-"""""" gv - Version Control commands """""""""""""""""""""""
-
-command! Scratch :new | :set buftype=nofile bufhidden=delete
-
-" gvd - diff current file
-map gvd :Scratch<CR>:r!dif #<CR>:runtime syntax/diff.vim<CR>
-
-" gvD - diff all files from current dir down
-map gvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
-
-" gvb - blame current file
-map gvb :Scratch<CR>:r!blame #<CR>
-
-" gvl - log current file
-map gvl :Scratch<CR>:r!log #<CR>
-
-"   gvc - Find next conflict marker
-"   Replace with <https://github.com/rhysd/conflict-marker.vim>?
-map gvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " gZ run named-checkzone
 map gZ :!named-checkzone 
