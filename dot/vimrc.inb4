@@ -685,9 +685,21 @@ digraph  om 8997    " ⌥ Option Key (Mac)
 
 "   Add `-i` to the shell command flags (used with ! etc.) to run the
 "   shell as "interactive" so that we have all our functions, aliases,
-"   etc. available. Note that `set shellcmdflag=-i\ -c` doesn't work
-"   here: when using that for some reason vim appears to receive a
-"   SIGSTOP on subshell exit and you're left at the shell prompt
-"   whence you ran vim.
+"   etc. available.
 "
-set shell=/bin/bash\ -i
+"   Unfortunately, with `-i` there's an issue where upon returning to
+"   vim after certain commands (often ones that don't produce output,
+"   such as `chmod`) vim is topped with SIGTTOU ('Background write to
+"   tty') and you're left at the command prompt where you had started
+"   vim, needing to type `fg` to get back. It's as if `stty tostop` is
+"   set, but `stty -a </dev/pts/1` (or wherever vim is running)
+"   doesn't seem to see it set at any time. The issue is perhaps that
+"   `-i` starts a new process group and only one process group at a
+"   time can own the terminal as described in the superuser link below.
+"       https://superuser.com/a/646268
+"       https://apple.stackexchange.com/q/199520/175545
+"       https://github.com/christoomey/vim-tmux-navigator/issues/97
+"   Possibly we just need to change the shell command to something that
+"   will source .bashrc and run my thing.
+
+set shellcmdflag=-ic
