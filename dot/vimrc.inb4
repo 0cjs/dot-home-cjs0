@@ -683,23 +683,21 @@ digraph  om 8997    " ⌥ Option Key (Mac)
 " ----------------------------------------------------------------------
 " External Program Settings
 
-"   Add `-i` to the shell command flags (used with ! etc.) to run the
-"   shell as "interactive" so that we have all our functions, aliases,
-"   etc. available.
-"
-"   Unfortunately, with `-i` there's an issue where upon returning to
-"   vim after certain commands (often ones that don't produce output,
-"   such as `chmod`) vim is topped with SIGTTOU ('Background write to
-"   tty') and you're left at the command prompt where you had started
-"   vim, needing to type `fg` to get back. It's as if `stty tostop` is
-"   set, but `stty -a </dev/pts/1` (or wherever vim is running)
-"   doesn't seem to see it set at any time. The issue is perhaps that
-"   `-i` starts a new process group and only one process group at a
-"   time can own the terminal as described in the superuser link below.
+"   We want to source `.bashrc` before executing any shell commands so
+"   we can use shell functions and aliases with `:!`. However, we
+"   cannot use `-i` to ask bash to source `.bashrc` because it will
+"   also do other 'interactive' things that cause unwanted behaviour,
+"   such as starting a new process group that on some command exits
+"   (particularly for commands that produce no output) will still be
+"   there when vim next generates output and thus stopping vim with a
+"   SIGTTOU ('Background write to tty') signal and leaving you at your
+"   original shell prompt. (Type `fg` to bring vim back.) Further
+"   information:
 "       https://superuser.com/a/646268
 "       https://apple.stackexchange.com/q/199520/175545
 "       https://github.com/christoomey/vim-tmux-navigator/issues/97
-"   Possibly we just need to change the shell command to something that
-"   will source .bashrc and run my thing.
-
-set shellcmdflag=-ic
+"
+"   So instead we have a special script that will source `.bashrc` and
+"   then `exec "$1"` to run the command in that same shell.
+"
+set shell=bash-withrc
