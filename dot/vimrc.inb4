@@ -700,4 +700,4 @@ digraph  om 8997    " ⌥ Option Key (Mac)
 "   So instead we have a special script that will source `.bashrc` and
 "   then `exec "$1"` to run the command in that same shell.
 "
-set shell=bash-withrc
+set shell=bash-rcc

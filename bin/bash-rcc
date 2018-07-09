@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+#   bash-rcc - source ~/.bashrc and run bash -c command
+#
+#   This is used as the shell by programs such as vim where we want
+#   `:!` commands to be able to use shell functions and aliases
+#   defined in `~/.bashrc` but do not want the shell started in
+#   interactive mode. Interactive mode does various things, such as
+#   setting up its own process group, that can cause problems when
+#   used to run a single command from another program.
+
+[[ $1 = -c ]] && shift
+. ~/.bashrc
+eval "$1"
