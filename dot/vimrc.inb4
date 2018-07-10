@@ -257,12 +257,13 @@ noremap qz      :source $HOME/.vimrc<CR>
 "   Additional movement commands
 "
 "   g{ey}   Scroll count*10 + 6 lines down/up in the buffer
+"           (Overrides: `ge` backward to end of word)
 "   g/      Search for visually selected text
-"
-"   Overrides: `ge` backward to end of word
+"   gs      Search for whitespace at EOL (Overrides: `gs` sleep)
 "
 noremap ge  6<C-E>
 noremap gy  6<C-Y>
+noremap gs  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
 
@@ -421,10 +422,6 @@ map gqW viWgqv
 
 " gR Run entire file in ruby.
 map gR :w !ruby<CR>
-
-" gs - unused
-map gs :call DisplayError("Use just 's' instead.")<CR>
-map gS :call DisplayError("Use just 'S' instead.")<CR>
 
 " ----------------------------------------------------------------------
 "  gt - column-related (tab-like) functions and tab pages
