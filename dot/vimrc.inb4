@@ -192,6 +192,7 @@ noremap q :call DisplayError("Use `Q@` to record to register")<CR>
 "   q{hjkl} move to window, just like Ctrl-W{hjkl}
 "   q{rR}   resize larger/smaller
 "   qm      Maximize this window
+"   qM      Set all windows equal size ('maximize all', of a sort)
 "   q^N     split and move to next file in arg list (if present)
 "
 noremap qn      <C-w>w
@@ -203,6 +204,7 @@ noremap ql      <C-W>l
 noremap qr      :resize +
 noremap qR      :resize -
 noremap qm      :resize +999<CR>
+noremap qM      :set equalalways noequalalways<CR>
 noremap q<C-N>  :split<CR>:next<CR>
 
 "   Window close/delete (including quit) and buffer management commands
