@@ -234,7 +234,7 @@ noremap qX      :!chmod +x '%'<CR>
 "   Version control commands
 "
 "   qvb     blame current file
-"   qvc     Find next conflict marker
+"   qvc,qv/ Find next conflict marker
 "           (Replace with <https://github.com/rhysd/conflict-marker.vim>?)
 "   qvd     diff current file
 "   qvD     diff all files from current dir down
@@ -247,6 +247,7 @@ noremap qvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>
 noremap qvl :Scratch<CR>:r!log #<CR>
 noremap qvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
+noremap qv/ /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
 
 "   Misc. commands on `q`
 "
