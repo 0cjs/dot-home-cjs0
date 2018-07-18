@@ -184,6 +184,10 @@ set noequalalways
 "   because sometimes doing that would be very confusing. (It's a
 "   lesser-used command that we move elsewhere.)
 noremap q :call DisplayError("Use `Q@` to record to register")<CR>
+"   Having done this, we now restore some of the original qX commands.
+noremap q:      q:
+noremap q/      q/
+noremap q?      q?
 
 "   Window create/move commands
 "   These tend to follow `q` with a right-hand key.
@@ -252,7 +256,9 @@ noremap qv/ /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
 
 "   Misc. commands on `q`
 "
+"   q;      Switch to ex (line editor) mode
 "   qz      Re-read .vimrc file.
+noremap q;      gQ
 noremap qz      :source $HOME/.vimrc<CR>
 
 
