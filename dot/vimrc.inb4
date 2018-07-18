@@ -203,6 +203,7 @@ noremap qk      <C-W>k
 noremap ql      <C-W>l
 noremap qr      :resize +
 noremap qR      :resize -
+noremap q<C-R>  :resize 
 noremap qm      :resize +999<CR>
 noremap qM      :set equalalways noequalalways<CR>
 noremap q<C-N>  :split<CR>:next<CR>
