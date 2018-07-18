@@ -673,7 +673,7 @@ endfunction
 
 " Custom digraphs
 "
-digraph  .m  183    " · U+00b7 Middle dot (easier to type than `.M`)
+digraph  .m  183    " · U+00b7 Middle dot/interpunct (easier to type than `.M`)
 digraph  .M 8226    " • U+2022 Bullet (now that we use .m for Middle Dot)
 digraph  SB 8226    " • U+2022 Bullet
                     "   Don't use ● 0M Black Circle as a bullet;
