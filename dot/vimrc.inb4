@@ -19,9 +19,6 @@ set cedit=<C-E>
 set timeoutlen=5000
 set display+=lastline
 set display+=uhex
-if exists("&colorcolumn")
-    set colorcolumn=81,82,83,84
-endif
 set nomodeline
 set hidden
 set hlsearch
@@ -438,6 +435,10 @@ map gR :w !ruby<CR>
 "  gT - tab and tabstop functions
 "  Overrides: `gt`, `gT`: next and prev tab page
 
+if exists("&colorcolumn")
+    set colorcolumn=81,82,83,84
+endif
+
 "  next/prev tab page
 noremap gtn   gt
 noremap gtp   gT
@@ -464,6 +465,7 @@ noremap gt&   :set textwidth=75<CR>
 noremap gt8   :set textwidth=79<CR>
 noremap gt*   :set textwidth=80<CR>
 noremap gtc   :setlocal colorcolumn=<CR>
+noremap gtC   :setlocal colorcolumn=81,82,83,84<CR>
 
 noremap gtl   :set invlist listchars=tab:→⋅,trail:□<CR>
 noremap gtv   :set virtualedit=<CR>
