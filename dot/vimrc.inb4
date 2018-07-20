@@ -248,8 +248,8 @@ noremap qvd :Scratch<CR>:r!dif #<CR>:runtime syntax/diff.vim<CR>
 noremap qvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>
 noremap qvl :Scratch<CR>:r!log #<CR>
-noremap qvc /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
-noremap qv/ /^\(<<<<<<< .*\\|=======\\|>>>>>>> .*\)$<CR>
+noremap qvc /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| merged common ancestors\\|=======\\|>>>>>>> .*\)$<CR>
+noremap qv/ /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| merged common ancestors\\|=======\\|>>>>>>> .*\)$<CR>
 
 "   Misc. commands on `q`
 "
