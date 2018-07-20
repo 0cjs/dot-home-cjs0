@@ -6,6 +6,7 @@
 
 [merge]
     defaultToUpstream = true    # Now default in Git >= 2.1 or so
+    conflictstyle = diff3
 
 [push]
     # This defaults to `no` in v2.11 which would let you accidentally
