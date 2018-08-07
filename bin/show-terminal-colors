@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+#
+#  show-terminal-colors
+#
+#  Shows not just colors, bold and the like as well.
+#  The `-e` option will show extended colors, too.
+#
+#  ANSI Terminal Codes:
+#  Select Grahpics Rendition is ESC(params)m where (params) is one or
+#  more SGR numeric codes, separated by semicolons. For details see:
+#      https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+#      http://www.ecma.ch/publications/standards/Ecma-048.htm
+#  For xterm escape sequences, see:
+#      http://rtfm.etla.org/xterm/ctlseq.html
+#  There are also some good hints in answers to:
+#      https://superuser.com/questions/270214/
+#
+
+sgr() {
+    local codes=${1:-0}; shift
+    for c in "$@"; do codes="$codes;$c"; done
+    echo -n -e "\e[${codes}m"
+}
+
+print_color_table() {
+    while read code name; do
+        printf "%6s $(sgr $code)This is $name text.$(sgr)\n" "$code"
+    done <<_____
+        00      normal
+        01      bold
+        02      faint
+        03      italic
+        04      underline
+        07      inverse
+        08      concealed
+        09      crossed-out
+        10      primary font
+        11      alternate font 1
+        12      alternate font 2
+        30      foreground color 0 (black)
+        31      foreground color 1 (red)
+        32      foreground color 2 (green)
+        33      foreground color 3 (yellow)
+        34      foreground color 4 (blue)
+        35      foreground color 5 (magenta)
+        36      foreground color 6 (cyan)
+        37      foreground color 7 (white)
+        1;30    foreground color 0 bold (black)
+        1;31    foreground color 1 bold (red)
+        1;32    foreground color 2 bold (green)
+        1;33    foreground color 3 bold (yellow)
+        1;34    foreground color 4 bold (blue)
+        1;35    foreground color 5 bold (magenta)
+        1;36    foreground color 6 bold (cyan)
+        1;37    foreground color 7 bold (white)
+        40      background color 0 (black)
+        41      background color 1 (red)
+        42      background color 2 (green)
+        43      background color 3 (yellow)
+        44      background color 4 (blue)
+        45      background color 5 (magenta)
+        46      background color 6 (cyan)
+        47      background color 7 (white)
+        51      framed
+        52      encircled
+        53      overlined
+_____
+
+    # Stuff we leave out because it's annoying
+    cat >/dev/null <<_____
+        05      slow blink
+        06      fast blink
+        39      reset foreground color to default
+        49      reset background color to default
+_____
+}
+
+print_extended_color_table() {
+    c=0; while [ $c -le 255 ]; do
+        echo "Color $c $(sgr 38 5 $c)Extended foreground color $c$(sgr)"
+        c=$(($c + 1))
+    done
+}
+
+set_path0() {     # This is portable; don't touch it!
+    path0="$0"
+    local dir
+    while [ -h "$path0" ]; do
+        dir="$(cd "$(dirname "$path0")" && pwd -P)"
+        path0="$(readlink "$path0")";
+        [ "$(echo "$path0" | cut -b 1)" = / ] || path0="$dir/$path0"
+    done
+}
+
+usage() {
+    cat >&2 <<-_____
+	Usage: $(basename "$0") [-e] [-l]
+	    -e      Show extended colors
+	    -l      Pipe ouput through less
+	    -r      Reload ~/.Xresources before starting terminals
+	    -t PRG  Open a new terminal PRG (e.g., "xterm") and run this in it
+	_____
+    exit 2
+}
+
+############################################################
+
+opts=()                 # For use if we run ourself
+opt_extended=false
+opt_terms=()
+output_filter=cat
+while true; do case "$1" in
+    -e)     opt_extended=true; opts+=(-e); shift;;
+    -l)     output_filter='less -+E -e -+F -r'; shift;;
+    -r)     xrdb -cpp cpp -merge $HOME/.Xresources; shift;;
+    -t)     shift; opt_terms+=("$1"); shift;;
+    -*)     usage;;
+    *)      break;;
+esac; done
+
+if [ -z "$opt_terms" ]; then
+    {   print_color_table
+	$opt_extended && print_extended_color_table
+    } | $output_filter
+else
+    set_path0
+    declare -i x=50
+    for term in "${opt_terms[@]}"; do
+	title="$term $(basename "$path0") $BASHPID"
+        "$term" -geometry 80x40+$x-50 -title "$title" \
+	    -e "$path0" -l "${opts[@]}" &
+        sleep 0.25  # Give window time to map
+	x+="$(xwininfo -name "$title" | sed -n -e 's/^ *Width: //p')"
+    done
+fi
