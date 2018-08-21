@@ -1,0 +1,44 @@
+#   Package list for `distro` command.
+#   Format: <group> <package-name> <distro-pattern> ...
+
+user    apg                 Debian.* Ubuntu.* CentOS.7
+user    bash-completion     Debian.* Ubuntu.* CentOS.7
+user    bind-utils          CentOS.7
+user    bsdmainutils        Debian.* Ubuntu.*
+user    curl                Debian.* Ubuntu.* CentOS.*
+user    dnsutils            Debian.* Ubuntu.*
+user    git                 Debian.* Ubuntu.* CentOS.*
+user    git-core            Ubuntu.12.04
+user    htop                Debian.* Ubuntu.* CentOS.*
+user    language-pack-en    Ubuntu.*
+user    mtr                 CentOS.7
+user    mtr-tiny            Debian.* Ubuntu.*
+user    netcat-openbsd      Debian.* Ubuntu.*
+user    nmap                Debian.* Ubuntu.* CentOS.*
+user    nmap-netcat         CentOS.*
+user    redhat-lsb          CentOS.7
+user    socat               Debian.* Ubuntu.* CentOS.*
+user    time                Debian.* Ubuntu.* CentOS.*
+user    vim-enhanced        CentOS.*
+user    vim-gtk             Debian.* Ubuntu.*
+user    wget                Debian.* Ubuntu.* CentOS.*
+user    xtail               Debian.* Ubuntu.* CentOS.*
+
+desktop gitk                Debian.* Ubuntu.* CentOS.*
+
+# Stuff needed for common builds (e.g., rbenv-ruby) on Debian.
+dev     libgnutls28-dev     Debian.*
+dev     libreadline6-dev    Debian.*
+dev     libssl-dev          Debian.*
+dev     zlib1g-dev          Debian.*
+
+sys     apt-file            Debian.* Ubuntu.*
+sys     apticron            Debian.* Ubuntu.*
+sys     aptitude            Debian.* Ubuntu.*
+sys     bind                CentOS.7
+sys     bind9               Debian.* Ubuntu.*
+sys     chrony              Debian.* Ubuntu.* CentOS.7
+sys     etckeeper           Debian.* Ubuntu.* CentOS.*
+sys     openssh-server      Debian.* Ubuntu.* CentOS.*
+sys     postfix             Debian.* Ubuntu.* CentOS.*
+sys     software-properties-common  Debian.*
