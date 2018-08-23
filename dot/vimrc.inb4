@@ -375,6 +375,8 @@ map gl      :setlocal invwrap <CR>:setlocal wrap?<CR>
 map gL      :setlocal invlbr  <CR>:setlocal lbr?<CR>
 map g<C-L>  :setlocal invspell<CR>:set spell?<CR>
 map g<ESC>l :call WordProcessorMode()<CR>
+"   zy - Replace word with first spelling fix suggestion (normally unmapped)
+noremap zy  1z=
 
 function! WordProcessorMode()
     setlocal wrap scrolloff=0 linebreak colorcolumn=
