@@ -473,7 +473,8 @@ noremap gt*   :set textwidth=80<CR>
 noremap gtc   :setlocal colorcolumn=<CR>
 noremap gtC   :setlocal colorcolumn=81,82,83,84<CR>
 
-noremap gtl   :set invlist listchars=tab:→⋅,trail:□<CR>
+set list listchars=tab:▹\ ,nbsp:◡,trail:░
+noremap gtl   :set invlist<CR>
 noremap gtv   :set virtualedit=<CR>
 noremap gtV   :set virtualedit=all<CR>
 
