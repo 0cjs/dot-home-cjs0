@@ -1,0 +1,203 @@
+#!/usr/bin/env python
+
+from __future__ import print_function
+import re
+from argparse import ArgumentParser
+from collections import OrderedDict
+from subprocess import check_output
+
+####################################################################
+#   Reading the fontlist from the X server resource database
+
+def test_readres():
+    ' Assumes we have an ``Rxvt.font`` resource in the X server. '
+    line = readres()
+    assert not re.search(r'vt\.font', line)
+    assert not re.search(r'^\s', line)
+    assert     re.search('^xft:', line)
+
+def readres():
+    ' Return the value of the ``Rxvt.font`` resource. '
+    resname = 'Rxvt.font'
+    resources = check_output(('xrdb', '-query')).decode().split('\n')
+    for res in resources:
+        if not res.strip():     # Dunno how we got blank lines in res output
+            continue
+        name, val = res.split(':', 1)
+        if name == resname:
+            return val.strip()
+    raise RuntimeError('Resource {} not found'.format(repr(resname)))
+
+####################################################################
+#   Font specification
+
+def test_FontSpec_core():
+    spec = FontSpec('9x15')
+    assert     not     spec.xft
+    assert   '9x15' == spec.name
+    assert   '9x15' == spec.spec
+    assert    None  is spec.props
+
+def test_FontSpec_core_prefix():
+    name = '-misc-fixed-bold-r-normal--15-140-75-75-c-90-iso10646-1'
+    spec = FontSpec('x:' + name)
+    assert     not     spec.xft
+    assert     name == spec.name
+    assert     name == spec.spec
+
+def test_FontSpec_xft():
+    pattern = 'DejaVu Sans Mono-11:foo:bar=0 1 2 3:baz=quux'
+    spec = FontSpec('xft:' + pattern)
+    assert                             spec.xft
+    assert    'DejaVu Sans Mono-11' == spec.name
+    assert         'xft:' + pattern == spec.spec
+    assert                        3 == len(spec.props)
+    assert                     None is spec.props['foo']
+    assert                '0 1 2 3' == spec.props['bar']
+    assert                   'quux' == spec.props['baz']
+
+def test_FontSpec_parselist():
+    specs = FontSpec.parselist(
+        '9x15,xft:Inconsolata:size=10,xft:Source Han Sans')
+    assert                  not    specs[0].xft
+    assert                 '10' == specs[1].props['size']
+    assert    'Source Han Sans' == specs[2].name
+    assert                    3 == len(specs)
+
+class FontSpec(object):
+    ''' A `FontSpec` is an item from a urxvt(1) comma-separated
+        fontlist as specified in the ``.font`` resource.
+
+        If the textual representation is not prefixed with ``xft:`` it
+        is parsed as an X11 core font (XLFD) specification (an
+        optional ``x:`` prefix is removed).
+
+        If the textual representation is prefixed with ``xft:`` the
+        remainder is parsed as a fontconfig font pattern. See the
+        'Font Names' section of the fonts-conf(5) manpage for details:
+        https://www.freedesktop.org/software/fontconfig/fontconfig-user.html
+    '''
+
+    @staticmethod
+    def parselist(specs):
+        return tuple(map(FontSpec, specs.split(',')))
+
+    def __init__(self, spec):
+        ''' Parse textual `spec` (`str`) to build a `FontSpec` object.
+
+            XXX This does not handle backslash-quoting of colons in
+                fontconfig patterns.
+        '''
+        if not spec.startswith('xft:'):     # X11 core font
+            self.xft = False
+            if spec.startswith('x:'):
+                self.name = spec[2:]
+            else:
+                self.name = spec
+            self.props = None
+        else:                               # fontconfig pattern
+            self.xft = True
+            parts = spec.split(':')
+            #   Not actually a 'name'; in fontconfig this is
+            #   the first two parts: list of family names and list of
+            #   point sizes. We elide this because we're really just
+            #   dealing with the textual specs in this program.
+            self.name = parts[1]
+            #   This is not just for convenience; fonts-conf(5)
+            #   makes it clear that the properties are ordered.
+            self.props = OrderedDict()
+            for prop in parts[2:]:
+                if '=' in prop:
+                    key, val = prop.split('=', 1)
+                    self.props[key] = val
+                else:
+                    self.props[prop] = None
+
+    @property
+    def spec(self):
+        ' Return the textual representation of this `FontSpec`. '
+        parts = []
+        if self.xft: parts.append('xft')
+        parts.append(self.name)
+        if self.props:
+            for key, val in self.props.items():
+                if val is None:
+                    parts.append(key)
+                else:
+                    parts.append('{}={}'.format(key, val))
+        return ':'.join(parts)
+
+####################################################################
+#   update_specs(), the core of the manipulation interface
+
+
+
+def test_update_specs():
+    def testlist(): return [
+        FontSpec('xft:Noto Mono:size=10:aspect=0.9'),
+        FontSpec('8x15') ]
+
+    ss = update_specs(testlist(), 'Source', 'Code', 'Pro:size=9:bold')
+    assert 2 == len(ss)
+    assert '8x15' == ss[1].spec
+    assert 'xft:Source Code Pro:size=9:aspect=0.9:bold' == ss[0].spec
+
+    ss = update_specs(testlist(), ':aspect=1')
+    assert 'xft:Noto Mono:size=10:aspect=1' == ss[0].spec
+
+def update_specs(fontspecs, *updateargs):
+    ''' Update `fontspecs` (`[FontSpec]`) with the changes described
+        in `update` (`str`).
+
+        Roughly, change the name and/or properties of the first
+        spec in `fontspecs`.
+
+        XXX We should allow specifying a full speclist as well as
+        a single spec; we could parse this by checking for a comma.
+
+        It's an open question whether new properties should be added
+        to the beginning (higher priority) or the end (lower priority)
+        of the existing property list. Also, it might be nice to have
+        a syntax for deleting properties.
+    '''
+    update = ' '.join(updateargs)
+    if ':' in update and not update.startswith('xft:'):
+        update = 'xft:' + update
+    sn = FontSpec(update)
+    s0 = fontspecs[0]
+    if sn.name:
+        s0.name = sn.name
+    if s0.props and sn.props:
+        for key, val in sn.props.items():
+            s0.props[key] = val
+    return fontspecs
+
+####################################################################
+#   Main
+
+def test_main_noargs(capsys):
+    ' Loopback test: with no changes output should equal input. '
+    main(('-n',))
+    out, err = capsys.readouterr(); assert '' == err
+    assert readres() + '\n' == out
+
+def main(argv=None):
+    argp = ArgumentParser(description='Set fonts in urxvt')
+    arg = argp.add_argument
+    arg('-n', action='store_true',
+        help='print only font pattern list itself, '
+             'not terminal escape codes to set it')
+    arg('spec', nargs='*',
+        help='font name and/or components to set')
+    args = argp.parse_args(argv)
+
+    prefix, suffix = '\033]710;', '\033\\'
+    if args.n: prefix, suffix = '', '\n'
+
+    specs = FontSpec.parselist(readres())
+    update_specs(specs, *args.spec)
+    newresvalue = ','.join([ f.spec for f in specs ])
+    print(prefix, newresvalue, end=suffix, sep='')
+
+if __name__ == '__main__':
+    main()
