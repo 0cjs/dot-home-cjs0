@@ -1,1 +1,6 @@
 " :inb4:
+
+"   Always bring in cjs minimum configuration, regardless of environment.
+"   This shouldn't disrupt anything, but it's brought in early so that
+"   different settings will override these.
+:runtime cjs/minimum.vim
