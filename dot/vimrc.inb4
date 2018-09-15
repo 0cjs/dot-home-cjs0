@@ -129,8 +129,12 @@ if &term == "kterm"
     set highlight=sb,Sb,lu
 endif
 
-" highlighting changes
+"   Highlight-related commands
 "   Overrides: gh  start select mode (Win/Mac-like selection that I never use)
+
+set list listchars=tab:▹\ ,nbsp:◡,trail:░
+noremap ghl   :set invlist<CR>
+
 map ghd :runtime syntax/diff.vim<CR>    " diff highlighting
 map ghs :syntax clear<CR>
 map ghS :syntax enable<CR>
@@ -475,8 +479,6 @@ noremap gt*   :set textwidth=80<CR>
 noremap gtc   :setlocal colorcolumn=<CR>
 noremap gtC   :setlocal colorcolumn=81,82,83,84<CR>
 
-set list listchars=tab:▹\ ,nbsp:◡,trail:░
-noremap gtl   :set invlist<CR>
 noremap gtv   :set virtualedit=<CR>
 noremap gtV   :set virtualedit=all<CR>
 
