@@ -151,12 +151,15 @@ endfun
 " ===== Graphical Environment =========================================
 
 set guicursor=a:blinkon0
-set guifont=Droid\ Sans\ Mono\ 9
+set guifont=Noto\ Mono\ 8
 if has('win32')
     set guifont=lucida_console
 endif
 
-noremap ggf :set guifont=Droid\ Sans\ Mono\ 
+"   gg - Graphical settings prefix
+"   Overrides: jump to <count> line default first; use `0G` instead
+noremap ggfn :set guifont=Noto\ Mono\ 8<CR>
+noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
 
 " ===== Window/Tab Management ====================================
 
