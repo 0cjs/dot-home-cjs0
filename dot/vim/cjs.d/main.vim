@@ -135,6 +135,12 @@ endif
 set list listchars=tab:▹\ ,nbsp:◡,trail:░
 noremap ghl   :set invlist<CR>
 
+if exists("&colorcolumn")
+    set colorcolumn=81,82,83,84
+endif
+noremap ghc   :setlocal colorcolumn=<CR>
+noremap ghC   :setlocal colorcolumn=81,82,83,84<CR>
+
 map ghd :runtime syntax/diff.vim<CR>    " diff highlighting
 map ghs :syntax clear<CR>
 map ghS :syntax enable<CR>
@@ -445,10 +451,6 @@ map gR :w !ruby<CR>
 "  gT - tab and tabstop functions
 "  Overrides: `gt`, `gT`: next and prev tab page
 
-if exists("&colorcolumn")
-    set colorcolumn=81,82,83,84
-endif
-
 "  next/prev tab page
 noremap gtn   gt
 noremap gtp   gT
@@ -474,8 +476,6 @@ noremap gt7   :set textwidth=70<CR>
 noremap gt&   :set textwidth=75<CR>
 noremap gt8   :set textwidth=79<CR>
 noremap gt*   :set textwidth=80<CR>
-noremap gtc   :setlocal colorcolumn=<CR>
-noremap gtC   :setlocal colorcolumn=81,82,83,84<CR>
 
 noremap gtv   :set virtualedit=<CR>
 noremap gtV   :set virtualedit=all<CR>
