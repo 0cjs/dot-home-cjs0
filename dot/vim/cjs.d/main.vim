@@ -387,7 +387,7 @@ map g<ESC>l :call WordProcessorMode()<CR>
 noremap zy  1z=
 
 function! WordProcessorMode()
-    setlocal wrap scrolloff=0 linebreak colorcolumn=
+    setlocal wrap scrolloff=0 linebreak nolist colorcolumn=
     setlocal spell spelllang=en_us
     set showbreak=┊
     " Up/down move screen lines, not file lines
