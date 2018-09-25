@@ -159,7 +159,7 @@ endfun
 set guicursor=a:blinkon0
 set guifont=Noto\ Mono\ 8
 if has('win32')
-    set guifont=lucida_console
+    set guifont=Inconsolata:h10,Consolas:h10
 endif
 
 "   gg - Graphical settings prefix
