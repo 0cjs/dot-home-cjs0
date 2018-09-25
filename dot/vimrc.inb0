@@ -1,5 +1,12 @@
 " :inb4:
 
+"   Use :scriptnames to debug the load process.
+
+"   The gvim runtimepath on uses ~/vimfiles/ instead of ~/.vim/.
+"   But dot-home can't install the symlinks at the moment, anyway, so for
+"   the moment hack with the following before our runtime commands.
+"set runtimepath^=~/.home/cjs0/dot/vim
+
 "   Always bring in cjs minimum configuration, regardless of environment.
 "   This shouldn't disrupt anything, but it's brought in early so that
 "   different settings will override these.
