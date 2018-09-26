@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#
+#   ssh-identify - try to determine a hostname based on SSH public key
+#
+#   This fetches all of the host keys from TARGET (a hostname or IP address)
+#   and shows the hostname portion of any lines in known_hosts files that
+#   match that key.
+#
+
+set -o pipefail
+name=$(basename "$0")
+
+die()   { echo 1>&2 "$name:" "$@"; exit 2; }
+usage() { echo 1>&2 "Usage: $name [-p PORT] TARGET"; exit 3; }
+
+port=22
+[[ $1 = -p ]] && { shift; port="$1"; shift; }
+[[ -z $1 || -n $2 ]] && usage
+
+: ${TMPDIR:=/tmp}
+export TMPDIR
+keylist=$(mktemp -t "$name.XXXXXX") || die mktemp failed
+trap "rm -f -- $keylist" 0
+
+keyfiles=()
+for keyfile in ~/.ssh/known_hosts /etc/ssh/ssh_known_hosts; do
+    [[ -r $keyfile ]] && keyfiles+=("$keyfile")
+done
+[[ -z "$keyfiles" ]] && die "Cannot find any readable known_hosts files"
+
+#   We suppress stderr from ssh-keyscan here because it produces
+#   annoying "comment" lines with the host and SSH version. It also
+#   masks errors such as 'connection refused,' but that seems
+#   something we can live with.
+ssh-keyscan -p "$port" "$1" 2>/dev/null | sed -e 's/[^ ]* //' > $keylist
+grep -s -h -F -f $keylist "${keyfiles[@]}" \
+    | sed -e 's/^@[^ ]* *//' -e 's/ .*//' \
+    | sort -u
