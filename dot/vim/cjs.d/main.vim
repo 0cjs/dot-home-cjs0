@@ -404,15 +404,15 @@ map go {!}sort<CR>
 
 
 "   gp - Format current pagagraph (very frequently used, so short is good)
-"   g[ - Format from current position to beginning of this paragraph
-"   g] - Format from current position to end of this paragraph
+"   g{ - Format from current position to beginning of this paragraph
+"   g[ - Format from current position to end of this paragraph
 "   gP - Preview markdown rendered in instant-markdown-d (must be running)
 "        https://github.com/suan/instant-markdown-d
 "   Overrides: gp gP  to paste but leave cursor after pasted text
 "   Not sure if I want to move these elsewhere and start trying to use those.
 noremap gp gwap
-noremap g[ gw{
-noremap g] gw}
+noremap g{ gw{
+noremap g[ gw}
 noremap gP :w !curl -X PUT -T - http://localhost:8090/<CR><CR>
 
 "----------------------------------------------------------------------
