@@ -253,6 +253,7 @@ noremap qX      :!chmod +x '%'<CR>
 "   Create command to open a new scratch buffer.
 command! Scratch :new | :set buftype=nofile bufhidden=delete
 noremap qvd :Scratch<CR>:r!dif #<CR>:runtime syntax/diff.vim<CR>
+noremap qvw :Scratch<CR>:r!dif --word-diff=plain #<CR>:runtime syntax/diff.vim<CR>
 noremap qvD :Scratch<CR>:r!dif<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>
