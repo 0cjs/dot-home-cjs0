@@ -188,7 +188,7 @@ set noequalalways
 "   accidentally turning on the 'record typed chars to register' mode
 "   because sometimes doing that would be very confusing. (It's a
 "   lesser-used command that we move elsewhere.)
-noremap q :call DisplayError("Use `Q@` to record to register")<CR>
+noremap q :     call ConsumeError("Use `Q@` to record to register")<CR>
 "   Having done this, we now restore some of the original qX commands.
 noremap q:      q:
 noremap q/      q/
@@ -258,6 +258,7 @@ noremap qvb :Scratch<CR>:r!blame #<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>
 noremap qvc /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| .*\\|=======\\|>>>>>>> .*\)$<CR>
 noremap qv/ /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| .*\\|=======\\|>>>>>>> .*\)$<CR>
+noremap qv  :call ConsumeError("Unknown qv command")<CR>
 
 "   Misc. commands on `q`
 "
@@ -285,7 +286,7 @@ noremap gs  /\s\+$<CR>
 vnoremap g/  y/\V<C-R>"<CR>
 
 " copy and paste with GUI system clipboard(s)
-map gc :call DisplayError("gc: Copy/paste functions")<CR>
+map gc  :call ConsumeError("Unknown gc (copy/paste) function")<CR>
 map gcc "+y
 map gcy "+y
 map gcl "+yl
@@ -320,7 +321,7 @@ noremap g<C-N>  :call DisplayError("gr: Use `q^N` instead")<CR>
 "   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
 "   Q@ - (followed by register) record for later execution with `@<reg`>`/`@@`
 "   Overrides: Q (alone) to go into record mode
-map     Q  :call DisplayError("Q not mapped")<CR>
+map     Q  :call ConsumeError("Unknown Q command")<CR>
 noremap Q@ q
 
 "-----------------------------------------------------------------------
@@ -639,6 +640,21 @@ function! DisplayError(s)
     " current script line number; it's clearly intended for debugging.
     echomsg a:s
     echohl None
+endfunction
+
+function! ConsumeError(s)
+    "   Consume a character and then display an error. This is used
+    "   with multichar mappings when a prefix matches but the last
+    "   char doesn't match any mapping in order to prevent that last
+    "   char from being executed as a new command.
+    "
+    "   On timeout you'll end up with the `call DisplayError` below
+    "   displayed at the command line, waiting for a keypress. This
+    "   should probably be fixed, but it's fairly obvious to the end
+    "   user what the problem is.
+    "
+    let l:c = getchar()
+    call DisplayError(a:s . ': ' . nr2char(l:c))
 endfunction
 
 function! StarlingCopyrightCheck()
