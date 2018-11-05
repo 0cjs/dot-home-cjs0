@@ -228,6 +228,7 @@ noremap q<C-N>  :split<CR>:next<CR>
 "
 "   qd      Allow DOS format and reload file
 "   q{e}    Change encoding to UTF-8 or prefix to view/change
+"   q{tT}   Show/set filetype (for syntax highlighting, autocmd, etc.)
 "   qX      Chmod current file to be executable
 "
 noremap ZZ      :xa<CR>
@@ -236,6 +237,8 @@ noremap qc      <C-W>c
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
 noremap qE      :set fileencoding
+noremap qt      :set filetype?<CR>
+noremap qT      :set filetype=
 noremap qq      <C-W>q
 noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
