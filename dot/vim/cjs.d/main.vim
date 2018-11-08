@@ -717,6 +717,7 @@ digraph  -^ 8593    " ↑ Upwards Arrow (alternative to -!)
 digraph \|- 8866    " ⊢ Right Tack
 digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥ Option Key (Mac)
+digraph  '/  773    " a̅ Combining Overbar (like / for "active low")
 
 " ----------------------------------------------------------------------
 " External Program Settings
