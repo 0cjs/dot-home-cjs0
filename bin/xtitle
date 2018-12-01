@@ -51,7 +51,7 @@ set_ckssh_keyinfo() {
     declare -g keyinfo='no keys' 2>/dev/null || keyinfo='no keys'
                                               # Bash <4.2 has no `declare -g`
 
-    keyinfo="$(ckssh.py ckset 2>/dev/null)"
+    keyinfo="$(ckssh.py ckset -n 2>/dev/null)"
     [[ -z $keyinfo ]] && keyinfo='?'
 
     keycount=$(ssh-add -l 2>/dev/null \
