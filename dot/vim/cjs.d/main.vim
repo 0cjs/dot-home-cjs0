@@ -804,4 +804,6 @@ digraph  0+ 8853    " ْْࣷ⊕ Circled Plus Operator (overrides Arabic Sukun)
 "   So instead we have a special script that will source `.bashrc` and
 "   then `exec "$1"` to run the command in that same shell.
 "
-set shell=bash-rcc
+if !has('win32')
+    set shell=bash-rcc
+endif
