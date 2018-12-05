@@ -1,5 +1,3 @@
 # cjs useful core bash aliases/functions; may be overridden
 
 prepath -n -q $HOME/.local/bin
-
-eval $(xtitle -x 2>/dev/null)   # define xt() function
