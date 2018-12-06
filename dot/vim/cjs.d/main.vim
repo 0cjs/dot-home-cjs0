@@ -222,16 +222,18 @@ noremap q<C-N>  :split<CR>:next<CR>
 "
 "   ZZ - write and quit all buffers (not just current one)
 "   qc - close window
-"   qw - quit (close) window or vim if last window
-"   qq - quit vim (all windows) unless unwritten buffers
-"   qQ - force quit (all windows)
+"   qw - quit (close) window if not last window
+"   qq - close current window; exit if last window
+"   qa - quit vim (closing all windows)
+"   qA - force quit (all windows), abandoning unwritten buffers
 "
 "   qd      Allow DOS format and reload file
-"   q{e}    Change encoding to UTF-8 or prefix to view/change
+"   q{eE}   Change encoding to UTF-8 or prefix to view/change
 "   q{tT}   Show/set filetype (for syntax highlighting, autocmd, etc.)
 "   qX      Chmod current file to be executable
 "
 noremap ZZ      :xa<CR>
+noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
 noremap qc      <C-W>c
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
@@ -240,7 +242,6 @@ noremap qE      :set fileencoding
 noremap qt      :set filetype?<CR>
 noremap qT      :set filetype=
 noremap qq      <C-W>q
-noremap qQ      :quitall<CR>
 noremap qw      <C-W>c
 noremap qX      :!chmod +x '%'<CR>
 
