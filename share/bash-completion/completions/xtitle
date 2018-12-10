@@ -1,0 +1,4 @@
+# `xtitle` not yet written.
+# `xt` not yet written.
+
+complete -F _command xtr   # _command supplied by the bash_completion framework
