@@ -363,6 +363,7 @@ set textwidth=70
 " g[67] - insert separation comment
 map g7 O<ESC>70i-<ESC>0
 map g6 O<ESC>68A#<ESC>0
+noremap g! O<ESC>A<!--<ESC>64A-<ESC>A--><ESC>
 
 
 " ga - autoindent
