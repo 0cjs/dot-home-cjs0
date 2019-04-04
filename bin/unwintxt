@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+#   unwintxt - Remove unwanted BOMs, CRs, etc. from Windows text files
+#
+#   This operates as a filter or on files in place and removes:
+#   * Byte Order Marker (BOM) at start of file
+#   * Trailing space at end of line
+#   * Trailing CR at end of line
+#
+#   You can see what this did with:
+#       git diff --ws-error-highlight=all
+#
+
+inplace=''
+[[ "${#@}" -gt 0 ]] && inplace='-i'
+sed $inplace -e $'1s/^\uFEFF//' -e 's/\r$//' -e 's/[\t ]*$//' "$@"
