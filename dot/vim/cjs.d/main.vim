@@ -169,11 +169,10 @@ noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
 
 " ===== Window/Tab Management ====================================
 
-"   Configuration:
-"   - Status line only when more than one window open
-"   - Do not set (X11) window icon title
-set laststatus=2
-set notitle noicon
+"   Status line and other information configuration
+"
+set laststatus=2                " Always have a status line
+set notitle noicon              " Do not set (X11) window icon title
 
 "   ^N/^P - move to next/previous file
 "   Overrides: move to next/previous line
