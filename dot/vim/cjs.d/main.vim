@@ -173,14 +173,35 @@ noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
 "
 set laststatus=2                " Always have a status line
 set notitle noicon              " Do not set (X11) window icon title
+"
+"   Fields on the status line are `%-0m.MI` where all but `%I` are optional:
+"       • % starts the substitution field
+"       • - left justifies instead of right
+"       • 0 leading zeros in numerics, unless - given
+"       • m minimum width, padded as above
+"       • . separator for min/max width
+"       • M maximum width; truncation with `<` on left for text,
+"           `>N` for N digits on right
+"       • I One-letter item code (see `:help statusline`)
+set statusline=%<%f\ %h%m%r%=\ %y\ \ \\u%04.4B\ %10.(%l,%c%V%)\ \ %P\ %{WFH()}
+
+function! WFH()
+    "   Return "FixSz" if the window has winfixheight set, or empty spaces
+    if &winfixheight == 0
+        return "     "
+    else
+        return "FixSz"
+    endif
+endfunction
+
+"   Generally, new windows open below and all windows are resized to be even.
+"   Use `qf` to "fix" windows that should not change size on splits.
+set splitbelow equalalways
 
 "   ^N/^P - move to next/previous file
 "   Overrides: move to next/previous line
 noremap <C-N> :next<CR>
 noremap <C-P> :previous<CR>
-
-set splitbelow
-set noequalalways
 
 "   We take over `q` as a prefix for all the stuff in this section.
 "   Thus, disable `q` alone or with an unknown char following to avoid
@@ -199,6 +220,8 @@ noremap q?      q?
 "   q{np}   move to next/previous window, or window given by count
 "   q{hjkl} move to window, just like Ctrl-W{hjkl}
 "   q{rR}   resize larger/smaller
+"   qf      Toggle fixed window vsize (won't change when splitting/closing)
+"   qF      Toggle equalways (resizing all windows on new window)
 "   qm      Maximize this window
 "   qM      Set all windows equal size ('maximize all', of a sort)
 "   q^N     split and move to next file in arg list (if present)
@@ -212,9 +235,12 @@ noremap ql      <C-W>l
 noremap qr      :resize +
 noremap qR      :resize -
 noremap q<C-R>  :resize 
+noremap qf      :set invwinfixheight\|set winfixheight?<CR>
+noremap qF      :set invequalalways\|set equalalways?<CR>
 noremap qm      :resize +999<CR>
-noremap qM      :set equalalways noequalalways<CR>
-noremap q<C-N>  :split<CR>:next<CR>
+"               Careful to preserve current equalalways settings
+noremap qM      :set invequalalways\|set invequalalways<CR>
+noremap q<C-N>  :split\|next<CR>
 
 "   Window close/delete (including quit) and buffer management commands
 "   These tend to follow `q` with a left-hand key.
