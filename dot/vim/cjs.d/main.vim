@@ -43,13 +43,6 @@ set ruler
 set nobackup
 filetype indent off
 
-set fileformats=unix
-if has('win32')
-    set fileformats=unix,dos
-endif
-set encoding=utf-8
-set fileencodings=ascii,utf-8,euc-jp,sjis,cp932,ucs-bom,latin1
-
 filetype on
 syntax off
 
@@ -168,6 +161,15 @@ noremap ggfn :set guifont=Noto\ Mono\ 8<CR>
 noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
 
 " ===== Window/Tab Management ====================================
+
+"   Default/detected  file/buffer format (unix/dos/mac) and encoding
+"
+set fileformats=unix
+if has('win32')
+    set fileformats=unix,dos
+endif
+set encoding=utf-8
+set fileencodings=ascii,utf-8,euc-jp,sjis,cp932,ucs-bom,latin1
 
 "   Status line and other information configuration
 "
