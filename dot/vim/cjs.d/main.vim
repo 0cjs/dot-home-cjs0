@@ -183,7 +183,16 @@ set notitle noicon              " Do not set (X11) window icon title
 "       • M maximum width; truncation with `<` on left for text,
 "           `>N` for N digits on right
 "       • I One-letter item code (see `:help statusline`)
-set statusline=%<%f\ %h%m%r%=\ %y\ \ \\u%04.4B\ %10.(%l,%c%V%)\ \ %P\ %{WFH()}
+set statusline=
+set statusline+=%<                  " Truncate at start
+set statusline+=%f\                 " Filename
+set statusline+=%m%r%w%h            " [+/-], [RO], [PREVIEW], [HELP]
+set statusline+=%=                  " Left/right split
+set statusline+=%y\ \               " Filetype
+set statusline+=\\u%04.4B\          " Character code (hex)
+set statusline+=%10.(%l,%c%V%)\     " Line, col, virtual col
+set statusline+=%P\                 " File percentage
+set statusline+=%{WFH()}            " winfixheight indicator
 
 function! WFH()
     "   Return "FixSz" if the window has winfixheight set, or empty spaces
