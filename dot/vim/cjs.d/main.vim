@@ -188,21 +188,30 @@ set statusline+=%<                  " Truncate at start
 set statusline+=%f\                 " Filename
 set statusline+=%m%r%w%h            " [+/-], [RO], [PREVIEW], [HELP]
 set statusline+=%=                  " Left/right split
-set statusline+=%{Statusline_ftf()} " filetype/format
+set statusline+=%{Statusline_ftef()}" filetype,fileencoding,fileformat
 set statusline+=\ \                 "
 set statusline+=\\u%04.4B\          " Character code (hex)
 set statusline+=%10.(%l,%c%V%)\     " Line, col, virtual col
 set statusline+=%P\                 " File percentage
 set statusline+=%{Statusline_wfh()} " winfixheight indicator
 
-function! Statusline_ftf()
+function! Statusline_ftef()
     "   Return filetype and fileformat (if not "unix") for status line
-    let l:ftf = '[' . &filetype
-    if &fileformat != "unix"
-        let l:ftf .= ',' . &fileformat
+    let l:s = '[' . &filetype
+    if &fileencoding == ''
+        let l:s .= ',¿'
+    elseif &fileencoding == 'utf-8'
+        " Don't bother showing it
+    elseif &fileencoding == 'ascii'
+        let l:s .= ',∀'
+    else
+        let l:s .= ',' . &fileencoding
     endif
-    let l:ftf .= ']'
-    return l:ftf
+    if &fileformat != "unix"
+        let l:s .= ',' . &fileformat
+    endif
+    let l:s .= ']'
+    return l:s
 endfunction
 
 function! Statusline_wfh()
