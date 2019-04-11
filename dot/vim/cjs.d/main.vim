@@ -193,8 +193,8 @@ set statusline+=%=                  " Left/right split
 set statusline+=%{Statusline_ftef()}" filetype,fileencoding,fileformat
 set statusline+=\ \                 "
 set statusline+=\\u%04.4B\          " Character code (hex)
-set statusline+=%10.(%l,%c%V%)\     " Line, col, virtual col
-set statusline+=%P\                 " File percentage
+set statusline+=%3c%-4.(%0V%)\      " cursor column
+set statusline+=%5.l\ %P\           " cursor row and file percentage
 set statusline+=%{Statusline_wfh()} " winfixheight indicator
 
 function! Statusline_ftef()
@@ -217,11 +217,11 @@ function! Statusline_ftef()
 endfunction
 
 function! Statusline_wfh()
-    "   Return "FixSz" if the window has winfixheight set, or empty spaces
+    "   Return "FIX" if the window has winfixheight set, or empty spaces
     if &winfixheight == 0
-        return "     "
+        return "   "
     else
-        return "FixSz"
+        return "FIX"
     endif
 endfunction
 
