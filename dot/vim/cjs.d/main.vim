@@ -255,8 +255,7 @@ noremap q?      q?
 "   qF      Toggle equalways (resizing all windows on new window)
 "   qm      Maximize this window
 "   qM      Set all windows equal size ('maximize all', of a sort)
-"   q^N     split and move to next file in arg list (if present)
-"   q^J     split and move to next file in arg list (if present)
+"   q^J     split and move to next file in arg list
 "
 noremap qn      <C-w>w
 noremap qp      <C-w>W
@@ -272,7 +271,6 @@ noremap qF      :set invequalalways\|set equalalways?<CR>
 noremap qm      :resize +999<CR>
 "               Careful to preserve current equalalways settings
 noremap qM      :set invequalalways\|set invequalalways<CR>
-noremap q<C-N>  :split\|next<CR>
 noremap q<C-J>  :split\|next<CR>
 
 "   Window close/delete (including quit) and buffer management commands
