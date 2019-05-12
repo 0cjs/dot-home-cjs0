@@ -248,14 +248,15 @@ noremap q?      q?
 "   Window create/move commands
 "   These tend to follow `q` with a right-hand key.
 "
-"   q{np}   move to next/previous window, or window given by count
+"   q{np}   move/wrap to next/previous window or window given by count
 "   q{hjkl} move to window, just like Ctrl-W{hjkl}
 "   q{rR}   resize larger/smaller
 "   qf      Toggle fixed window vsize (won't change when splitting/closing)
 "   qF      Toggle equalways (resizing all windows on new window)
 "   qm      Maximize this window
 "   qM      Set all windows equal size ('maximize all', of a sort)
-"   q^J     split and move to next file in arg list
+"   q^J     split below and move to next file in arg list
+"   q^K     split above and move to previous file in arg list
 "
 noremap qn      <C-w>w
 noremap qp      <C-w>W
@@ -271,7 +272,8 @@ noremap qF      :set invequalalways\|set equalalways?<CR>
 noremap qm      :resize +999<CR>
 "               Careful to preserve current equalalways settings
 noremap qM      :set invequalalways\|set invequalalways<CR>
-noremap q<C-J>  :split\|next<CR>
+noremap q<C-J>  :split +next<CR>
+noremap q<C-K>  :above split +previous<CR>
 
 "   Window close/delete (including quit) and buffer management commands
 "   These tend to follow `q` with a left-hand key.
