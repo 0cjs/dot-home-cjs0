@@ -150,9 +150,10 @@ endfun
 " ===== Graphical Environment =========================================
 
 set guicursor=a:blinkon0
-set guifont=Noto\ Mono\ 8
 if has('win32')
     set guifont=Inconsolata:h10,Consolas:h10
+else
+    set guifont=Noto\ Mono\ 8
 endif
 
 "   gg - Graphical settings prefix
