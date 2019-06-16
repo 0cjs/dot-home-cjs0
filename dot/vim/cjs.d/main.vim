@@ -8,6 +8,8 @@
 " XXX This should gracefully degrade, a la
 " http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
 
+:scriptencoding utf-8
+
 " nvi and vim
 set autoindent
 set shiftwidth=4
