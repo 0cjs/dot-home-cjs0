@@ -537,18 +537,18 @@ noremap gt2   :set shiftwidth=2<CR>
 noremap gt4   :set shiftwidth=4<CR>
 noremap gt8   :set shiftwidth=8<CR>
 
-noremap gtw   :set textwidth=
-noremap gt5   :set textwidth=50<CR>
-noremap gt%   :set textwidth=55<CR>
-noremap gt6   :set textwidth=60<CR>
-noremap gt^   :set textwidth=65<CR>
-noremap gt7   :set textwidth=70<CR>
-noremap gt&   :set textwidth=75<CR>
-noremap gt8   :set textwidth=79<CR>
-noremap gt*   :set textwidth=80<CR>
+noremap gtw   :setlocal textwidth=
+noremap gt5   :setlocal textwidth=50<CR>
+noremap gt%   :setlocal textwidth=55<CR>
+noremap gt6   :setlocal textwidth=60<CR>
+noremap gt^   :setlocal textwidth=65<CR>
+noremap gt7   :setlocal textwidth=70<CR>
+noremap gt&   :setlocal textwidth=75<CR>
+noremap gt8   :setlocal textwidth=79<CR>
+noremap gt*   :setlocal textwidth=80<CR>
 
-noremap gtv   :set virtualedit=<CR>
-noremap gtV   :set virtualedit=all<CR>
+noremap gtv   :setlocal virtualedit=<CR>
+noremap gtV   :setlocal virtualedit=all<CR>
 
 "   Markdown configuration (see :help comments)
 "   (Also see `autocmd FileType markdown`)
