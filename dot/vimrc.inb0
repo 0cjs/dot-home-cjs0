@@ -2,7 +2,7 @@
 
 "   Use :scriptnames to debug the load process.
 
-"   The gvim runtimepath on uses ~/vimfiles/ instead of ~/.vim/.
+"   The gvim runtimepath on Windows uses ~/vimfiles/ instead of ~/.vim/.
 "   But dot-home can't install the symlinks at the moment, anyway, so for
 "   the moment hack with the following before our runtime commands.
 "set runtimepath^=~/.home/cjs0/dot/vim
