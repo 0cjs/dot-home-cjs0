@@ -2,15 +2,15 @@
 
 upgrade() {
     case $dist in
-	Debian|Ubuntu)
-	    [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
-	    echo ===== apt-get update
-	    sudo apt-get -q -q update || err apt-get update failed
-	    echo ===== apt-get dist-upgrade
-	    sudo apt-get -q dist-upgrade || err apt-get dist-upgrade failed
-	    ;;
-	*)
-	    err "Don't know how to upgrade $dist";;
+        Debian|Ubuntu)
+            [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
+            echo ===== apt-get update
+            sudo apt-get -q -q update || err apt-get update failed
+            echo ===== apt-get dist-upgrade
+            sudo apt-get -q dist-upgrade || err apt-get dist-upgrade failed
+            ;;
+        *)
+            err "Don't know how to upgrade $dist";;
     esac
 }
 
@@ -18,46 +18,46 @@ install() {
     package_files=$HOME/.home/*/libdata/distro/packages.$dist.$release
     packages=$(cat 2>/dev/null $package_files | grep -v '^#')
     if [ _"$1" = _-s ]; then
-	package_files=$HOME/.home/*/libdata/distro/syspackages.$dist.$release
-	packages="$packages $(cat 2>/dev/null $package_files | grep -v '^#')"
+        package_files=$HOME/.home/*/libdata/distro/syspackages.$dist.$release
+        packages="$packages $(cat 2>/dev/null $package_files | grep -v '^#')"
     fi
     case $dist in
-	Debian|Ubuntu)
-	    [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
-	    echo ===== apt-get update
-	    sudo apt-get -q -q update || err apt-get update failed
-	    echo ===== apt-get install
-	    sudo apt-get -q install $packages || err apt-get install failed
-	    ;;
-	*)
-	    err "Don't know how to install $dist";;
+        Debian|Ubuntu)
+            [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
+            echo ===== apt-get update
+            sudo apt-get -q -q update || err apt-get update failed
+            echo ===== apt-get install
+            sudo apt-get -q install $packages || err apt-get install failed
+            ;;
+        *)
+            err "Don't know how to install $dist";;
     esac
 }
 
 distro_name() {
     if [ -x /usr/bin/lsb_release ]
-	then lsb_release -s -i
-	else echo "Unknown"
-	fi
+        then lsb_release -s -i
+        else echo "Unknown"
+        fi
 }
 
 distro_release() {
-    [ -r /etc/os-release ] && {		# systemd
-	. /etc/os-release
-	echo $VERSION_ID
-	return
+    [ -r /etc/os-release ] && {         # systemd
+        . /etc/os-release
+        echo $VERSION_ID
+        return
     }
     if [ -x /usr/bin/lsb_release ]
-	then echo $(lsb_release -s -r)
-	else echo "Unknown"
-	fi
+        then echo $(lsb_release -s -r)
+        else echo "Unknown"
+        fi
 }
 
 distro_release_verbose() {
     if [ -x /usr/bin/lsb_release ]
-	then echo $(lsb_release -s -d)
-	else echo "Unknown"
-	fi
+        then echo $(lsb_release -s -d)
+        else echo "Unknown"
+        fi
 }
 
 err() {
