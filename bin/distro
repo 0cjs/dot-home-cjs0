@@ -1,8 +1,8 @@
 #!/bin/sh
 
 upgrade() {
-    case $dist in
-        Debian|Ubuntu)
+    case $ID in
+        debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
             echo ===== apt-get update
             sudo apt-get -q -q update || err apt-get update failed
@@ -10,19 +10,19 @@ upgrade() {
             sudo apt-get -q dist-upgrade || err apt-get dist-upgrade failed
             ;;
         *)
-            err "Don't know how to upgrade $dist";;
+            err "Don't know how to upgrade $ID";;
     esac
 }
 
 install() {
-    package_files=$HOME/.home/*/libdata/distro/packages.$dist.$release
+    package_files=$HOME/.home/*/libdata/distro/packages.$ID.$VERSION_ID
     packages=$(cat 2>/dev/null $package_files | grep -v '^#')
     if [ _"$1" = _-s ]; then
-        package_files=$HOME/.home/*/libdata/distro/syspackages.$dist.$release
+        package_files=$HOME/.home/*/libdata/distro/syspackages.$ID.$VERSION_ID
         packages="$packages $(cat 2>/dev/null $package_files | grep -v '^#')"
     fi
-    case $dist in
-        Debian|Ubuntu)
+    case $ID in
+        debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
             echo ===== apt-get update
             sudo apt-get -q -q update || err apt-get update failed
@@ -30,14 +30,14 @@ install() {
             sudo apt-get -q install $packages || err apt-get install failed
             ;;
         *)
-            err "Don't know how to install $dist";;
+            err "Don't know how to install $ID";;
     esac
 }
 
 distro_name() {
     if [ -x /usr/bin/lsb_release ]
-        then lsb_release -s -i
-        else echo "Unknown"
+        then lsb_release -s -i | tr A-Z a-z
+        else echo "unknown"
         fi
 }
 
@@ -49,14 +49,14 @@ distro_release() {
     }
     if [ -x /usr/bin/lsb_release ]
         then echo $(lsb_release -s -r)
-        else echo "Unknown"
+        else echo "unknown"
         fi
 }
 
 distro_release_verbose() {
     if [ -x /usr/bin/lsb_release ]
         then echo $(lsb_release -s -d)
-        else echo "Unknown"
+        else echo "unknown"
         fi
 }
 
@@ -79,16 +79,23 @@ help() {
     exit 2
 }
 
-dist=$(distro_name)
-release=$(distro_release)
+unset ID VERSION_ID PRETTY_NAME
+if [ -r /etc/os-release ]; then
+    . /etc/os-release
+else
+    ID=$(distro_name)
+    VERSION_ID=$(distro_release)
+    PRETTY_NAME=$(distro_release_verbose)
+fi
+
 case "$1" in
-    "") echo $dist $(distro_release);;
+    "") echo "$ID $VERSION_ID";;
     -h) help;;
     -i) install;;
-    -n) echo $dist;;
-    -r) distro_release;;
+    -n) echo $ID;;
+    -r) echo "$VERSION_ID";;
     -s) install -s;;
     -u) upgrade;;
-    -v) distro_release_verbose;;
+    -v) echo "$PRETTY_NAME";;
     *)  help;;
 esac
