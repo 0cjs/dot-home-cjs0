@@ -352,6 +352,7 @@ noremap gs  /\s\+$<CR>
 vnoremap g/  y/\V<C-R>"<CR>
 
 " copy and paste with GUI system clipboard(s)
+set clipboard=
 map gc  :call ConsumeError("Unknown gc (copy/paste) function")<CR>
 map gcc "+y
 map gcy "+y
