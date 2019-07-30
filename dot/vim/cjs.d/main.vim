@@ -369,6 +369,7 @@ map gcG "+yG
 map gcC "+y'a
 map gcF :1,$y +<CR>
 map gca :'a,.yank +<CR>
+map gcb :'b,.yank +<CR>
 map gcA :1,$yank +<CR>
 map gcv "+p
 map gcp "+p
