@@ -775,10 +775,13 @@ endfunction
 digraph  .m 8226    " • U+2022 Bullet (don't confuse with middle dot or
                     " ● 0M Black Circle which doesn't work in some fonts).
 digraph  xx  215    " × Multiplication Sign
-digraph  is 7522    " ࠳ Latin Subscript Small Letter I
-digraph  iS 8305    " ࠳ Latin Superscript Small Letter I
-digraph  ns 8345    " ࠳ Latin Subscript Small Letter N
-digraph  nS 8319    " ࠳ Latin Superscript Small Letter N
+digraph  dS 7496    " ᵈ Latin Superscript Small Letter D
+digraph  hS 0688    " ʰ Latin Superscript Small Letter H
+digraph  iS 8305    " ⁱ࠳Latin Superscript Small Letter I
+digraph  nS 8319    " ⁿ࠳Latin Superscript Small Letter N
+digraph  oS 7506    " ᵒ Latin Superscript Small Letter O
+digraph  is 7522    " ᵢ Latin Subscript Small Letter I
+digraph  ns 8345    " ₙ࠳Latin Subscript Small Letter N
 digraph  -^ 8593    " ↑ Upwards Arrow (alternative to -!)
 digraph \|- 8866    " ⊢ Right Tack
 digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
