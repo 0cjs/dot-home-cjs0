@@ -343,11 +343,11 @@ noremap qz      :source $HOME/.vimrc<CR>
 "   g{ey}   Scroll count*10 + 6 lines down/up in the buffer
 "           (Overrides: `ge` backward to end of word)
 "   g/      Search for visually selected text
-"   gs      Search for whitespace at EOL (Overrides: `gs` sleep)
+"   gS      Search for whitespace at EOL (Overrides: `gs` sleep)
 "
 noremap ge  6<C-E>
 noremap gy  6<C-Y>
-noremap gs  /\s\+$<CR>
+noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
 
