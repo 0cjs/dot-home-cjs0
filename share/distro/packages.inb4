@@ -27,6 +27,7 @@ user    xtail               Debian.* Ubuntu.* CentOS.*
 desktop gitk                Debian.* Ubuntu.* CentOS.*
 
 # Stuff needed for common builds (e.g., rbenv-ruby) on Debian.
+dev     build-essential     Debian.* Ubuntu.*
 dev     libgnutls28-dev     Debian.*
 dev     libreadline6-dev    Debian.*
 dev     libssl-dev          Debian.*
