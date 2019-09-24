@@ -534,6 +534,7 @@ noremap gT4   :set tabstop=4<CR>
 noremap gT8   :set tabstop=8<CR>
 
 noremap gte   :set expandtab softtabstop=4<CR>
+noremap gtE   :set noexpandtab<CR>
 noremap gts   :set shiftwidth=
 noremap gt2   :set shiftwidth=2<CR>
 noremap gt4   :set shiftwidth=4<CR>
