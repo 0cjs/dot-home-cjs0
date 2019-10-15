@@ -281,12 +281,13 @@ noremap q<C-K>  :above split +previous<CR>
 "   Window close/delete (including quit) and buffer management commands
 "   These tend to follow `q` with a left-hand key.
 "
-"   ZZ - write and quit all buffers (not just current one)
-"   qc - close window
-"   qw - quit (close) window if not last window
-"   qq - close current window; exit if last window
-"   qa - quit vim (closing all windows)
-"   qA - force quit (all windows), abandoning unwritten buffers
+"   ZZ      write and quit all buffers (not just current one)
+"   qc      close window
+"   qw      quit (close) window if not last window
+"   qq      close current window; exit if last window
+"   qa      quit vim (closing all windows)
+"   qA      force quit (all windows), abandoning unwritten buffers
+"   q^A     force quit with error code (:cquit even without ! does this)
 "
 "   qd      Allow DOS format and reload file
 "   q{eE}   Change encoding to UTF-8 or prefix to view/change
@@ -296,6 +297,7 @@ noremap q<C-K>  :above split +previous<CR>
 noremap ZZ      :xa<CR>
 noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
+noremap q<C-A>  :cquit!<CR>
 noremap qc      <C-W>c
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
