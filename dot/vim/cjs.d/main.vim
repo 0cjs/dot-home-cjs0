@@ -159,7 +159,8 @@ else
 endif
 
 "   gg - Graphical settings prefix
-"   Overrides: jump to <count> line default first; use `0G` instead
+"   Overrides: `gg`; use `0G` or `g<C-M>` instead.
+noremap g<C-M>  gg      " kinda parallel to z<C-M>
 noremap ggfn :set guifont=Noto\ Mono\ 8<CR>
 noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
 
