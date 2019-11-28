@@ -290,6 +290,7 @@ noremap q<C-K>  :above split +previous<CR>
 "   qA      force quit (all windows), abandoning unwritten buffers
 "   q^A     force quit with error code (:cquit even without ! does this)
 "
+"   qC      Add additional comment character
 "   qd      Allow DOS format and reload file
 "   q{eE}   Change encoding to UTF-8 or prefix to view/change
 "   q{tT}   Show/set filetype (for syntax highlighting, autocmd, etc.)
@@ -300,6 +301,7 @@ noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
 noremap q<C-A>  :cquit!<CR>
 noremap qc      <C-W>c
+noremap qC      :setlocal comments+=b:
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
 noremap qE      :set fileencoding
