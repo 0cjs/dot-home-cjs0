@@ -291,12 +291,14 @@ noremap q<C-K>  :above split +previous<CR>
 "   q^A     force quit with error code (:cquit even without ! does this)
 "
 "   qC      Add additional comment character
+"   q-      Remove - from list of "word" characters
 "   qd      Allow DOS format and reload file
 "   q{eE}   Change encoding to UTF-8 or prefix to view/change
 "   q{tT}   Show/set filetype (for syntax highlighting, autocmd, etc.)
 "   qX      Chmod current file to be executable
 "
 noremap ZZ      :xa<CR>
+noremap q-      :setlocal iskeyword-=-<CR>
 noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
 noremap q<C-A>  :cquit!<CR>
