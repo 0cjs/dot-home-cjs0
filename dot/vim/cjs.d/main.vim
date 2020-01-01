@@ -683,6 +683,16 @@ autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   so ~/.vim/haskell.vim
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal so ~/.vim/haskell.vim
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   so ~/.vim/haskell.vim
 
+" ===== Assembly language mode ========================================
+
+function! SetAsmCodeSettings()
+    " Maybe should set filetype=asm and/or call s:FTasm?
+    setlocal comments=b:;
+    setlocal textwidth=75
+endfunction
+"   Probably we should use `setf asm` here....
+autocmd! BufReadPre,FileReadPre      *.a65  call SetAsmCodeSettings()
+
 " ===== Encrypted file editing  =======================================
 
 " Edit gpg-encrypted ascii-armoured files
