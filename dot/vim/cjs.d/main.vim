@@ -648,7 +648,7 @@ autocmd Filetype markdown setlocal sw=2
 autocmd FileType markdown setlocal textwidth=70
 autocmd FileType markdown syntax on
                           " Also see `gtm` mapping
-autocmd FileType markdown set comments=fb:*,fb:-,b:>
+autocmd FileType markdown setlocal comments=fb:*,fb:-,b:>
 
 " ===== YAML mode ===================================================
 
