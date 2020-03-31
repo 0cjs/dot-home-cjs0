@@ -4,6 +4,14 @@
 "   When considering a new mapping, check `:help index` to see
 "   if it's already used.
 
+" ===== Debugging Notes  ==============================================
+
+"   To figure out what lines in this file are causing other files to
+"   be sourced, create an empty file named as below, enable this line
+"   at any point in this file, and then use :scriptnames to see where
+"   it is shown in the order of scripts that were run.
+"source ~/.vim/checkpoint0.vim
+
 " ===== Settings ======================================================
 " XXX This should gracefully degrade, a la
 " http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
@@ -45,7 +53,9 @@ set ruler
 set nobackup
 filetype indent off
 
+"   Sources /usr/share/vim/vim80/filetype.vim
 filetype on
+"   Sources  /usr/share/vim/vim80/syntax/nosyntax.vim
 syntax off
 
 " ===== Colors ========================================================
@@ -611,9 +621,10 @@ augroup end     " Remove autocommands from default group so we start clean
 autocmd!
 
 " ===== Tab Settings =====================================================
+"   Generic to all files.
 
-" Use spaces instead of tabs for any files that have no tabs
-" near the beginning (in the first thousand lines)
+"   Use spaces instead of tabs for any files that have no tabs
+"   near the beginning (in the first thousand lines)
 function! ExpandTabCheck()
     let s:tab = search("\t", "n")", 1000)
     if s:tab == 0
@@ -622,6 +633,13 @@ function! ExpandTabCheck()
     endif
 endfunction
 autocmd BufEnter * call ExpandTabCheck()
+
+" ===== Custom Filename Extensions =======================================
+"   These files use standard settings, but are extensions not
+"   recognized by /usr/share/vim/vim80/filetype.vim.
+
+"   Pytest files. Overrides: Zope template files.
+autocmd! filetypedetect BufNewFile,BufRead *.pt setf python
 
 " ===== TXT files ========================================================
 
