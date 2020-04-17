@@ -982,4 +982,6 @@ digraph eg 9178   " ⏚ Electronic/Earth Ground
 "
 if !has('win32')
     set shell=bash-rcc
+else
+    set shell=bash\ -i
 endif
