@@ -1,3 +1,0 @@
-Host ssh.github.com.
-    #   Host with SSH on port 443 to help get around firewalls.
-    Port 443
