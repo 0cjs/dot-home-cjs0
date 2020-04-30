@@ -15,10 +15,6 @@ This is a [dot-home] module. To use it:
 Description
 -----------
 
-**WARNING:** This has not yet disabled certain features, such as
-minimizing the Vim configuration. This will happen soon after a
-few more changes have been brought into the [dot-home] core system.
-
 This is a minimally-enabled dot-file configuration used by [Curt J.
 Sampson]. It serves both as a base for his [full configuration][cjs1]
 and enables a minimal set of changes that will interfere minimally or
