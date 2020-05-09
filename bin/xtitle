@@ -77,7 +77,7 @@ case $(echo $host) in
         second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
         host="$first.$second"
 esac
-dir=$(/bin/pwd | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
+dir=$(pwd -P | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
 echo_xtitle=false
 get_keyinfo=true
