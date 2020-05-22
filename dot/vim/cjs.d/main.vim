@@ -610,7 +610,6 @@ map <TAB>P      "=system('echo -n `makepw nopunc`')<CR>p
 
 " English
 "abbr sb substitution
-abbr coop coöp
 abbr cooperation coöperation
 
 " ===== Autocmd Cleanup ==================================================
