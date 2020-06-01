@@ -368,6 +368,11 @@ noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
 
+"   We use virtual replace mode in place of standard replace mode
+"   because we typically don't want spacing to change just because
+"   we're using the tab key (or editing files with tabs).
+noremap R gR
+
 " copy and paste with GUI system clipboard(s)
 set clipboard=
 map gc  :call ConsumeError("Unknown gc (copy/paste) function")<CR>
