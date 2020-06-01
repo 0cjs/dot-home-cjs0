@@ -4,6 +4,10 @@
 "   When considering a new mapping, check `:help index` to see
 "   if it's already used.
 
+"   Documentation:
+"   ∙ Vim scripting help: :help eval
+"   ∙ Vim scripting cheatsheet: https://devhints.io/vimscript
+
 " ===== Debugging Notes  ==============================================
 
 "   To figure out what lines in this file are causing other files to
