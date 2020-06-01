@@ -793,6 +793,7 @@ endfunction
 
 " ===== Digraphs =====================================================
 " Input with Ctrl-K followed by two chars.
+" (Ctrl-K space CHAR enters CHAR with high bit set.)
 
 " Commonly used digraphs to remember:
 "
@@ -830,6 +831,11 @@ digraph  om 8997    " ⌥ Option Key (Mac)
 digraph  '/  773    " a̅ Combining Overbar (like / for "active low")
 digraph  0+ 8853    " ْْࣷ⊕ Circled Plus Operator (overrides Arabic Sukun)
 digraph  /o 8960    " ⌀ Diameter Sign
+
+"   e[a-z]: electronics (overrides some Bopomofo)
+digraph ep 9101   " ⎍ "pulse" Monostable Symbol
+digraph eh 9102   " ⎎ Hysteresis Symbol
+digraph eg 9178   " ⏚ Electronic/Earth Ground 
 
 
 " ----------------------------------------------------------------------
