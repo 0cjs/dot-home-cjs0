@@ -363,14 +363,42 @@ noremap qz      :source $HOME/.vimrc<CR>
 "
 "   g{ey}   Scroll count*10 + 6 lines down/up in the buffer
 "           (Overrides: `ge` backward to end of word)
-"   g/      Search for visually selected text
 "   gS      Search for whitespace at EOL (Overrides: `gs` sleep)
+"   g/      Search for visually selected text
+"   gr      Search for Markdown reference under cursor
 "
 noremap ge  6<C-E>
 noremap gy  6<C-Y>
 noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
+nnoremap gr :call MarkdownRefSearch()<CR>
+
+"   Markdown reference search.
+"   This does not add the pattern to the search history, but instead
+"   leaves the reference (with brackets) in register r for later pasting
+"   (usually with `Ctrl-R r` in insert mode).
+function! MarkdownRefSearch()
+    "   Select bracketed block around [c[a]b]cursor and yank to register r
+    "   The yank must be a separate :normal command in case the select fails.
+    normal! va[
+    normal! "ry
+    "                   echo "DEBUG selection len=" . len(@r) . " /" . @r . "/"
+    "   If the select failed we are left with a 1-char block.
+    if len(@r) == 1
+        call DisplayError("Cursor not on a markdown reference")
+        return
+    endif
+    "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
+    let l:pat = "\\V" . substitute(@r, "/", "\\\\/", "g")
+    "                   echo "DEBUG pat /" . l:pat . "/"
+    "   Set our last search pattern so that n and p commands can be used.
+    let @/ = l:pat
+    "   Move from current position at start of this reference to the next
+    "   instance of it.
+    normal! n
+    "                   echo "DEBUG done"
+endfunction
 
 "   We use virtual replace mode in place of standard replace mode
 "   because we typically don't want spacing to change just because
@@ -406,7 +434,6 @@ map gci :setlocal invpaste paste?<CR>
 map gu :nohlsearch<CR>
 
 "   Help us unlearn deprecated mappings
-noremap gr      :call DisplayError("gr: Use `qr` instead")<CR>
 noremap g<C-N>  :call DisplayError("gr: Use `q^N` instead")<CR>
 
 " Esc-s we leave undefined so that an accidental use of it in command
