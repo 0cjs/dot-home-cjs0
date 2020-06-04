@@ -468,7 +468,7 @@ vnoremap <silent> # :<C-U>
 set nojoinspaces
 "   Turn off autowrap (formatoptions=t) so textwidth used only for autoformat.
 set formatoptions=qn
-set textwidth=70
+set textwidth=75
 "   See `gt` mappings for changing textwidth.
 
 "-----------------------------------------------------------------------
@@ -689,7 +689,7 @@ endfunction
 
 " ===== Git Commit Messages ==========================================
 
-autocmd FileType gitcommit setlocal textwidth=70 fileencoding=UTF-8
+autocmd FileType gitcommit setlocal textwidth=75 fileencoding=UTF-8
 autocmd FileType gitcommit syntax on
 
 " ===== Markdown mode ================================================
@@ -698,7 +698,7 @@ autocmd FileType gitcommit syntax on
 autocmd BufNewFile,BufFilePre,BufRead       *.md set filetype=markdown
 
 autocmd Filetype markdown setlocal sw=2
-autocmd FileType markdown setlocal textwidth=70
+autocmd FileType markdown setlocal textwidth=75
 autocmd FileType markdown syntax on
                           " Also see `gtm` mapping
 autocmd FileType markdown setlocal comments=fb:*,fb:-,b:>
