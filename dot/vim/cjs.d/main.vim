@@ -372,13 +372,14 @@ noremap gy  6<C-Y>
 noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
-nnoremap gr :call MarkdownRefSearch()<CR>
+nnoremap gr :call MarkdownRefLabelSearch()<CR>
+nnoremap gR :call MarkdownRefDefinitionSearch()<CR>
 
-"   Markdown reference search.
+"   Markdown reference label search.
 "   This does not add the pattern to the search history, but instead
 "   leaves the reference (with brackets) in register r for later pasting
 "   (usually with `Ctrl-R r` in insert mode).
-function! MarkdownRefSearch()
+function! MarkdownRefLabelSearch()
     "   Select bracketed block around [c[a]b]cursor and yank to register r
     "   The yank must be a separate :normal command in case the select fails.
     normal! va[
@@ -397,6 +398,45 @@ function! MarkdownRefSearch()
     "   Move from current position at start of this reference to the next
     "   instance of it.
     normal! n
+    "                   echo "DEBUG done"
+endfunction
+
+"   Markdown reference definition search.
+"   As above, but finds only the definition, leaves the cursor on
+"   the start of the URL after the label, and copies the URL to the
+"   system clipboard.
+"   This does _not_ set the search pattern, so that `n` will continue
+"   to search for what was previously found; we expect that there will
+"   be only one definition so destroying `n` is not helpful.
+"   XXX Lots of duplicate code that needs to be refactored out.
+function! MarkdownRefDefinitionSearch()
+    "   Select bracketed block around [c[a]b]cursor and yank to register r
+    "   The yank must be a separate :normal command in case the select fails.
+    normal! va[
+    normal! "ry
+    "                   echo "DEBUG selection len=" . len(@r) . " /" . @r . "/"
+    "   If the select failed we are left with a 1-char block.
+    if len(@r) == 1
+        call DisplayError("Cursor not on a markdown reference")
+        return
+    endif
+    "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
+    let l:pat = "\\V" . substitute(@r, "/", "\\\\/", "g")
+    "   Extend pattern to include following colon and any whitespace
+    let l:pat = l:pat . ":\\s\\*"
+    "                   echo "DEBUG pat /" . l:pat . "/"
+    "   Search for it, not affecting user's searches.
+    "   We move one char to the right afterwards (if possible) to move
+    "   the cursor past the trailing whitespace to the start of the URL.
+    "   XXX should have error handling here to indicate no definition.
+    let l:line = search(l:pat, "e")
+    "                   echo "DEBUG line " . l:line
+    if l:line > 0
+        normal! l
+        normal! "+y$
+    else
+        call DisplayError("Definition not found: " . l:pat)
+    endif
     "                   echo "DEBUG done"
 endfunction
 
@@ -566,11 +606,6 @@ noremap gqv< xi<><ESC>P
 "   (These are intentionally not `noremap` because they call `gqv`.)
 map gqw viwgqv
 map gqW viWgqv
-
-"----------------------------------------------------------------------
-
-" gR Run entire file in ruby.
-map gR :w !ruby<CR>
 
 " ----------------------------------------------------------------------
 "  gt - column-related (tab-like) functions and tab pages
