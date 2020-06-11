@@ -467,6 +467,7 @@ map gcb :'b,.yank +<CR>
 map gcA :1,$yank +<CR>
 map gcv "+p
 map gcp "+p
+map gcP "+P
 " "Paste into input mode" for local buffer
 map gci :setlocal invpaste paste?<CR>
 
