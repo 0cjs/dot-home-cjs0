@@ -901,6 +901,7 @@ digraph  nS 8319    " ⁿ  Latin Superscript Small Letter N
 digraph  oS 7506    " ᵒ  Latin Superscript Small Letter O
 digraph  is 7522    " ᵢ  Latin Subscript Small Letter I
 digraph  ns 8345    " ₙ  Latin Subscript Small Letter N
+digraph  xs 8339    " ₓ  Latin Subscript Small Letter X
 digraph  -^ 8593    " ↑  Upwards Arrow (alternative to -!)
 digraph \|- 8866    " ⊢  Right Tack
 digraph  cm 8984    " ⌘  Place of Interest Sign (Mac Command Key)
