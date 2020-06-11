@@ -890,24 +890,24 @@ endfunction
 
 " Custom digraphs
 "
-"        .M  183    " · U+00b7 Middle dot/interpunct is built in
-digraph  .m 8226    " • U+2022 Bullet (don't confuse with middle dot or
-                    " ● 0M Black Circle which doesn't work in some fonts).
-digraph  xx  215    " × Multiplication Sign
-digraph  dS 7496    " ᵈ Latin Superscript Small Letter D
-digraph  hS 0688    " ʰ Latin Superscript Small Letter H
-digraph  iS 8305    " ⁱ Latin Superscript Small Letter I
-digraph  nS 8319    " ⁿ Latin Superscript Small Letter N
-digraph  oS 7506    " ᵒ Latin Superscript Small Letter O
-digraph  is 7522    " ᵢ Latin Subscript Small Letter I
-digraph  ns 8345    " ₙ Latin Subscript Small Letter N
-digraph  -^ 8593    " ↑ Upwards Arrow (alternative to -!)
-digraph \|- 8866    " ⊢ Right Tack
-digraph  cm 8984    " ⌘ Place of Interest Sign (Mac Command Key)
-digraph  om 8997    " ⌥ Option Key (Mac)
-digraph  '/  773    " a̅ Combining Overbar (like / for "active low")
-digraph  0+ 8853    " ْْࣷ⊕ Circled Plus Operator (overrides Arabic Sukun)
-digraph  /o 8960    " ⌀ Diameter Sign
+"        .M  183    " ·  U+00b7 Middle dot/interpunct is built in
+digraph  .m 8226    " •  U+2022 Bullet (don't confuse with middle dot or
+                    " ●  0M Black Circle which doesn't work in some fonts).
+digraph  xx  215    " ×  Multiplication Sign
+digraph  dS 7496    " ᵈ  Latin Superscript Small Letter D
+digraph  hS 0688    " ʰ  Latin Superscript Small Letter H
+digraph  iS 8305    " ⁱ  Latin Superscript Small Letter I
+digraph  nS 8319    " ⁿ  Latin Superscript Small Letter N
+digraph  oS 7506    " ᵒ  Latin Superscript Small Letter O
+digraph  is 7522    " ᵢ  Latin Subscript Small Letter I
+digraph  ns 8345    " ₙ  Latin Subscript Small Letter N
+digraph  -^ 8593    " ↑  Upwards Arrow (alternative to -!)
+digraph \|- 8866    " ⊢  Right Tack
+digraph  cm 8984    " ⌘  Place of Interest Sign (Mac Command Key)
+digraph  om 8997    " ⌥  Option Key (Mac)
+digraph  '/  773    " a̅  Combining Overbar (like / for "active low")
+digraph  0+ 8853    " ْْࣷ⊕  Circled Plus Operator (overrides Arabic Sukun)
+digraph  /o 8960    " ⌀  Diameter Sign
 
 "   e[a-z]: electronics (overrides some Bopomofo)
 digraph ep 9101   " ⎍ "pulse" Monostable Symbol
