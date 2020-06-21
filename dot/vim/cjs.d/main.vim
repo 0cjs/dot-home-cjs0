@@ -335,12 +335,17 @@ noremap qX      :!chmod +x '%'<CR>
 "   qvd     diff current file
 "   qvD     diff all files from current dir down
 "   qvl     log current file
+"   qvs     diff staged changes for current file
+"   qvS     diff staged changes for all files from current dir down
+"   qvw     word diff
 
 "   Create command to open a new scratch buffer.
 command! Scratch :new | :set buftype=nofile bufhidden=delete
 noremap qvd :Scratch<CR>:r!dif #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
-noremap qvw :Scratch<CR>:r!dif --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvD :Scratch<CR>:r!dif<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvs :Scratch<CR>:r!dif --staged #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvS :Scratch<CR>:r!dif --staged<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvw :Scratch<CR>:r!dif --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>:normal gg<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>:set nolist<CR>:normal gg<CR>
 noremap qvc /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| .*\\|=======\\|>>>>>>> .*\)$<CR>
