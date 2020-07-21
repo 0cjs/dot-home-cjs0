@@ -749,6 +749,11 @@ autocmd FileType markdown setlocal comments=fb:*,fb:-,b:>
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.yml   setlocal sw=4
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.yaml  setlocal sw=4
 
+" ===== Disassemblies =================================================
+"   .dis files are generated, not edited
+
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.dis   setlocal ro autoread iskeyword-=-
+
 " ===== C mode ========================================================
 
 function! SetCCodeSettings()
