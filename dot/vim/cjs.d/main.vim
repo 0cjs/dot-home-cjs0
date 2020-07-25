@@ -790,7 +790,7 @@ function! SetAsmCodeSettings()
     setlocal textwidth=75
 endfunction
 "   Probably we should use `setf asm` here....
-autocmd! BufReadPre,FileReadPre      *.a65  call SetAsmCodeSettings()
+autocmd! BufReadPre,FileReadPre      *.a6[589]      call SetAsmCodeSettings()
 
 " ===== Encrypted file editing  =======================================
 
