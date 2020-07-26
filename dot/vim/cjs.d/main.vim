@@ -396,7 +396,7 @@ function! MarkdownRefLabelSearch()
         return
     endif
     "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
-    let l:pat = "\\V" . substitute(@r, "/", "\\\\/", "g")
+    let l:pat = "\\c\\V" . substitute(@r, "/", "\\\\/", "g")
     "                   echo "DEBUG pat /" . l:pat . "/"
     "   Set our last search pattern so that n and p commands can be used.
     let @/ = l:pat
@@ -426,7 +426,7 @@ function! MarkdownRefDefinitionSearch()
         return
     endif
     "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
-    let l:pat = "\\V" . substitute(@r, "/", "\\\\/", "g")
+    let l:pat = "\\c\\V" . substitute(@r, "/", "\\\\/", "g")
     "   Extend pattern to include following colon and any whitespace
     let l:pat = l:pat . ":\\s\\*"
     "                   echo "DEBUG pat /" . l:pat . "/"
