@@ -894,6 +894,7 @@ endfunction
 digraph  .m 8226    " •  U+2022 Bullet (don't confuse with middle dot or
                     " ●  0M Black Circle which doesn't work in some fonts).
 digraph  xx  215    " ×  Multiplication Sign
+digraph  BC 9587    " ╳　Box Drawing Light Diagonal Cross
 digraph  dS 7496    " ᵈ  Latin Superscript Small Letter D
 digraph  hS 0688    " ʰ  Latin Superscript Small Letter H
 digraph  iS 8305    " ⁱ  Latin Superscript Small Letter I
