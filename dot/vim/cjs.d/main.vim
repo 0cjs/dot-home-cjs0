@@ -46,6 +46,7 @@ set tags=./tags;
 set wildmode=longest,list
 set matchpairs=(:),{:},[:],<:>
 set iskeyword=@,-,48-57,_,192-255
+set suffixesadd=.md
 
 " We need to be careful with .viminfo to avoid leaking sensitive data.
 " Note that we blank it later if editing an encrypted file.
@@ -537,10 +538,6 @@ noremap gA   ga
 " gb - byte/word/line count
 " vim uses g^G
 map gb g<C-G>
-
-" gF/gf fail/unfail a ruby test
-map gF :s/def test_/def FAILING_test_/<CR>
-map gf :s/def FAILING_test_/def test_/<CR>
 
 " gg - GUI options (see elsewhere)
 
