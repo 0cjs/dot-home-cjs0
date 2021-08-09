@@ -633,6 +633,7 @@ noremap gt4   :set shiftwidth=4<CR>
 noremap gt8   :set shiftwidth=8<CR>
 
 noremap gtw   :setlocal textwidth=
+noremap gt0   :setlocal textwidth=0<CR>
 noremap gt5   :setlocal textwidth=50<CR>
 noremap gt%   :setlocal textwidth=55<CR>
 noremap gt6   :setlocal textwidth=60<CR>
