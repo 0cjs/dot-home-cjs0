@@ -28,12 +28,27 @@ install_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
+install_pip() {
+    local req=python3-distutils     # required only on Debian 11
+    #   Cannot use grep -q here because it fails with 141 (pipe broken?)
+    if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
+        && ! dpkg -s $req >/dev/null
+    then
+        sudo apt-get install $req
+    fi
+
+    local getpip=~/Download/get-pip.py
+    curl --create-dirs -o "$getpip" https://bootstrap.pypa.io/get-pip.py
+    python3 "$getpip" --user
+}
+
 install_pythonz() {
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
 case "$1" in
     nodejs)     install_nodejs;;
+    pip)        install_pip;;
     pythonz)    install_pythonz;;
     *)          die "Unknown option '$1'";;
 esac
