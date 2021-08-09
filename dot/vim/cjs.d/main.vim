@@ -211,7 +211,7 @@ set statusline+=%m%r%w%h            " [+/-], [RO], [PREVIEW], [HELP]
 set statusline+=%=                  " Left/right split
 set statusline+=%{Statusline_ftef()}" filetype,fileencoding,fileformat
 set statusline+=\ \                 "
-set statusline+=\\u%04.4B\          " Character code (hex)
+set statusline+=\\u%05.5B\          " Character code (hex)
 set statusline+=%3c%-4.(%0V%)\      " cursor column
 set statusline+=%5.l\ %P\           " cursor row and file percentage
 set statusline+=%{Statusline_wfh()} " winfixheight indicator
