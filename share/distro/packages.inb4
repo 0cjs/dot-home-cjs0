@@ -29,7 +29,8 @@ desktop gitk                Debian.* Ubuntu.* CentOS.*
 # Stuff needed for common builds (e.g., rbenv-ruby) on Debian.
 dev     build-essential     Debian.* Ubuntu.*
 dev     libgnutls28-dev     Debian.*
-dev     libreadline6-dev    Debian.*
+#dev    libreadline6-dev    Debian.8
+dev     libreadline-dev     Debian.*
 dev     libssl-dev          Debian.*
 dev     zlib1g-dev          Debian.*
 
@@ -38,7 +39,8 @@ sys     apticron            Debian.* Ubuntu.*
 sys     aptitude            Debian.* Ubuntu.*
 sys     bind                CentOS.7
 sys     bind9               Debian.* Ubuntu.*
-sys     chrony              Debian.* Ubuntu.* CentOS.7
+#   We use systemd-timesyncd (installed by default) on Debian ≥10
+sys     chrony              Debian.8 Debian.9 Ubuntu.* CentOS.7
 sys     etckeeper           Debian.* Ubuntu.* CentOS.*
 sys     openssh-server      Debian.* Ubuntu.* CentOS.*
 sys     postfix             Debian.* Ubuntu.* CentOS.*
