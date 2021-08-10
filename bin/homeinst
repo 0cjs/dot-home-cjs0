@@ -37,7 +37,7 @@ install_pip() {
         sudo apt-get install $req
     fi
 
-    local getpip=~/Download/get-pip.py
+    local getpip=~/Downloads/get-pip.py
     curl --create-dirs -o "$getpip" https://bootstrap.pypa.io/get-pip.py
     python3 "$getpip" --user
 }
