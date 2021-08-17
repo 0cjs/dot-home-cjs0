@@ -891,7 +891,7 @@ endfunction
 "        .P 8901    " ·  U+22c5 Dot Operator                        built in
 "        .M  183    " ·  U+00b7 Middle Dot (interpunct)             built in
 "        0M 9679    " ●  U+25cf Black Circle (not in some fonts)    built in
-digraph  .m 8226    " •  U+2022 Bullet
+digraph  oo 8226    " •  U+2022 Bullet (built in in Vim ≥8.2)
 "
 digraph  xx  215    " ×  Multiplication Sign
 digraph  BC 9587    " ╳　Box Drawing Light Diagonal Cross
