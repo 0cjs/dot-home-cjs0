@@ -3,6 +3,7 @@
 
 user    apg                 Debian.* Ubuntu.* CentOS.7
 user    bash-completion     Debian.* Ubuntu.* CentOS.7
+user    bc                  Debian.* Ubunto.* Centos.*
 user    bind-utils          CentOS.7
 user    bsdmainutils        Debian.* Ubuntu.*
 user    curl                Debian.* Ubuntu.* CentOS.*
