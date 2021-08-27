@@ -911,6 +911,8 @@ digraph  om 8997    " ⌥  Option Key (Mac)
 digraph  '/  773    " a̅  Combining Overbar (like / for "active low")
 digraph  0+ 8853    " ْْࣷ⊕  Circled Plus Operator (overrides Arabic Sukun)
 digraph  /o 8960    " ⌀  Diameter Sign
+digraph  ** 0981    " ϕ  U+03D5 Greek Phi Symbol (φ for math/sci contexts)
+                    "    `f%` would make more sense, but harder to type.
 
 "   e[a-z]: electronics (overrides some Bopomofo)
 digraph ep 9101   " ⎍ "pulse" Monostable Symbol
