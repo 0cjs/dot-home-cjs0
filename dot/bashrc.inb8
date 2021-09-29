@@ -6,4 +6,13 @@ prepath -f -n -q $HOME/.local/bin
 
 #   My most commonly-used and -missed functions, but we don't override
 #   them if they have already been set by previous configuration.
-type -t lf >/dev/null || lf() { ls -CF "$@"; }
+#
+#   The code to define a Bash function that has the same name as an alias
+#   that exists *during parsing* produces a "syntax error near unexpected
+#   token `('". To avoid this we create a temporary "file" (using process
+#   substitution) and evalulate the contents of it in the current
+#   environment; because the "file" is parsed separately in an environment
+#   without the parent environment's aliases, it will not generate a parse
+#   error.
+#
+type -t lf >/dev/null || . <(echo 'lf() { ls -CF "$@"; }')
