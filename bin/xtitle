@@ -67,6 +67,7 @@ case "$TERM" in
     xterm*)     : ;;
     rxvt*)      : ;;
     screen*)    : ;;
+    tmux*)      : ;;
     *)          echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
 esac
 
