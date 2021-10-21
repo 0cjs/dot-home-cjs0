@@ -1,3 +1,4 @@
-"   Full cjs configuration. `:runtime cjs` to use this.
-"   Or: vi() { vim -c ':runtime cjs' "$@"; }
+"   Full cjs configuration. `:runtime cjs` to use this. Or:
+"       export EDITOR='vi -c ":runtime cjs"'
+"       vi() { vim -c ':runtime cjs' "$@"; }
 runtime! cjs.d/*.vim
