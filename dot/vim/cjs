@@ -1,2 +1,3 @@
 "   Full cjs configuration. `:runtime cjs` to use this.
+"   Or: vi() { vim -c ':runtime cjs' "$@"; }
 runtime! cjs.d/*.vim
