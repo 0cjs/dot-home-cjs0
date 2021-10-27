@@ -906,6 +906,9 @@ digraph  ns 8345    " ₙ  Latin Subscript Small Letter N
 digraph  xs 8339    " ₓ  Latin Subscript Small Letter X
 digraph  -^ 8593    " ↑  Upwards Arrow (alternative to -!)
 digraph \|- 8866    " ⊢  Right Tack (turnstyle)
+digraph -\| 8867    " ⊣  Left Tack
+digraph  -T 8868    " ⊤  Down Tack
+digraph  -t 8869    " ⊥  Up Tack
 digraph \|= 8872    " ⊨  True (double turnstile)
 digraph  cm 8984    " ⌘  Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥  Option Key (Mac)
