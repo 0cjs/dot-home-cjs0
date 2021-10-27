@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+#
+#   Run a command when directories are changed
+#
+#   inotifywait does not watch files or directories with a given name, but
+#   with a given _inode_. But editors such as vim typically save by using
+#   rename(1) to move a new file over the existing file, deleting the
+#   existing one and thus cancelling any watches on it. (The new file is
+#   unwatched because it did not exist when we started the watches.)
+#
+#   Thus this recursively watches _directories_ for the close_write calls
+#   that occur after a file has been created or changed. The current
+#   working directory is watched by default; a different set of directories
+#   to watch may be specified by providing the -f option one or more times.
+#
+#   ./.git/ and ./.build/ directories are ignored for obvious reasons.
+#
+#   CAVEATS:
+#   * In most cases specifying a file with -f will not work for the
+#     reasons given above.
+#   * Directories specified directly with -f will no longer be watched if
+#     they are removed; recreating it creates a different directory even if
+#     it has the same name.
+#
+
+EX_USAGE=64     # sysexits.h
+
+warn() { echo >&2 -e "$(basename $0):" "$@"; }
+die()  { warn "$@"; exit 1; }
+
+print_separator() {
+    local cols=$(tput cols)
+    echo
+    #   Not that we care much about efficiency here,
+    #   but the following uses only Bash built-ins.
+    for ((i=0; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done; echo
+    echo
+}
+
+usage() {
+    cat >&2 <<____
+Usage: $(basename $0) [-v] [-f FILE] ...  COMMAND ...
+    -f FILE     Add a file to watch (directories recursively); multiple allowed.
+                Default list is files tracked by Git in/under CWD.
+    -s          Suppress the separator lines between runs.
+    -v          Verbose; show events and other information.
+    COMMAND     Command to run; interpted by shell.
+____
+    exit $EX_USAGE
+}
+
+####################################################################
+
+type inotifywait >/dev/null \
+    || die "Can't run inotifywait. Install inotify-tools?"
+
+quiet=:
+separator=
+watchlist=()
+while true; do case "$1" in
+    -f)     shift; watchlist+=("$1"); shift ;;
+    -v)     shift; quiet= ;;
+    -s)     shift; separator=: ;;
+    -*)     warn "Unknown option: $1\n"; usage;;
+    *)      break;;
+esac; done
+[ -z "$1" ] && usage
+
+[[ "${#watchlist}" -gt 0 ]] || watchlist+=(.)
+
+$quiet echo "Watching: ${watchlist[@]}"
+inotifywait --monitor ${quiet:+--quiet} --event close_write \
+    --exclude '^./.(build|git)/' --recursive "${watchlist[@]}" \
+    | while read event; do
+        $separator print_separator
+
+        $quiet echo "#  Received: $event"
+        $quiet echo "#   Running: $@"
+        (. ~/.bashrc && "$@")
+
+        #   After the first event that triggered the command run there may
+        #   have immediately been further events if multiple files were
+        #   written or if the written file was in a subdirectory,
+        #   triggering a directory write. There may also have been further
+        #   events yet from files written during the command run, such as
+        #   (re)compiled Python bytecode. We read and ignore all these so
+        #   that we don't trigger multiple runs from what the user sees as
+        #   one "save" event.
+        while read -t 0.5 event; do
+            $quiet echo "#  Ignoring: $event"
+        done
+    done
