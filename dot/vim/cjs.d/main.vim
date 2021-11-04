@@ -910,6 +910,8 @@ digraph -\| 8867    " ⊣  Left Tack
 digraph  -T 8868    " ⊤  Down Tack
 digraph  -t 8869    " ⊥  Up Tack
 digraph \|= 8872    " ⊨  True (double turnstile)
+digraph  <m 10216   " ⟨  Mathematical Left Angle Bracket
+digraph  >m 10217   " ⟩  Mathematical Right Angle Bracket
 digraph  cm 8984    " ⌘  Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥  Option Key (Mac)
 digraph  '/  773    " a̅  Combining Overbar (like / for "active low")
