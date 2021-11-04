@@ -12,8 +12,8 @@
 
 "   To figure out what lines in this file are causing other files to
 "   be sourced, create an empty file named as below, enable this line
-"   at any point in this file, and then use :scriptnames to see where
-"   it is shown in the order of scripts that were run.
+"   at any point in this file, and then use :scriptnames or :scr to see
+"   where it is shown in the order of scripts that were run.
 "source ~/.vim/checkpoint0.vim
 
 " ===== Settings ======================================================
