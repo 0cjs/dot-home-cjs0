@@ -76,7 +76,14 @@ inotifywait --monitor ${quiet:+--quiet} --event close_write \
 
         $quiet echo "#  Received: $event"
         $quiet echo "#   Running: $@"
-        (. ~/.bashrc && "$@")
+        #   Because we're in a while loop reading events from inotifywait,
+        #   interactive programs such as `docker run -it ... bash -l` will
+        #   fail beacuse stdin/stout/stderr are not a tty. To fix this we
+        #   reconnect these to /dev/tty in the subshell. The bash(1)
+        #   manpage says that "builtin  commands  that  affect the shell's
+        #   environment do not remain in effect after the command completes,"
+        #   and this does seem to apply to the redirections as well.
+        (exec </dev/tty >/dev/tty 2>/dev/tty && . ~/.bashrc && "$@")
 
         #   After the first event that triggered the command run there may
         #   have immediately been further events if multiple files were
