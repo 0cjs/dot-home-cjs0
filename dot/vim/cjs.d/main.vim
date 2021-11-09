@@ -322,6 +322,7 @@ noremap qC      :setlocal comments+=b:
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
 noremap qE      :set fileencoding
+noremap qs      :checktime<CR>          " reload files saved outside vim
 noremap qt      :set filetype?<CR>
 noremap qT      :set filetype=
 noremap qq      <C-W>q
