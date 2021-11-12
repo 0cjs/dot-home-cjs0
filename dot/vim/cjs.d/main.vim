@@ -314,6 +314,7 @@ noremap q<C-K>  :above split +previous<CR>
 "
 noremap ZZ      :xa<CR>
 noremap q-      :setlocal iskeyword-=-<CR>
+noremap q_      :setlocal iskeyword-=_<CR>
 noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
 noremap q<C-A>  :cquit!<CR>
