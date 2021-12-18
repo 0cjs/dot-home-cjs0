@@ -430,8 +430,8 @@ function! MarkdownRefDefinitionSearch()
     endif
     "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
     let l:pat = "\\c\\V" . substitute(@r, "/", "\\\\/", "g")
-    "   Extend pattern to include following colon and any whitespace
-    let l:pat = l:pat . ":\\s\\*"
+    "   Extend pattern to include line start, trailing colon and any whitespace
+    let l:pat = '^' . l:pat . ":\\s\\*"
     "                   echo "DEBUG pat /" . l:pat . "/"
     "   Search for it, not affecting user's searches.
     "   We move one char to the right afterwards (if possible) to move
