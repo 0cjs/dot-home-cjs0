@@ -3,6 +3,8 @@
 set expandtab
 "? set softtabstop=4
 
+set comments+=b:--      " Haskell line comment prefix
+
 "-- Original -----------------------------------------
 
 if exists('b:did_indent')
