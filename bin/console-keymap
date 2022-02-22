@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -eu -o pipefail
+
+mapfile="$HOME/.local/share/keymap"
+
+usage() {
+    echo "Usage: $(basename "$0") <mapname>"
+    exit 64     # EX_USAGE
+}
+
+####################################################################
+
+sudo -v
+
+#   At the earliest possible moment, dump a copy of what we hope is the
+#   original console keymap. (We assume nothing else has changed it before
+#   the first run of this program.)
+[[ -e "$mapfile.orig" ]] || sudo dumpkeys > "$mapfile.orig"
+
+[[ ${#@} -eq 1 ]] || usage
+sudo loadkeys "$mapfile.$1"
