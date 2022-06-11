@@ -20,8 +20,32 @@
 " XXX This should gracefully degrade, a la
 " http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
 
+set nocompatible
 :scriptencoding utf-8
 
+" ===== Reset Environment =============================================
+"
+"   It's not entirely clear how to deal with using my environment in
+"   accounts where the user brings in a ton of very aggressive stuff, such
+"   as the "airline" package that  overrides any other status line. For the
+"   moment I just clear 'packpath' and leave it at that. I _don't_ clean up
+"   'runtimepath' because that blocks access to some of my own stuff as
+"   well, and I don't want to stop others from :runtime'ing in a
+"   bit of their own stuff from time to time.
+"
+"   Certain user's use of symlinks make this even more complex because if
+"   ~/.vim is a symlink, dot-home will not be able to place my files in it.
+"   Probably for that I need to add paths into ~/.home/cjs0/.
+"
+"set runtimepath=$VIMRUNTIME    " XXX would cut out my own stuff!
+set packpath=                   " Avoid autoloading another user's packages.
+
+" ===== Settings from .vim/cjs.d/tiny.vim =============================
+"   XXX Possibly this should be reading that file instead.
+noremap s :w<CR>
+noremap S :wa<CR>
+
+" ===== Basic Settings ================================================
 " nvi and vim
 set autoindent
 set shiftwidth=4
@@ -64,7 +88,7 @@ filetype on
 syntax off
 
 " ===== Colors ========================================================
-" Available ctermfg colours, in DarkFoo and LightFoo versions:
+" Available ctermfg colors, in DarkFoo and LightFoo versions:
 "     Black Blue Green Cyan Red Magenta Yellow Grey White
 " See them with `:runtime syntax/colortest.vim`
 "
@@ -72,6 +96,11 @@ syntax off
 " because subsequent color settings wipe out cterm settings.
 
 set background=light
+"   XXX This doesn't do what I want; it ends up overriding my color scheme.
+"   I think I need to set up a separate, proper color scheme somehow.
+"   For the moment, I need to `:syntax off` and `:syntax on` again to
+"   get my colours for the 2nd and subsequent files in arge.
+"colorscheme default
 
 " editing
 highlight NonText ctermfg=DarkGray

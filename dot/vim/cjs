@@ -2,9 +2,10 @@
 ":" #   Vim:   `:runtime cjs`
 ":" #   Shell: `source` this file or enter the following:
 
-":" ;       export EDITOR='vim -c ":runtime cjs"'
-":" ;       vi()  { command vim -c ':runtime cjs' "$@"; }
-":" ;       vim() { command vim -c ':runtime cjs' "$@"; }
+":" ;       __cjs_vimrc=$HOME/.home/cjs0/dot/vim/cjs.d/main.vim;
+":" ;       export EDITOR='vim -u "$__cjs_vimrc"';
+":" ;       vi()  { command vim -u "$__cjs_vimrc" "$@"; };
+":" ;       vim() { command vim -u "$__cjs_vimrc" "$@"; };
 ":" ;       return
 
 runtime! cjs.d/*.vim
