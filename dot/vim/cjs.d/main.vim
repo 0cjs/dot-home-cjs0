@@ -38,7 +38,9 @@ set nocompatible
 "   Probably for that I need to add paths into ~/.home/cjs0/.
 "
 "set runtimepath=$VIMRUNTIME    " XXX would cut out my own stuff!
-set packpath=                   " Avoid autoloading another user's packages.
+if has('packages')
+    set packpath=               " Avoid autoloading another user's packages.
+endif
 
 " ===== Settings from .vim/cjs.d/tiny.vim =============================
 "   XXX Possibly this should be reading that file instead.
