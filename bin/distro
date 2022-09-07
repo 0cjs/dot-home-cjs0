@@ -15,13 +15,11 @@ upgrade() {
 }
 
 install() {
+    $note "Installing group '$install_group' packages"
     package_files=$HOME/.home/*/libdata/distro/packages.$ID.$VERSION_ID
     $note package_files=\'$package_files\'
     packages=$(cat 2>/dev/null $package_files | grep -v '^#')
-    if [ _"$1" = _-s ]; then
-        package_files=$HOME/.home/*/libdata/distro/syspackages.$ID.$VERSION_ID
-        packages="$packages $(cat 2>/dev/null $package_files | grep -v '^#')"
-    fi
+    $note "Packages: $packages"
     case $ID in
         debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
@@ -73,10 +71,9 @@ help() {
     echo "   (no arg): print OS/distribution name and release number"
     echo "   -d: dry run: print what would be done for -i/-s/-u etc."
     echo "   -h: print this help"
-    echo "   -i: install standard user packages on this system"
+    echo "   -i <group>: install <group> packages on this system"
     echo "   -n: print distribution name"
     echo "   -r: print distribution release (version) number"
-    echo "   -s: install packages for systems we sysadmin and user packages too"
     echo "   -u: upgrade all packages on this system"
 }
 
@@ -94,10 +91,9 @@ dry=''; note=':'
 while [ $# -gt 0 ]; do case "$1" in
     -d) dry='echo EXEC:'; note='echo NOTE:';;
     -h) command='help';;
-    -i) command='install';;
+    -i) shift; command='install'; install_group="$1";;
     -n) command='echo $ID';;
     -r) command='echo "$VERSION_ID"';;
-    -s) command='install -s';;
     -u) command='upgrade';;
     -v) command='echo "$PRETTY_NAME"';;
     *)  warn "Unknown argument: '$1'"; help; exit 2;;
