@@ -16,10 +16,17 @@ upgrade() {
 
 install() {
     $note "Installing group '$install_group' packages"
-    package_files=$HOME/.home/*/libdata/distro/packages.$ID.$VERSION_ID
-    $note package_files=\'$package_files\'
-    packages=$(cat 2>/dev/null $package_files | grep -v '^#')
-    $note "Packages: $packages"
+    packages=$(
+        #   `while` reading from a pipeline creates a subshell so any variable
+        #   settings we make in that loop are lost. Thus we print output and
+        #   collect it with $() syntax.
+        sed -n -e 's/#.*//' -e "s/^${install_group}  *//p" \
+            $HOME/.local/share/distro/packages \
+        | while read package systems; do
+            echo "$systems" | grep -qwEi "$ID\.($VERSION_ID|\*)" \
+                && echo -n "$package" ''    # space-separated list
+        done
+    )
     case $ID in
         debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
