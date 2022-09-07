@@ -5,9 +5,9 @@ upgrade() {
         debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
             echo ===== apt-get update
-            sudo apt-get -q -q update || err apt-get update failed
+            $dry sudo apt-get -q -q update || err apt-get update failed
             echo ===== apt-get dist-upgrade
-            sudo apt-get -q dist-upgrade || err apt-get dist-upgrade failed
+            $dry sudo apt-get -q dist-upgrade || err apt-get dist-upgrade failed
             ;;
         *)
             err "Don't know how to upgrade $ID";;
@@ -16,6 +16,7 @@ upgrade() {
 
 install() {
     package_files=$HOME/.home/*/libdata/distro/packages.$ID.$VERSION_ID
+    $note package_files=\'$package_files\'
     packages=$(cat 2>/dev/null $package_files | grep -v '^#')
     if [ _"$1" = _-s ]; then
         package_files=$HOME/.home/*/libdata/distro/syspackages.$ID.$VERSION_ID
@@ -25,9 +26,9 @@ install() {
         debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
             echo ===== apt-get update
-            sudo apt-get -q -q update || err apt-get update failed
+            $dry sudo apt-get -q -q update || err apt-get update failed
             echo ===== apt-get install
-            sudo apt-get -q install $packages || err apt-get install failed
+            $dry sudo apt-get -q install $packages || err apt-get install failed
             ;;
         *)
             err "Don't know how to install $ID";;
@@ -70,6 +71,7 @@ warn() { echo 1>&2 "$@"; }
 help() {
     echo "Usage: $(basename $0) [-h | -u | -i]"
     echo "   (no arg): print OS/distribution name and release number"
+    echo "   -d: dry run: print what would be done for -i/-s/-u etc."
     echo "   -h: print this help"
     echo "   -i: install standard user packages on this system"
     echo "   -n: print distribution name"
@@ -88,7 +90,9 @@ else
 fi
 
 command='echo "$ID $VERSION_ID"'
+dry=''; note=':'
 while [ $# -gt 0 ]; do case "$1" in
+    -d) dry='echo EXEC:'; note='echo NOTE:';;
     -h) command='help';;
     -i) command='install';;
     -n) command='echo $ID';;
