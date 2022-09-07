@@ -88,14 +88,15 @@ else
     PRETTY_NAME=$(distro_release_verbose)
 fi
 
-case "$1" in
-    "") echo "$ID $VERSION_ID";;
-    -h) help;;
-    -i) install;;
-    -n) echo $ID;;
-    -r) echo "$VERSION_ID";;
-    -s) install -s;;
-    -u) upgrade;;
-    -v) echo "$PRETTY_NAME";;
-    *)  help;;
-esac
+command='echo "$ID $VERSION_ID"'
+while [ $# -gt 0 ]; do case "$1" in
+    -h) command='help';;
+    -i) command='install';;
+    -n) command='echo $ID';;
+    -r) command='echo "$VERSION_ID"';;
+    -s) command='install -s';;
+    -u) command='upgrade';;
+    -v) command='echo "$PRETTY_NAME"';;
+    *)  command='help';;
+esac; shift; done
+eval "$command"
