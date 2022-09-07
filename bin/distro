@@ -65,7 +65,7 @@ err() {
     echo 1>&2 ERROR: "$@"
     if [ $retval -eq 0 ]; then exit 1; else exit $retval; fi
 }
-warn() { echo 2>&1 "$@"; }
+warn() { echo 1>&2 "$@"; }
 
 help() {
     warn "Usage: $(basename $0) [-h | -u | -i]"
