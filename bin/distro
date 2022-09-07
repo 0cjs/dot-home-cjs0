@@ -68,15 +68,14 @@ err() {
 warn() { echo 1>&2 "$@"; }
 
 help() {
-    warn "Usage: $(basename $0) [-h | -u | -i]"
-    warn "   (no arg): print OS/distribution name and release number"
-    warn "   -h: print this help"
-    warn "   -i: install standard user packages on this system"
-    warn "   -n: print distribution name"
-    warn "   -r: print distribution release (version) number"
-    warn "   -s: install packages for systems we sysadmin and user packages too"
-    warn "   -u: upgrade all packages on this system"
-    exit 2
+    echo "Usage: $(basename $0) [-h | -u | -i]"
+    echo "   (no arg): print OS/distribution name and release number"
+    echo "   -h: print this help"
+    echo "   -i: install standard user packages on this system"
+    echo "   -n: print distribution name"
+    echo "   -r: print distribution release (version) number"
+    echo "   -s: install packages for systems we sysadmin and user packages too"
+    echo "   -u: upgrade all packages on this system"
 }
 
 unset ID VERSION_ID PRETTY_NAME
@@ -97,6 +96,6 @@ while [ $# -gt 0 ]; do case "$1" in
     -s) command='install -s';;
     -u) command='upgrade';;
     -v) command='echo "$PRETTY_NAME"';;
-    *)  command='help';;
+    *)  warn "Unknown argument: '$1'"; help; exit 2;;
 esac; shift; done
 eval "$command"
