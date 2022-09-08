@@ -53,7 +53,7 @@ homeinst_pip() {
 }
 
 homeinst_pythonz() {
-    curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
+    curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
 [[ $(type -t homeinst_$1) == function ]] || die 2 "Unknown application: $1"
