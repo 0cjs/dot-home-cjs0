@@ -56,6 +56,19 @@ homeinst_pythonz() {
     curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
+homeinst_telegram() {
+    #   The final response after redirection does not include a
+    #   content-disposition header so -J does not work to pick the correct
+    #   filename. Instead, we first get the final URL (after redirections)
+    #   and then download that directly with -O.
+    url=$(curl -L -s --head -o /dev/null -w %{url_effective} \
+        https://telegram.org/dl/desktop/linux)
+    echo "Redirect: $url"
+
+    cd ~/.local/bin/
+    curl "$url" | tar -v -J --strip-components=1 -x -f -
+}
+
 [[ $(type -t homeinst_$1) == function ]] || die 2 "Unknown application: $1"
 homeinst_$1
 completed=true
