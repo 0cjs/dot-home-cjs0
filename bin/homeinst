@@ -6,7 +6,7 @@ set -o pipefail
 
 die() { echo 2>&1 "$(basename "$0"):" "$@"; exit 1; }
 
-install_nodejs() {
+homeinst_nodejs() {
     # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
         curl -s https://nodejs.org/en/download/ \
@@ -28,7 +28,7 @@ install_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
-install_pip() {
+homeinst_pip() {
     local req=python3-distutils     # required only on Debian 11
     #   Cannot use grep -q here because it fails with 141 (pipe broken?)
     if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
@@ -42,13 +42,12 @@ install_pip() {
     python3 "$getpip" --user
 }
 
-install_pythonz() {
+homeinst_pythonz() {
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
-case "$1" in
-    nodejs)     install_nodejs;;
-    pip)        install_pip;;
-    pythonz)    install_pythonz;;
-    *)          die "Unknown option '$1'";;
-esac
+if [[ $(type -t homeinst_$1) == function ]]; then
+    homeinst_$1
+else
+    die "Unknown application: $1"
+fi
