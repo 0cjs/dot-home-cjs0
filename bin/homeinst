@@ -2,9 +2,19 @@
 #
 #   homeinst - install stuff in homedir
 #
-set -o pipefail
+set -eu -o pipefail
 
-die() { echo 2>&1 "$(basename "$0"):" "$@"; exit 1; }
+completed=false
+trap '
+    $completed || die 3 "FAILURE during install"
+' 0
+
+die() {
+    local exitcode="$1"
+    echo 2>&1 "$(basename "$0"):" "$@"
+    completed=true
+    exit "$exitcode"
+}
 
 homeinst_nodejs() {
     # Filename format: node-v8.9.4-linux-x64.tar.xz
@@ -12,7 +22,7 @@ homeinst_nodejs() {
         curl -s https://nodejs.org/en/download/ \
         | sed -ne 's/.*"\(https:[^"]*-linux-x64[^"]*\)".*/\1/p'
         )
-    [[ -n $url ]] || die "Can't find latest stable nodejs version"
+    [[ -n $url ]] || die 1 "Can't find latest stable nodejs version"
     local filename="$(basename "$url")"
     local version="${filename#node-}"
           version="${version%%-*}"
@@ -24,7 +34,7 @@ homeinst_nodejs() {
     else
         curl --create-dirs -o "$tarball" "$url"
     fi
-    cd ~/.local/ || die "Can't cd ~/.local/"
+    cd ~/.local/ || die 1 "Can't cd ~/.local/"
     tar --strip-components=1 -xf "$tarball"
 }
 
@@ -46,8 +56,6 @@ homeinst_pythonz() {
     curl -kL https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
-if [[ $(type -t homeinst_$1) == function ]]; then
-    homeinst_$1
-else
-    die "Unknown application: $1"
-fi
+[[ $(type -t homeinst_$1) == function ]] || die 2 "Unknown application: $1"
+homeinst_$1
+completed=true
