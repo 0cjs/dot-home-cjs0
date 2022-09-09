@@ -34,6 +34,7 @@ dev     libgnutls28-dev     Debian.*
 #dev    libreadline6-dev    Debian.8
 dev     libreadline-dev     Debian.*
 dev     libssl-dev          Debian.*
+dev     python3-distutils   Debian.*
 dev     zlib1g-dev          Debian.*
 
 sys     apt-file            Debian.* Ubuntu.*
