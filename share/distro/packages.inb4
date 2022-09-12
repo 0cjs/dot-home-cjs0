@@ -29,13 +29,17 @@ user    xtail               Debian.* Ubuntu.* CentOS.*
 desktop gitk                Debian.* Ubuntu.* CentOS.*
 
 # Stuff needed for common builds (e.g., rbenv-ruby) on Debian.
-dev     build-essential     Debian.* Ubuntu.*
-dev     libgnutls28-dev     Debian.*
-#dev    libreadline6-dev    Debian.8
-dev     libreadline-dev     Debian.*
-dev     libssl-dev          Debian.*
-dev     python3-distutils   Debian.*
-dev     zlib1g-dev          Debian.*
+build   build-essential     Debian.* Ubuntu.*
+build   libgnutls28-dev     Debian.*
+#build  libreadline6-dev    Debian.8
+build   libreadline-dev     Debian.*
+build   libssl-dev          Debian.*
+build   python3-distutils   Debian.*
+build   zlib1g-dev          Debian.*
+
+#   Stuff usually wanted when doing software development.
+dev     exuberant-ctags     Debian.* Ubuntu.*
+
 
 sys     apt-file            Debian.* Ubuntu.*
 sys     apticron            Debian.* Ubuntu.*
