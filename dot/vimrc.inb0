@@ -6,6 +6,11 @@
 "   But dot-home can't install the symlinks at the moment, anyway, so for
 "   the moment hack with the following before our runtime commands.
 "set runtimepath^=~/.home/cjs0/dot/vim
+"set runtimepath^=~/.home/cjs1/dot/vim
+"set runtimepath+=~/.home/cjs0/dot/vim/after
+"   Remove default user config to help avoid conflicts.
+"set runtimepath-=~/.vim
+"set runtimepath-=~/.vim/after
 
 "   Always bring in cjs tiny configuration, regardless of environment.
 "   This shouldn't disrupt anything, but it's brought in early so that
