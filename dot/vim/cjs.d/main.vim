@@ -73,6 +73,9 @@ set wildmode=longest,list
 set matchpairs=(:),{:},[:],<:>
 set iskeyword=@,-,48-57,_,192-255
 set suffixesadd=.md
+"   shortmess=filnxtToOS    " default
+set shortmess-=S            " display "[1/5]" search count
+set shortmess+=I            " suppress :intro message
 
 " We need to be careful with .viminfo to avoid leaking sensitive data.
 " Note that we blank it later if editing an encrypted file.
