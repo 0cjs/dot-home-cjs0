@@ -56,6 +56,7 @@ set nowarn
 set cedit=<C-E>
 
 " vim-only
+set nofixeol                " If I need to fix, I just add an empty line at end
 set timeoutlen=5000
 set display+=lastline
 set display+=uhex
