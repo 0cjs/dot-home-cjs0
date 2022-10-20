@@ -370,7 +370,7 @@ noremap q_      :setlocal iskeyword-=_<CR>
 noremap qa      :quitall<CR>
 noremap qA      :quitall!<CR>
 noremap q<C-A>  :cquit!<CR>
-noremap qc      <C-W>c
+noremap qc      :call DisplayError("qc: Use `qw` to close window")<CR>
 noremap qC      :setlocal comments+=b:
 noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
