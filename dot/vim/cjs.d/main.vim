@@ -726,6 +726,8 @@ endfunction
 " and strips the trailing newline off the output, so we don't need to use
 " the "echo -n" thing in all the mappings below.
 "
+" retain access to "move (count) forward in jump list" by making it ^I^I
+noremap <TAB><TAB>  <TAB>
 " dates:  YYYY-MM-DD, date+time, time only, time only
 map <TAB>d      "=system('. ~/.bashrc && echo -n `i-date`')<CR>p
 map <TAB>D      "=system('echo -n `date "+%y%m%d" "$@"`')<CR>p
