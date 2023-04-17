@@ -1,3 +1,7 @@
+highlight clear
+if exists("syntax_on")
+    syntax reset
+endif
 let g:colors_name = 'cjs'
 
 " Available ctermfg colors, in DarkFoo and LightFoo versions:
