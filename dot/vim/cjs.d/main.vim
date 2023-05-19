@@ -905,6 +905,10 @@ digraph  om 8997    " ⌥  Option Key (Mac)
 digraph  '/  773    " a̅  Combining Overbar (like / for "active low")
 digraph  0+ 8853    " ْْࣷ⊕  Circled Plus Operator (overrides Arabic Sukun)
 digraph  D0 8960    " ⌀  Diameter Sign
+digraph  XO 8891    " ⊻  XOR
+digraph  XR 8891    " ⊻  XOR
+digraph  NA 8892    " ⊼  NAND
+digraph  NR 8893    " ⊽  NOR
 digraph  ** 0981    " ϕ  U+03D5 Greek Phi Symbol (φ for math/sci contexts)
                     "    `f%` would make more sense, but harder to type.
 digraph  DC 9107    " ⎓  Direct Current Symbol Form Two
