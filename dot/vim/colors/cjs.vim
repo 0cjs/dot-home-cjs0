@@ -34,6 +34,7 @@ highlight PreProc ctermfg=Black
 highlight Type ctermfg=Black
 highlight Title ctermfg=Blue cterm=bold
 highlight Subtitle ctermfg=Blue
+highlight Error term=reverse ctermfg=Black ctermbg=Red
 
 " diffs
 highlight diffAdded     ctermfg=DarkBlue
