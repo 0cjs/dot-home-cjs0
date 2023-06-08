@@ -3,7 +3,7 @@
 ":" #   Shell: `source` this file or enter the following:
 
 ":" ;       __cjs_vimrc=$HOME/.home/cjs0/dot/vim/cjs.d/main.vim;
-":" ;       export EDITOR='vim -u "$__cjs_vimrc"';
+":" ;       export EDITOR="vim -u $__cjs_vimrc";
 ":" ;       vi()  { command vim -u "$__cjs_vimrc" "$@"; };
 ":" ;       vim() { command vim -u "$__cjs_vimrc" "$@"; };
 ":" ;       return
