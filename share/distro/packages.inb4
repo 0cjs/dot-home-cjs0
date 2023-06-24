@@ -21,8 +21,8 @@ user    redhat-lsb          CentOS.7
 user    socat               Debian.* Ubuntu.* CentOS.*
 user    time                Debian.* Ubuntu.* CentOS.*
 user    tmate               Debian.* Ubuntu.* CentOS.*
+user    vim                 Debian.*
 user    vim-enhanced        CentOS.*
-user    vim-gtk             Debian.* Ubuntu.*
 user    wget                Debian.* Ubuntu.* CentOS.*
 user    xtail               Debian.* Ubuntu.* CentOS.*
 
