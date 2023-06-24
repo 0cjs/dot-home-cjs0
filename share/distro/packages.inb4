@@ -34,6 +34,7 @@ build   libgnutls28-dev     Debian.*
 #build  libreadline6-dev    Debian.8
 build   libreadline-dev     Debian.*
 build   libssl-dev          Debian.*
+build   pkg-config          Debian.*
 build   python3-distutils   Debian.*
 build   zlib1g-dev          Debian.*
 
