@@ -23,6 +23,7 @@ user    time                Debian.* Ubuntu.* CentOS.*
 user    tmate               Debian.* Ubuntu.* CentOS.*
 user    vim                 Debian.*
 user    vim-enhanced        CentOS.*
+user    xxd                 Debian.12                   # came with vim before
 user    wget                Debian.* Ubuntu.* CentOS.*
 user    xtail               Debian.* Ubuntu.* CentOS.*
 
