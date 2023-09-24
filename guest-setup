@@ -1,10 +1,10 @@
 #   `source` this file
 set -o vi
 
-for i in ~/.home/{cjs0,git-tools}/dot/bashrc.*; do
+for i in ~/.home/{cjs0,gitcmd-abbrev}/dot/bashrc.*; do
     source "$i"
 done
-st() { ~/.home/git-tools/bin/st "$@"; }
+st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 
 #   XXX should be replaced by multi-config vim wrapper
 source ~/.home/cjs0/dot/vim/cjs
