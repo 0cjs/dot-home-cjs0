@@ -34,7 +34,7 @@ homeinst_discord() {
 homeinst_nodejs() {
     # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
-        curl -s https://nodejs.org/en/download/ \
+        curl -s -L https://nodejs.org/en/download/ \
         | sed -ne 's/.*"\(https:[^"]*-linux-x64[^"]*\)".*/\1/p'
         )
     [[ -n $url ]] || die 1 "Can't find latest stable nodejs version"
