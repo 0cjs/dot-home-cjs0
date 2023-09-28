@@ -1,4 +1,11 @@
 #   `source` this file
+
+#   Bash will generate an error if you define a function of the same name
+#   as an existing alias, so we need to ensure those aliases do not exist.
+#   Further, the unalias command must not happen on the same line, as later
+#   in that line the alias will already have been substituted.
+_u() { unalias "$@" >/dev/null 2>&1 || true; }
+
 set -o vi
 
 for i in ~/.home/{cjs0,gitcmd-abbrev}/dot/bashrc.*; do
@@ -15,9 +22,12 @@ source ~/.home/cjs0/dot/vim/cjs
 #   Simpler functions etc. that I sometimes want to source alone
 #   when I'm a guest in someone else's environment.
 
+
 #   Blank lines make following text easier to find in terminal scrollback.
+_u sp
 sp() { local i=0; while [ $i -lt ${1:-5} ]; do echo; i=$(($i+1)); done; }
 
+_u lf lfa ll lla llt llth
 lf()            { ls -CF "$@"; }       # also configured by cjs0
 lfa()           { lf -a "$@"; }
 ll()            { ls -lh "$@"; }
@@ -25,11 +35,13 @@ lla()           { ll -a "$@"; }
 llt()           { ll -t "$@"; }
 llth()          { ll -t "$@" | head; }
 
+_u mdcd
 mdcd() {
     [[ ${#@} -eq 1 ]] || { echo 1>&2 "Usage: mdcd PATH"; return 2; }
     mkdir -p "$1" && cd "$1"
 }
 
+_u findf
 findf() {
     [ -z "$1" ] && {
         echo 1>&2 "Usage: findf DIR ... [NAME-FRAGMENT [FIND-OPS ...]]"
