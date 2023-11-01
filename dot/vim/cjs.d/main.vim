@@ -449,9 +449,31 @@ noremap qvS :Scratch<CR>:r!dif --staged<CR>:normal gg<CR>:runtime syntax/diff.vi
 noremap qvw :Scratch<CR>:r!dif --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>:normal gg<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>:set nolist<CR>:normal gg<CR>
-noremap qvc /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| .*\\|=======\\|>>>>>>> .*\)$<CR>
+noremap qvC :call GitCommit()<CR>
+noremap qvc :call GitCommit('-f')<CR>
 noremap qv/ /^\(<<<<<<< .*\\|\|\|\|\|\|\|\| .*\\|=======\\|>>>>>>> .*\)$<CR>
 noremap qv  :call ConsumeError("Unknown qv command")<CR>
+
+"   Run a commit script, if available, otherwise just run 'git commit'.
+"   • We search for an executable file named 'commit' in the current directory
+"     and then each parent directory above it.
+"   • The `gc` mapping passes '-f', which the commit script should interpret
+"     as: commit using (script-defined) message file without using the editor.
+"     With no arguments, the script should bring up an editor.
+"   • If no `commit` script is found, it runs `git commit -v -a`.
+"
+function! GitCommit(...)
+    let l:dir = expand('%:p:h')
+    while l:dir != '/'
+        let l:commit = l:dir . '/commit'
+        if executable(l:commit)
+            execute '!' . l:commit . ' ' . join(a:000, ' ')
+            return
+        endif
+        let l:dir = fnamemodify(l:dir, ':h')
+    endwhile
+    execute '!git commit -v -a'
+endfunction
 
 "   Misc. commands on `q`
 "
