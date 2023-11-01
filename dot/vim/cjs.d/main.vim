@@ -424,7 +424,7 @@ noremap qK      :setlocal iskeyword-=
 noremap qs      :checktime<CR>          " reload files saved outside vim
 noremap qt      :set filetype?<CR>
 noremap qT      :set filetype=
-noremap qq      <C-W>q
+noremap qq      :call DisplayError("qq: use `qw` to close window")<CR>
 noremap qw      <C-W>c
 noremap qX      :!chmod +x '%'<CR>
 
