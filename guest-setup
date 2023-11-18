@@ -18,11 +18,13 @@ st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 source ~/.home/cjs0/dot/vim/cjs
 
 ####################################################################
-# From ~/.home/cjs1/dot/bashrc.inb6, so we don't need to clone it.
-
+#   From ~/.home/cjs1 files, so we don't need to clone it.
+#
 #   Simpler functions etc. that I sometimes want to source alone
 #   when I'm a guest in someone else's environment.
 
+#   If less(1) is using default options, stop it from switching to alt screen.
+[[ -n $LESS ]] || export LESS='-aeFimsXR -j.15'
 
 #   Blank lines make following text easier to find in terminal scrollback.
 _u sp
