@@ -467,7 +467,7 @@ function! GitCommit(...)
     while l:dir != '/'
         let l:commit = l:dir . '/commit'
         if executable(l:commit)
-            execute '!' . l:commit . ' ' . join(a:000, ' ')
+            execute '!' . '"' . l:commit . '"' . ' ' . join(a:000, ' ')
             return
         endif
         let l:dir = fnamemodify(l:dir, ':h')
