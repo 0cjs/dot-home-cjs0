@@ -4,6 +4,8 @@ upgrade() {
     case $ID in
         debian|ubuntu)
             [ -x /usr/bin/apt-get ] || err "Can't find apt-get."
+            echo ===== apt-get autoclean
+            $dry sudo apt-get -q -q autoclean || err apt-get autoclean failed
             echo ===== apt-get update
             $dry sudo apt-get -q -q update || err apt-get update failed
             echo ===== apt-get dist-upgrade
