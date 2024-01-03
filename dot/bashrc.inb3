@@ -1,3 +1,7 @@
 # cjs useful core bash aliases/functions; may be overridden
 
+cjsguest()  {
+    source ~/.bashrc    # in case there are any updates we need to bring in
+    source ~/.home/cjs0/guest-setup
+}
 cjsvi() { source ~/.vim/cjs; }
