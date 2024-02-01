@@ -64,6 +64,7 @@ set_ckssh_keyinfo() {
 }
 
 case "$TERM" in
+    linux*)     : ;;
     xterm*)     : ;;
     rxvt*)      : ;;
     screen*)    : ;;
