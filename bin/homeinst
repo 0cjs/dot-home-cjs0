@@ -68,6 +68,11 @@ homeinst_pip() {
 }
 
 homeinst_pythonz() {
+    #   This list from README at: https://github.com/saghul/pythonz
+    sudo apt-get install build-essential \
+        zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev \
+        libsqlite3-dev libgdbm-dev libdb-dev libexpat-dev libpcap-dev \
+        liblzma-dev libpcre3-dev libffi-dev
     curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
