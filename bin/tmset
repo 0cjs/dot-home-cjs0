@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+#   remote tmate settings hack - XXX document this!
+#
+set -euo pipefail
+
+tmate set-option -g prefix C-a
+tmate unbind-key C-b
+tmate bind-key C-a send-prefix
+exit 0
+
+#   XXX The following works except for bind-key. (?!)
+[[ -n ${TMUX:-} ]] || {
+    echo 1>&2 '$TMUX not set; cannot find session.'
+    exit 3
+}
+SOCK="${TMUX%%,*}"
+unset TMUX          # Allow nested session.
+tmate -S "$SOCK" -CC attach-session <<_____
+set-option -g prefix C-a
+unbind-key C-b
+bind-key C-a send-prefix
+_____
