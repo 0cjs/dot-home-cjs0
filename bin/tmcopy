@@ -35,6 +35,10 @@ tmc_add() {
         sed -i -e "/^$session_name:/s/.*/$line/" "$TMCFILE"
         echo "Updated $line"
     fi
+
+    #   XXX Doesn't work because we can't change $XTITLE in parent.
+    #eval $(xtitle -x 2>/dev/null)   # define xt() function
+    #xt "$session_name"
 }
 
 ####################################################################
