@@ -4,7 +4,7 @@
 #
 set -euo pipefail
 
-TMCFILE=~/co/.tmcopy
+TMCFILE=~/co/public/.tmcopy
 
 die() {
     ec="$1"; shift
