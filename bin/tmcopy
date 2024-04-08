@@ -24,15 +24,15 @@ tmc_add() {
     local line=$(tmate show-messages \
         | sed -n -e "
             s/.*] //
-            s/$/ ($COLUMNS×$LINES)/
-            s/^ssh session:/$session_name:/p
+            s/^ssh session:/$session_name ($COLUMNS×$LINES):/p
         "
     )
-    if ! grep -q "^$session_name:" "$TMCFILE"; then
+    touch "$TMCFILE"
+    if ! grep -q "^$session_name " "$TMCFILE"; then
         echo "$line" >> "$TMCFILE"
         echo "Added $line"
     else
-        sed -i -e "/^$session_name:/s/.*/$line/" "$TMCFILE"
+        sed -i -e "/^$session_name /s/.*/$line/" "$TMCFILE"
         echo "Updated $line"
     fi
 
