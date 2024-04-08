@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+#
+#   tmcopy - tools for sending tmate session information to chat
+#
+set -euo pipefail
+
+TMCFILE=~/co/.tmcopy
+
+die() {
+    ec="$1"; shift
+    echo 2>&1 "ERROR:" "$@"
+    exit $ec
+}
+
+tmc_copy() { xsel -i -b < "$TMCFILE"; }
+
+tmc_new() {
+    echo > "$TMCFILE" "For web sessions, use http://tmate.io/t/SESSION_ID"
+}
+
+tmc_add() {
+    tmate show-messages >/dev/null 2>&1 || die 2 "Not in tmate session"
+
+    local line=$(tmate show-messages \
+        | sed -n -e "
+            s/.*] //
+            s/$/ ($COLUMNS×$LINES)/
+            s/^ssh session:/$session_name:/p
+        "
+    )
+    if ! grep -q "^$session_name:" "$TMCFILE"; then
+        echo "$line" >> "$TMCFILE"
+        echo "Added $line"
+    else
+        sed -i -e "/^$session_name:/s/.*/$line/" "$TMCFILE"
+        echo "Updated $line"
+    fi
+}
+
+####################################################################
+#   Main
+
+[[ ${#@} -lt 1 ]] && die 2 "Missing argument"
+case "$1" in
+    -n)     shift; tmc_new;;
+    -c)     shift; tmc_copy;;
+    -*)     die 2 "Bad option: $1";;
+    *)      session_name="$1"; shift; tmc_add;;
+esac
