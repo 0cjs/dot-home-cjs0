@@ -40,7 +40,7 @@ build   python3-distutils   Debian.*
 build   zlib1g-dev          Debian.*
 
 #   Stuff usually wanted when doing software development.
-dev     exuberant-ctags     Debian.* Ubuntu.*
+dev     universal-ctags     Debian.* Ubuntu.*
 
 
 sys     apt-file            Debian.* Ubuntu.*
