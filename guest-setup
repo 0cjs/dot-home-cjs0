@@ -1,12 +1,16 @@
 #   `source` this file
 
+set -o vi
+[[ -n ${TMUX:-} ]] && tmset    # reconfig tmate if we're in a tmate session
+
+####################################################################
+#   Basic aliases and functions
+
 #   Bash will generate an error if you define a function of the same name
 #   as an existing alias, so we need to ensure those aliases do not exist.
 #   Further, the unalias command must not happen on the same line, as later
 #   in that line the alias will already have been substituted.
 _u() { unalias "$@" >/dev/null 2>&1 || true; }
-
-set -o vi
 
 source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
 for i in ~/.home/{cjs0,gitcmd-abbrev}/dot/bashrc.*; do
