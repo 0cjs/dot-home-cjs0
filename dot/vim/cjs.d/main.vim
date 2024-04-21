@@ -296,6 +296,7 @@ set statusline+=%3vc                " ###c: cursor column on screen
 set statusline+=%-4{Statusline_bytecol()}
 set statusline+=%5.l\ %P\           " cursor row and file percentage
 set statusline+=%{Statusline_wfh()} " winfixheight indicator
+set statusline+=\ %{exists('*mode')?mode():'•'}
 
 function! Statusline_ftef()
     "   Return filetype and fileformat (if not "unix") for status line
