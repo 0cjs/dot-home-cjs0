@@ -74,6 +74,13 @@ inotifywait --monitor ${quiet:+--quiet} --event close_write \
     | while read event; do
         $separator print_separator
 
+        #   Very fast machines, on seeing file creation or rewrite, may try
+        #   to start using that file before the editor has finished writing
+        #   it. This can cause mysterious errors such as "Text file busy."
+        #   So we pause very briefly to ensure (we hope) that all the files
+        #   are completely written before we try to execute the build.
+        sleep 0.05
+
         $quiet echo "#  Received: $event"
         $quiet echo "#   Running: $@"
         #   Because we're in a while loop reading events from inotifywait,
