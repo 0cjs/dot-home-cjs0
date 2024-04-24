@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#   tmset - remote tmate settings hack
+#   tmset - switch to Ctrl-A etc. in remote tmate
 #
 #   Though my tmux config file changes the prefix to C-a, this of course
 #   has no effect when ssh'ing into a tmate session started on someone

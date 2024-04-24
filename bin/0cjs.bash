@@ -1,7 +1,7 @@
 #   `source` this file
 
 set -o vi
-[[ -n ${TMUX:-} ]] && tmset    # reconfig tmate if we're in a tmate session
+[[ -n ${TMUX:-} ]] && tmaconf   # reconfig tmate if we're in a tmate session
 
 ####################################################################
 #   Basic aliases and functions
