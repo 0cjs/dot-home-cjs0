@@ -49,6 +49,40 @@ ____
     exit $EX_USAGE
 }
 
+run() {
+    $separator print_separator
+
+    #   Very fast machines, on seeing file creation or rewrite, may try
+    #   to start using that file before the editor has finished writing
+    #   it. This can cause mysterious errors such as "Text file busy."
+    #   So we pause very briefly to ensure (we hope) that all the files
+    #   are completely written before we try to execute the build.
+    sleep 0.05
+
+    $quiet echo "#  Received: $event"
+    $quiet echo "#   Running: $@"
+    #   Because we're in a while loop reading events from inotifywait,
+    #   interactive programs such as `docker run -it ... bash -l` will
+    #   fail beacuse stdin/stout/stderr are not a tty. To fix this we
+    #   reconnect these to /dev/tty in the subshell. The bash(1)
+    #   manpage says that "builtin  commands  that  affect the shell's
+    #   environment do not remain in effect after the command completes,"
+    #   and this does seem to apply to the redirections as well.
+    (exec </dev/tty >/dev/tty 2>/dev/tty && . ~/.bashrc && "$@")
+
+    #   After the first event that triggered the command run there may
+    #   have immediately been further events if multiple files were
+    #   written or if the written file was in a subdirectory,
+    #   triggering a directory write. There may also have been further
+    #   events yet from files written during the command run, such as
+    #   (re)compiled Python bytecode. We read and ignore all these so
+    #   that we don't trigger multiple runs from what the user sees as
+    #   one "save" event.
+    while read -t 0.5 event; do
+        $quiet echo "#  Ignoring: $event"
+    done
+}
+
 ####################################################################
 
 type inotifywait >/dev/null \
@@ -68,39 +102,10 @@ esac; done
 
 [[ "${#watchlist}" -gt 0 ]] || watchlist+=(.)
 
+run "$@" </dev/null     # Do an initial run before we start waiting for events.
+$separator print_separator
+
 $quiet echo "Watching: ${watchlist[@]}"
 inotifywait --monitor ${quiet:+--quiet} --event close_write \
     --exclude '^./.(build|git)/' --recursive "${watchlist[@]}" \
-    | while read event; do
-        $separator print_separator
-
-        #   Very fast machines, on seeing file creation or rewrite, may try
-        #   to start using that file before the editor has finished writing
-        #   it. This can cause mysterious errors such as "Text file busy."
-        #   So we pause very briefly to ensure (we hope) that all the files
-        #   are completely written before we try to execute the build.
-        sleep 0.05
-
-        $quiet echo "#  Received: $event"
-        $quiet echo "#   Running: $@"
-        #   Because we're in a while loop reading events from inotifywait,
-        #   interactive programs such as `docker run -it ... bash -l` will
-        #   fail beacuse stdin/stout/stderr are not a tty. To fix this we
-        #   reconnect these to /dev/tty in the subshell. The bash(1)
-        #   manpage says that "builtin  commands  that  affect the shell's
-        #   environment do not remain in effect after the command completes,"
-        #   and this does seem to apply to the redirections as well.
-        (exec </dev/tty >/dev/tty 2>/dev/tty && . ~/.bashrc && "$@")
-
-        #   After the first event that triggered the command run there may
-        #   have immediately been further events if multiple files were
-        #   written or if the written file was in a subdirectory,
-        #   triggering a directory write. There may also have been further
-        #   events yet from files written during the command run, such as
-        #   (re)compiled Python bytecode. We read and ignore all these so
-        #   that we don't trigger multiple runs from what the user sees as
-        #   one "save" event.
-        while read -t 0.5 event; do
-            $quiet echo "#  Ignoring: $event"
-        done
-    done
+    | while read event; do run "$@"; done
