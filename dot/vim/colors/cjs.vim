@@ -25,7 +25,7 @@ highlight ColorColumn ctermbg=lightyellow
 highlight Underlined ctermfg=Black      " Remove magenta on Underlined text
 
 " syntax
-highlight Comment ctermfg=DarkGray
+highlight Comment ctermfg=Grey
 highlight Constant ctermfg=DarkBlue
 highlight Special ctermfg=Black
 highlight Identifier ctermfg=DarkBlue
@@ -43,7 +43,7 @@ highlight diffFile      ctermfg=DarkGreen
 highlight diffLine      ctermfg=DarkYellow
 
 "   Git commit messages
-highlight gitcommitComment ctermfg=Gray
+highlight gitcommitComment ctermfg=Grey
 highlight gitcommitOnBranch ctermfg=Gray
 highlight gitcommitHeader ctermfg=Gray
 highlight gitcommitType ctermfg=Gray
