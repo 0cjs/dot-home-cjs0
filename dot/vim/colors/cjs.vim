@@ -26,7 +26,7 @@ highlight Underlined ctermfg=Black      " Remove magenta on Underlined text
 
 " syntax
 highlight Comment ctermfg=DarkGray
-highlight Constant ctermfg=DarkYellow
+highlight Constant ctermfg=DarkBlue
 highlight Special ctermfg=Black
 highlight Identifier ctermfg=DarkBlue
 highlight Statement ctermfg=Black
