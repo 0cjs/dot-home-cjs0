@@ -25,7 +25,12 @@ highlight ColorColumn ctermbg=lightyellow
 highlight Underlined ctermfg=Black      " Remove magenta on Underlined text
 
 " syntax
-highlight Comment ctermfg=Grey
+if &t_Co > 8
+    let g:highlight_grey = "DarkGrey"
+else
+    let g:highlight_grey = "Grey"
+endif
+execute 'highlight Comment ctermfg=' . g:highlight_grey
 highlight Constant ctermfg=DarkBlue
 highlight Special ctermfg=Black
 highlight Identifier ctermfg=DarkBlue
