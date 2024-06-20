@@ -24,6 +24,18 @@ homeinst_chrome() {
     sudo apt-get install ~/Downloads/"$fname"
 }
 
+homeinst_slack() {
+    #   XXX not actually a $HOME install!
+    #   It's actually the 'try again' link on this page, to be parsed out:
+    #   (look for <a> with href= containing .deb/
+    #   https://slack.com/downloads/instructions/linux?ddl=1&build=deb
+    #   Note: a double-slash (//) in URL will fail to download.
+    local fname='slack-desktop-4.38.125-amd64.deb'
+    local urlloc='https://downloads.slack-edge.com/desktop-releases/linux/x64/4.38.125'
+    curl -L -o ~/Downloads/"$fname" "$urlloc/$fname"
+    sudo apt-get install ~/Downloads/"$fname"
+}
+
 homeinst_discord() {
     local url="https://discord.com/api/download?platform=linux&format=deb"
     #   The filename they supply in Content-disposition is `download`. :-(
