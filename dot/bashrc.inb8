@@ -15,4 +15,7 @@ prepath -f -n -q $HOME/.local/bin
 #   without the parent environment's aliases, it will not generate a parse
 #   error.
 #
-type -t lf >/dev/null || . <(echo 'lf() { ls -CF "$@"; }')
+#   Note we do not use the `-t` option here (as we used to) because this
+#   is not supported by MacOS zsh.
+#
+type lf >/dev/null || . <(echo 'lf() { ls -CF "$@"; }')
