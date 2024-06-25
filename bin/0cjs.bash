@@ -1,7 +1,6 @@
 #   `source` this file
 
 set -o vi
-[[ -n ${TMUX:-} ]] && tmaconf   # reconfig tmate if we're in a tmate session
 
 ####################################################################
 #   Basic aliases and functions
@@ -25,6 +24,8 @@ __cjs0_checkexist ~/.home/cjs0/ && {
     for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
     #   XXX should be replaced by multi-config vim wrapper
     source ~/.home/cjs0/dot/vim/cjs
+    #   If in a tmate session, reconfig for C-a prefix etc.
+    [[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
 }
 
 __cjs0_checkexist ~/.home/gitcmd-abbrev/ && {
