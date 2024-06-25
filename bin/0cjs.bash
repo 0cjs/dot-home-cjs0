@@ -28,7 +28,7 @@ __cjs0_checkexist ~/.home/cjs0/ && {
 }
 
 __cjs0_checkexist ~/.home/gitcmd-abbrev/ && {
-    for i in ~/.home/gitcmd-abbrev/dot/bashrc.*; do source "$i"; done
+    source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
     st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 }
 
