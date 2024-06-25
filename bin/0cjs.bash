@@ -12,17 +12,25 @@ set -o vi
 #   in that line the alias will already have been substituted.
 _u() { unalias "$@" >/dev/null 2>&1 || true; }
 
-source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
-for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
-if ! [[ -d ~/.home/gitcmd-abbrev/ ]]; then
-    echo 1>&2 "WARNING: ~/.home/gitcmd-abbrev/ not found"
-else
+__cjs0_checkexist() {
+    [[ -e $1 ]] && return 0
+    echo 1>&2 "WARNING: $1 not found"
+    return 1
+}
+
+__cjs0_checkexist ~/.home/dot-home/ \
+    && source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
+
+__cjs0_checkexist ~/.home/cjs0/ && {
+    for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
+    #   XXX should be replaced by multi-config vim wrapper
+    source ~/.home/cjs0/dot/vim/cjs
+}
+
+__cjs0_checkexist ~/.home/gitcmd-abbrev/ && {
     for i in ~/.home/gitcmd-abbrev/dot/bashrc.*; do source "$i"; done
     st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
-fi
-
-#   XXX should be replaced by multi-config vim wrapper
-source ~/.home/cjs0/dot/vim/cjs
+}
 
 ####################################################################
 #   From ~/.home/cjs1 files, so we don't need to clone it.
