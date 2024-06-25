@@ -13,10 +13,13 @@ set -o vi
 _u() { unalias "$@" >/dev/null 2>&1 || true; }
 
 source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
-for i in ~/.home/{cjs0,gitcmd-abbrev}/dot/bashrc.*; do
-    source "$i"
-done
-st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
+for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
+if ! [[ -d ~/.home/gitcmd-abbrev/ ]]; then
+    echo 1>&2 "WARNING: ~/.home/gitcmd-abbrev/ not found"
+else
+    for i in ~/.home/gitcmd-abbrev/dot/bashrc.*; do source "$i"; done
+    st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
+fi
 
 #   XXX should be replaced by multi-config vim wrapper
 source ~/.home/cjs0/dot/vim/cjs
