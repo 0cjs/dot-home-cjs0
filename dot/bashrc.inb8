@@ -18,4 +18,4 @@ prepath -f -n -q $HOME/.local/bin
 #   Note we do not use the `-t` option here (as we used to) because this
 #   is not supported by MacOS zsh.
 #
-type lf >/dev/null || . <(echo 'lf() { ls -CF "$@"; }')
+type lf >/dev/null 2>&1 || . <(echo 'lf() { ls -CF "$@"; }')
