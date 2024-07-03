@@ -7,8 +7,18 @@
 
 "   This patch seems to fix the problem completely.
 "   From @padawin, https://github.com/tpope/vim-markdown/pull/140
-syntax clear markdownCodeBlock
-syn region markdownCodeBlock start="\n\(    \|\t\)" end="\v^((\t|\s{4})@!|$)" contained
+"
+"   XXX this is disabled for the moment because it fails on blocks like
+"   the following, and that's even more annoying than the original bug.
+"
+"       foo
+"       ```python
+"       some code
+"       ```
+"       foo
+"
+"syntax clear markdownCodeBlock
+"syn region markdownCodeBlock start="\n\(    \|\t\)" end="\v^((\t|\s{4})@!|$)" contained
 
 "   In case we still have issues, we still have this older hack:
 "   This allows us to hack this by disabling code block regions, which
