@@ -2,21 +2,24 @@
 #
 #   3pinst - install 3rd-party (non-distro) Linux packages
 #
-set -eu -o pipefail
+#   This installs packages from third parties (i.e., not Debian or
+#   whomever your distro provider is). It includes things that:
+#   • install entirely under $HOME
+#   • install using the native packaging system, but with packages from
+#     another source
+#
+set -Eeuo pipefail
 
-completed=false
-trap '
-    $completed || die 3 "FAILURE during install"
-' 0
+trap 'die 1 "FAILURE during install"' ERR
 
 die() {
-    local exitcode="$1"
+    local exitcode="$1"; shift
     echo 2>&1 "$(basename "$0"):" "$@"
     completed=true
     exit "$exitcode"
 }
 
-homeinst_chrome() {
+inst_chrome() {
     #   XXX not actually a $HOME install!
     local fname='google-chrome-stable_current_amd64.deb'
     local urlloc='https://dl.google.com/linux/direct/'
@@ -24,7 +27,7 @@ homeinst_chrome() {
     sudo apt-get install ~/Downloads/"$fname"
 }
 
-homeinst_slack() {
+inst_slack() {
     #   XXX not actually a $HOME install!
     #   It's actually the 'try again' link on this page, to be parsed out:
     #   (look for <a> with href= containing .deb/
@@ -36,14 +39,14 @@ homeinst_slack() {
     sudo apt-get install ~/Downloads/"$fname"
 }
 
-homeinst_discord() {
+inst_discord() {
     local url="https://discord.com/api/download?platform=linux&format=deb"
     #   The filename they supply in Content-disposition is `download`. :-(
     curl -L -o ~/Downloads/discord.deb "$url"
     sudo apt-get install ~/Downloads/discord.deb
 }
 
-homeinst_nodejs() {
+inst_nodejs() {
     # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
         curl -s -L https://nodejs.org/en/download/ \
@@ -65,7 +68,7 @@ homeinst_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
-homeinst_pip() {
+inst_pip() {
     local req=python3-distutils     # required only on Debian 11
     #   Cannot use grep -q here because it fails with 141 (pipe broken?)
     if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
@@ -79,7 +82,7 @@ homeinst_pip() {
     python3 "$getpip" --user
 }
 
-homeinst_pythonz() {
+inst_pythonz() {
     #   This list from README at: https://github.com/saghul/pythonz
     sudo apt-get install build-essential \
         zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev \
@@ -88,7 +91,7 @@ homeinst_pythonz() {
     curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
-homeinst_telegram() {
+inst_telegram() {
     #   The final response after redirection does not include a
     #   content-disposition header so -J does not work to pick the correct
     #   filename. Instead, we first get the final URL (after redirections)
@@ -101,6 +104,16 @@ homeinst_telegram() {
     curl "$url" | tar -v -J --strip-components=1 -x -f -
 }
 
-[[ $(type -t homeinst_$1) == function ]] || die 2 "Unknown application: $1"
-homeinst_$1
-completed=true
+####################################################################
+
+usage() {
+    echo "Usage: $(basename "$0") PACKAGE"
+    echo "Packages: $(set | sed -ne 's/^inst_//p' \
+        | sed -ne 's/ () *//p' | tr '\n' ' ')"
+}
+
+[[ $# -eq 0 ]] && { usage; exit 1; }
+[[ $1 = -h ]]  && { usage; exit 0; }
+[[ $# -gt 1 ]] && { die 2 'Takes only one argument'; }
+[[ $(type -t inst_$1) == function ]] || die 2 "Unknown package: $1"
+inst_$1
