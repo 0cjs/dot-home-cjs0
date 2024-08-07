@@ -89,6 +89,18 @@ inst_pythonz() {
     curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
+inst_rust() {
+    #   Defaults:  CARGO_HOME=~/.cargo  RUSTUP_HOME=~/.rustup
+    #   More at:  https://stackoverflow.com/q/57765424/107294
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+        | sh -s -- --no-modify-path -y 
+    # --no-modify-path to avoid touching .bashrc etc.
+    #   (`. "$CARGO_HOME/env"` not added, just adds $HOME/.cargo/bin to $PATH)
+    # -y: disable confirmation prompt
+
+    # For completion setup docs run `rustup completions`.
+}
+
 inst_nodejs() {
     # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
