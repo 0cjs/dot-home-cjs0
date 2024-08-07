@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#   homeinst - install stuff in homedir
+#   3pinst - install 3rd-party (non-distro) Linux packages
 #
 set -eu -o pipefail
 
