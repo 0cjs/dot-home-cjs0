@@ -19,12 +19,35 @@ die() {
     exit "$exitcode"
 }
 
+####################################################################
+#   Desktop browse/chat apps
+
 inst_chrome() {
     #   XXX not actually a $HOME install!
     local fname='google-chrome-stable_current_amd64.deb'
     local urlloc='https://dl.google.com/linux/direct/'
     curl -L -o ~/Downloads/"$fname" "$urlloc/$fname"
     sudo apt-get install ~/Downloads/"$fname"
+}
+
+inst_telegram() {
+    #   The final response after redirection does not include a
+    #   content-disposition header so -J does not work to pick the correct
+    #   filename. Instead, we first get the final URL (after redirections)
+    #   and then download that directly with -O.
+    url=$(curl -L -s --head -o /dev/null -w %{url_effective} \
+        https://telegram.org/dl/desktop/linux)
+    echo "Redirect: $url"
+
+    cd ~/.local/bin/
+    curl "$url" | tar -v -J --strip-components=1 -x -f -
+}
+
+inst_discord() {
+    local url="https://discord.com/api/download?platform=linux&format=deb"
+    #   The filename they supply in Content-disposition is `download`. :-(
+    curl -L -o ~/Downloads/discord.deb "$url"
+    sudo apt-get install ~/Downloads/discord.deb
 }
 
 inst_slack() {
@@ -39,11 +62,31 @@ inst_slack() {
     sudo apt-get install ~/Downloads/"$fname"
 }
 
-inst_discord() {
-    local url="https://discord.com/api/download?platform=linux&format=deb"
-    #   The filename they supply in Content-disposition is `download`. :-(
-    curl -L -o ~/Downloads/discord.deb "$url"
-    sudo apt-get install ~/Downloads/discord.deb
+####################################################################
+#   Development tools
+
+#   XXX We no longer use this, but use pae/pactivate instead.
+inst_pip() {
+    local req=python3-distutils     # required only on Debian 11
+    #   Cannot use grep -q here because it fails with 141 (pipe broken?)
+    if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
+        && ! dpkg -s $req >/dev/null
+    then
+        sudo apt-get install $req
+    fi
+
+    local getpip=~/Downloads/get-pip.py
+    curl --create-dirs -o "$getpip" https://bootstrap.pypa.io/get-pip.py
+    python3 "$getpip" --user
+}
+
+inst_pythonz() {
+    #   This list from README at: https://github.com/saghul/pythonz
+    sudo apt-get install build-essential \
+        zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev \
+        libsqlite3-dev libgdbm-dev libdb-dev libexpat-dev libpcap-dev \
+        liblzma-dev libpcre3-dev libffi-dev
+    curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
 inst_nodejs() {
@@ -68,43 +111,8 @@ inst_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
-inst_pip() {
-    local req=python3-distutils     # required only on Debian 11
-    #   Cannot use grep -q here because it fails with 141 (pipe broken?)
-    if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
-        && ! dpkg -s $req >/dev/null
-    then
-        sudo apt-get install $req
-    fi
-
-    local getpip=~/Downloads/get-pip.py
-    curl --create-dirs -o "$getpip" https://bootstrap.pypa.io/get-pip.py
-    python3 "$getpip" --user
-}
-
-inst_pythonz() {
-    #   This list from README at: https://github.com/saghul/pythonz
-    sudo apt-get install build-essential \
-        zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev \
-        libsqlite3-dev libgdbm-dev libdb-dev libexpat-dev libpcap-dev \
-        liblzma-dev libpcre3-dev libffi-dev
-    curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
-}
-
-inst_telegram() {
-    #   The final response after redirection does not include a
-    #   content-disposition header so -J does not work to pick the correct
-    #   filename. Instead, we first get the final URL (after redirections)
-    #   and then download that directly with -O.
-    url=$(curl -L -s --head -o /dev/null -w %{url_effective} \
-        https://telegram.org/dl/desktop/linux)
-    echo "Redirect: $url"
-
-    cd ~/.local/bin/
-    curl "$url" | tar -v -J --strip-components=1 -x -f -
-}
-
 ####################################################################
+#   Main
 
 usage() {
     echo "Usage: $(basename "$0") PACKAGE"
