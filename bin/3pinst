@@ -19,11 +19,15 @@ die() {
     exit "$exitcode"
 }
 
+no_additional_args() {
+    [[ $# -eq 0 ]] || die 2 'No additional arguments allowed.'
+}
+
 ####################################################################
 #   Desktop browse/chat apps
 
 inst_chrome() {
-    #   XXX not actually a $HOME install!
+    no_additional_args "$@"
     local fname='google-chrome-stable_current_amd64.deb'
     local urlloc='https://dl.google.com/linux/direct/'
     curl -L -o ~/Downloads/"$fname" "$urlloc/$fname"
@@ -31,6 +35,7 @@ inst_chrome() {
 }
 
 inst_telegram() {
+    no_additional_args "$@"
     #   The final response after redirection does not include a
     #   content-disposition header so -J does not work to pick the correct
     #   filename. Instead, we first get the final URL (after redirections)
@@ -44,6 +49,7 @@ inst_telegram() {
 }
 
 inst_discord() {
+    no_additional_args "$@"
     local url="https://discord.com/api/download?platform=linux&format=deb"
     #   The filename they supply in Content-disposition is `download`. :-(
     curl -L -o ~/Downloads/discord.deb "$url"
@@ -51,6 +57,7 @@ inst_discord() {
 }
 
 inst_slack() {
+    no_additional_args "$@"
     #   XXX not actually a $HOME install!
     #   It's actually the 'try again' link on this page, to be parsed out:
     #   (look for <a> with href= containing .deb/
@@ -67,6 +74,7 @@ inst_slack() {
 
 #   XXX We no longer use this, but use pae/pactivate instead.
 inst_pip() {
+    no_additional_args "$@"
     local req=python3-distutils     # required only on Debian 11
     #   Cannot use grep -q here because it fails with 141 (pipe broken?)
     if  apt-cache pkgnames $req | grep "^$req\$" >/dev/null \
@@ -81,6 +89,7 @@ inst_pip() {
 }
 
 inst_pythonz() {
+    no_additional_args "$@"
     #   This list from README at: https://github.com/saghul/pythonz
     sudo apt-get install build-essential \
         zlib1g-dev libbz2-dev libssl-dev libreadline-dev libncurses5-dev \
@@ -90,10 +99,11 @@ inst_pythonz() {
 }
 
 inst_rust() {
+    no_additional_args "$@"
     #   Defaults:  CARGO_HOME=~/.cargo  RUSTUP_HOME=~/.rustup
     #   More at:  https://stackoverflow.com/q/57765424/107294
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-        | sh -s -- --no-modify-path -y 
+        | sh -s -- --no-modify-path -y "$@"
     # --no-modify-path to avoid touching .bashrc etc.
     #   (`. "$CARGO_HOME/env"` not added, just adds $HOME/.cargo/bin to $PATH)
     # -y: disable confirmation prompt
@@ -102,6 +112,7 @@ inst_rust() {
 }
 
 inst_nodejs() {
+    no_additional_args "$@"
     # Filename format: node-v8.9.4-linux-x64.tar.xz
     local url=$(
         curl -s -L https://nodejs.org/en/download/ \
@@ -134,6 +145,6 @@ usage() {
 
 [[ $# -eq 0 ]] && { usage; exit 1; }
 [[ $1 = -h ]]  && { usage; exit 0; }
-[[ $# -gt 1 ]] && { die 2 'Takes only one argument'; }
-[[ $(type -t inst_$1) == function ]] || die 2 "Unknown package: $1"
-inst_$1
+package="$1"; shift
+[[ $(type -t inst_$package) == function ]] || die 2 "Unknown package: $package"
+inst_$package "$@"
