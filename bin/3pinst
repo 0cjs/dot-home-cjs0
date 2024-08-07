@@ -134,6 +134,22 @@ inst_nodejs() {
     tar --strip-components=1 -xf "$tarball"
 }
 
+inst_nix() {
+    [[ "$@" = *--daemon* || "$@" = *--no-daemon* ]] \
+        || die 2 'must specify --daemon or --no-daemon'
+    curl -sS -L https://nixos.org/nix/install \
+        | sh -s -- --no-modify-profile "$@"
+    # Nix adds to .bash_profile:
+    #   if [ -e /home/cjs/.nix-profile/etc/profile.d/nix.sh ]; then
+    #       . /home/cjs/.nix-profile/etc/profile.d/nix.sh;
+    #   fi # added by Nix installer
+    # This will prepend ~/.nix-profile/bin to $PATH even if already present.
+    # Sets:
+    # • $MANPATH (if already set)
+    # • NIX_PROFILES=/nix/var/nix/profiles/default $HOME/.nix-profile
+    # • NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+}
+
 ####################################################################
 #   Main
 
