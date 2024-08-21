@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -Eeuo pipefail
 
 print_xt() {
     echo 'xt() { eval $($HOME/.local/bin/xtitle -e "$@"); }'
@@ -82,13 +83,13 @@ case $(echo $host) in
         second=$(uname -n | sed -e 's/[^.]*\.//' -e 's/\..*//')
         host="$first.$second"
 esac
-[[ -n $HOST_HOSTNAME ]] && host="$host : $HOST_HOSTNAME"
+[[ -n ${HOST_HOSTNAME:-} ]] && host="$host : $HOST_HOSTNAME"
 
 dir=$(pwd -P | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
 echo_xtitle=false
 get_keyinfo=true
-while true; do case "$1" in
+while [[ $# -gt 0 ]]; do case "$1" in
     -e) shift; echo_xtitle=true;;
     -k) shift; get_keyinfo=false;;
     -x) shift; print_xt; exit 0;;
