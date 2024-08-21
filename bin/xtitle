@@ -1,23 +1,5 @@
 #!/usr/bin/env bash
 
-usage() {
-    cat >&2 <<____
-$(basename "$0") [-e] [NAME]
-  Sets xterm terminal title to "[NAME] HOST DIR".
-  NAME defaults to contents of the \$XTITLE environment variable.
-
-  This is normally used through the \`xt()\` function (printed with
-  \`-x\`) to set \$XTITLE=NAME in the environment so that subsequent
-  calls that don't specify a name keep the previously set one, but
-  update the host and current directory.
-
-  -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
-  -k  don't get keyinfo; this may be much faster on slow networks
-  -x  print definition of \`xt()\` function
-____
-    exit 2
-}
-
 print_xt() {
     echo 'xt() { eval $($HOME/.local/bin/xtitle -e "$@"); }'
 }
@@ -62,6 +44,27 @@ set_ckssh_keyinfo() {
         *)  keyinfo="[++$keyinfo++]";;
     esac
 }
+
+usage() {
+    cat >&2 <<____
+$(basename "$0") [-e] [NAME]
+  Sets xterm terminal title to "[NAME] HOST DIR".
+  NAME defaults to contents of the \$XTITLE environment variable.
+
+  This is normally used through the \`xt()\` function (printed with
+  \`-x\`) to set \$XTITLE=NAME in the environment so that subsequent
+  calls that don't specify a name keep the previously set one, but
+  update the host and current directory.
+
+  -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
+  -k  don't get keyinfo; this may be much faster on slow networks
+  -x  print definition of \`xt()\` function
+____
+    exit 2
+}
+
+####################################################################
+#   Main
 
 case "$TERM" in
     linux*)     : ;;
