@@ -34,11 +34,11 @@ set_ckssh_keyinfo() {
     declare -g keyinfo='no keys' 2>/dev/null || keyinfo='no keys'
                                               # Bash <4.2 has no `declare -g`
 
-    keyinfo="$(ckssh.py ckset -n 2>/dev/null)"
+    keyinfo=$(ckssh.py ckset -n 2>/dev/null || true)
     [[ -z $keyinfo ]] && keyinfo='?'
 
     keycount=$(ssh-add -l 2>/dev/null \
-        | grep -v 'The agent has no identities.' | wc -l)
+        | grep -v 'The agent has no identities.' | wc -l || true)
     case $keycount in
         0)  keyinfo="(--$keyinfo--)";;
         1)  keyinfo="[$keyinfo]";;
