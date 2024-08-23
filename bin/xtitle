@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+trap '
+    errcode=$?
+    echo 1>&2 "$0: INTERNAL ERROR $errcode at line $LINENO"
+    exit $errcode
+' ERR
+
 print_xt() {
     echo 'xt() { eval $($HOME/.local/bin/xtitle -e "$@"); }'
 }
