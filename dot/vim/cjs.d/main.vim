@@ -502,7 +502,8 @@ noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
 nnoremap gr :call MarkdownRefLabelSearch()<CR>
-nnoremap gR :call MarkdownRefDefinitionSearch()<CR>
+nnoremap gR :call MarkdownRefDefinitionSearch('url')<CR>
+nnoremap g<C-R> :call MarkdownRefDefinitionSearch('inline')<CR>
 
 "   Markdown reference label search.
 "   This does not add the pattern to the search history, but instead
@@ -530,15 +531,15 @@ function! MarkdownRefLabelSearch()
     "                   echo "DEBUG done"
 endfunction
 
-"   Markdown reference definition search.
+"   Markdown reference definition search, copying URL or inline reference.
 "   As above, but finds only the definition, leaves the cursor on
 "   the start of the URL after the label, and copies the URL to the
-"   system clipboard.
+"   system clipboard. (Or inline def, with the right param.)
 "   This does _not_ set the search pattern, so that `n` will continue
 "   to search for what was previously found; we expect that there will
 "   be only one definition so destroying `n` is not helpful.
 "   XXX Lots of duplicate code that needs to be refactored out.
-function! MarkdownRefDefinitionSearch()
+function! MarkdownRefDefinitionSearch(copy)
     "   Select bracketed block around [c[a]b]cursor and yank to register r
     "   The yank must be a separate :normal command in case the select fails.
     normal! va[
@@ -560,14 +561,32 @@ function! MarkdownRefDefinitionSearch()
     "   XXX should have error handling here to indicate no definition.
     let l:line = search(l:pat, "e")
     "                   echo "DEBUG line " . l:line
-    if l:line > 0
+    if l:line == 0
+        call DisplayError("Definition not found: " . l:pat)
+        return
+    endif
+
+    "                   echo "DEBUG copy arg " . a:copy
+    if a:copy == 'url'
         normal! l
         normal! "+y$
-    else
-        call DisplayError("Definition not found: " . l:pat)
+        return
     endif
-    "                   echo "DEBUG done"
+
+    "   Move to start of line. Copy bracketed ref. Skip to URL.
+    "   Append it with parens to + buffer.
+    if a:copy == 'inline'
+        normal! 0
+        normal! "+y%
+        normal! %W
+        let @+ = @+ . '(' . getline(".")[col(".") - 1:] . ')'
+        return
+    endif
+
+    call DisplayError("MarkdownRefDefinitionSearch: bad copy arg " . a:copy)
 endfunction
+
+" ----------------------------------------------------------------------
 
 "   We use virtual replace mode in place of standard replace mode
 "   because we typically don't want spacing to change just because
