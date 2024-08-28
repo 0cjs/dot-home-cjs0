@@ -103,10 +103,12 @@ inst_rust() {
     #   Defaults:  CARGO_HOME=~/.cargo  RUSTUP_HOME=~/.rustup
     #   More at:  https://stackoverflow.com/q/57765424/107294
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
-        | sh -s -- --no-modify-path -y "$@"
+        | sh -s -- --no-modify-path -y --default-toolchain=stable "$@"
     # --no-modify-path to avoid touching .bashrc etc.
     #   (`. "$CARGO_HOME/env"` not added, just adds $HOME/.cargo/bin to $PATH)
     # -y: disable confirmation prompt
+    # --default-toolchain=stable for most common use; could be `none`
+    # Optional: Add -q for quiet install
 
     # For completion setup docs run `rustup completions`.
 }
