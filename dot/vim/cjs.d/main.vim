@@ -577,9 +577,10 @@ function! MarkdownRefDefinitionSearch(copy)
     "   Append it with parens to + buffer.
     if a:copy == 'inline'
         normal! 0
-        normal! "+y%
-        normal! %W
+        keepjumps normal! "+y%
+        keepjumps normal! %W
         let @+ = @+ . '(' . getline(".")[col(".") - 1:] . ')'
+        normal! 0
         return
     endif
 
