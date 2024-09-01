@@ -34,7 +34,6 @@ print_separator() {
     #   Not that we care much about efficiency here,
     #   but the following uses only Bash built-ins.
     for ((i=0; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done; echo
-    echo
 }
 
 usage() {
@@ -50,7 +49,7 @@ ____
 }
 
 run() {
-    $separator print_separator
+    $separator echo
 
     #   Very fast machines, on seeing file creation or rewrite, may try
     #   to start using that file before the editor has finished writing
@@ -81,6 +80,8 @@ run() {
     while read -t 0.5 event; do
         $quiet echo "#  Ignoring: $event"
     done
+
+    $separator print_separator
 }
 
 ####################################################################
@@ -103,7 +104,6 @@ esac; done
 [[ "${#watchlist}" -gt 0 ]] || watchlist+=(.)
 
 run "$@" </dev/null     # Do an initial run before we start waiting for events.
-$separator print_separator
 
 $quiet echo "Watching: ${watchlist[@]}"
 inotifywait --monitor ${quiet:+--quiet} --event close_write \
