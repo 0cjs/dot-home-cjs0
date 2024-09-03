@@ -566,25 +566,29 @@ function! MarkdownRefDefinitionSearch(copy)
         return
     endif
 
-    "                   echo "DEBUG copy arg " . a:copy
+    "                   echom "DEBUG copy arg " . a:copy
     if a:copy == 'url'
         normal! l
         normal! "+y$
-        return
-    endif
-
-    "   Move to start of line. Copy bracketed ref. Skip to URL.
-    "   Append it with parens to + buffer.
-    if a:copy == 'inline'
+        execute "normal \<c-O>"
+    elseif a:copy == 'inline'
+        "   Move to start of line. Copy bracketed ref. Skip to URL.
+        "   Append it with parens to + buffer.
         normal! 0
         keepjumps normal! "+y%
         keepjumps normal! %W
         let @+ = @+ . '(' . getline(".")[col(".") - 1:] . ')'
-        normal! 0
+        execute "normal \<c-O>"
+    else
+        call DisplayError("MarkdownRefDefinitionSearch: bad copy arg " . a:copy)
         return
     endif
 
-    call DisplayError("MarkdownRefDefinitionSearch: bad copy arg " . a:copy)
+    "   Need a redraw *before* we echo anything, maybe because of all the
+    "   cursor movement above, otherwise what we echo won't display even
+    "   with a redraw afterwards.
+    redraw
+    echo "Copied: " . @+
 endfunction
 
 " ----------------------------------------------------------------------
