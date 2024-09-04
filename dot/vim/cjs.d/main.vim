@@ -856,6 +856,9 @@ let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 map z. :call DisplayError("Try using zz instead.")<CR>
 
 function! DisplayError(s)
+    "   Ensure that display of the message is not suppressed because we
+    "   have buffered output requests that have not yet been displayed.
+    redraw
     echohl ErrorMsg
     " We don't use :echoerr here because that always adds a line with the
     " current script line number; it's clearly intended for debugging.
