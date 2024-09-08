@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+trap 'echo 1>&2 "INTERNAL ERROR: ec=$? cmd=$BASH_COMMAND line=$LINENO"' ERR
+
+[[ $(git rev-parse --symbolic-full-name @) == refs/heads/master ]] && {
+    echo '● Changing from `master` branch to `main`'
+    git checkout main
+    git rebase
+} || true
