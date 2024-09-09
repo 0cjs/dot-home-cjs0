@@ -595,7 +595,13 @@ function! MarkdownRefDefinitionSearch(copy)
     "   cursor movement above, otherwise what we echo won't display even
     "   with a redraw afterwards.
     redraw
-    echo "Copied: " . @+
+    let l:s = "Copied: " . @+
+    if strchars(l:s) < 80
+        echo l:s
+    else
+        "   Avoid wrapping in 80 column terminal, which will prompt for ENTER
+        echo strcharpart(l:s, 0, 76) . "..."
+    endif
 endfunction
 
 " ----------------------------------------------------------------------
