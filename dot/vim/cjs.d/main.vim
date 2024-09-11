@@ -501,20 +501,27 @@ noremap gy  6<C-Y>
 noremap gS  /\s\+$<CR>
 "            yank, start search, insert " register contents
 vnoremap g/  y/\V<C-R>"<CR>
-nnoremap gr :call MarkdownRefLabelSearch()<CR>
-nnoremap gR :call MarkdownRefDefinitionSearch('url')<CR>
-nnoremap g<C-R> :call MarkdownRefDefinitionSearch('inline')<CR>
+"   gr commands: Markdown references under cursor
+"       grn: find next use of reference
+"       grN: find previous use of reference
+"       gru: copy URL of reference
+"       gri: copy in-line reference version of reference ("[…](…)")
+nnoremap grn :call MarkdownRefLabelSearch('/')<CR>
+nnoremap grN :call MarkdownRefLabelSearch('?')<CR>
+nnoremap gru :call MarkdownRefDefinitionSearch('url')<CR>
+nnoremap gri :call MarkdownRefDefinitionSearch('inline')<CR>
 
 "   Markdown reference label search.
 "   This does not add the pattern to the search history, but instead
 "   leaves the reference (with brackets) in register r for later pasting
 "   (usually with `Ctrl-R r` in insert mode).
-function! MarkdownRefLabelSearch()
+"   `search_command` should be `/` for forward search or `?` for reverse
+function! MarkdownRefLabelSearch(search_command)
     "   Select bracketed block around [c[a]b]cursor and yank to register r
     "   The yank must be a separate :normal command in case the select fails.
     normal! va[
     normal! "ry
-    "                   echo "DEBUG selection len=" . len(@r) . " /" . @r . "/"
+    "               echom "DEBUG selection len=" . len(@r) . " /" . @r . "/"
     "   If the select failed we are left with a 1-char block.
     if len(@r) == 1
         call DisplayError("Cursor not on a markdown reference")
@@ -522,13 +529,13 @@ function! MarkdownRefLabelSearch()
     endif
     "   Escape slashes in search pattern. Dunno why we need 4× "\" here.
     let l:pat = "\\c\\V" . substitute(@r, "/", "\\\\/", "g")
-    "                   echo "DEBUG pat /" . l:pat . "/"
-    "   Set our last search pattern so that n and p commands can be used.
+    "               echom "DEBUG pat /" . l:pat . "/"
+    "  Set our last search pattern so that n and p commands can be used.
     let @/ = l:pat
+    "               echom 'DEBUG search_command = ' . a:search_command
     "   Move from current position at start of this reference to the next
-    "   instance of it.
-    normal! n
-    "                   echo "DEBUG done"
+    "   or previous instance of it.
+    call feedkeys(a:search_command . "\n", 'n')
 endfunction
 
 "   Markdown reference definition search, copying URL or inline reference.
