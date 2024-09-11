@@ -504,12 +504,15 @@ vnoremap g/  y/\V<C-R>"<CR>
 "   gr commands: Markdown references under cursor
 "       grn: find next use of reference
 "       grN: find previous use of reference
+"       grp: alias for `grN`; saves a shift keystroke
 "       gru: copy URL of reference
 "       gri: copy in-line reference version of reference ("[…](…)")
 nnoremap grn :call MarkdownRefLabelSearch('/')<CR>
 nnoremap grN :call MarkdownRefLabelSearch('?')<CR>
+nnoremap grp :call MarkdownRefLabelSearch('?')<CR>
 nnoremap gru :call MarkdownRefDefinitionSearch('url')<CR>
 nnoremap gri :call MarkdownRefDefinitionSearch('inline')<CR>
+nnoremap gr  :call ConsumeError('Unknown gr command')<CR>
 
 "   Markdown reference label search.
 "   This does not add the pattern to the search history, but instead
