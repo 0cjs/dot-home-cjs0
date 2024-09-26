@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+#   tcut - trim command output to number of columns in terminal
+#
+#   Given a command, tcut will run that command and trim the output lines
+#   to be no longer than the number of columns in the terminal. With no
+#   arguments it trims the standard input.
+#
+set -Eeuo pipefail
+trap 'ec=$?; echo 1>&2 "INTERNAL ERROR: ec=$ec line=$LINENO cmd=$BASH_COMMAND\
+ file=${BASH_SOURCE[0]}"; exit $ec;' ERR
+
+shopt -s checkwinsize   # Just to make sure, though on by default.
+/bin/true </dev/tty     # Use non-builtin to trigger check of window size.
+[[ $# -eq 0 ]] && set cat
+"$@" | cut -c 1-$COLUMNS || exit $?
