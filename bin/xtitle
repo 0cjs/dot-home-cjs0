@@ -91,6 +91,8 @@ case $(echo $host) in
 esac
 [[ -n ${HOST_HOSTNAME:-} ]] && host="$host : $HOST_HOSTNAME"
 
+#   XXX fix this for when pwd fails;
+#   deal with non-exitent dir: maybe try without -P when dir is gone?
 dir=$(pwd -P | sed -e "s,$HOME,~," -e 's,.*/co/[^/]*/,,')/
 
 echo_xtitle=false
