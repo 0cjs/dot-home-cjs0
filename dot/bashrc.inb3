@@ -5,3 +5,9 @@ cjsguest()  {
     source ~/.home/cjs0/guest-setup
 }
 cjsvi() { source ~/.vim/cjs; }
+
+alias wr='wr_literal #'
+wr_literal() {
+    cmd=$(fc -l -n -1 | sed -e 's/^[[:space:]]*wr //')
+    watchrun bash -c "$cmd"
+}
