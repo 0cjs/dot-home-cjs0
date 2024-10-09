@@ -9,5 +9,5 @@ cjsvi() { source ~/.vim/cjs; }
 alias wr='wr_literal #'
 wr_literal() {
     cmd=$(fc -l -n -1 | sed -e 's/^[[:space:]]*wr //')
-    watchrun bash -c "$cmd"
+    watchrun bash -i -c "$cmd"      # -i to source .bashrc
 }
