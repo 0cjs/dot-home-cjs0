@@ -9,5 +9,12 @@ cjsvi() { source ~/.vim/cjs; }
 alias wr='wr_literal #'
 wr_literal() {
     cmd=$(fc -l -n -1 | sed -e 's/^[[:space:]]*wr //')
-    watchrun bash -i -c "$cmd"      # -i to source .bashrc
+    watchrun bash -c ". ~/.bashrc && $cmd"
+    #   We must source our .bashrc in the child shell because settings
+    #   from it (e.g., shell functions) are generally not inherited.
+    #   We do not use `-l` for a login shell, because that generally
+    #   sets env vars and the like that are inhereted, and we want to
+    #   inherit the changed value. Nor do we use `-i` (interactive),
+    #   becuase while that sources the .bashrc it doesn't exit
+    #   properly, producing messed-up job control.
 }
