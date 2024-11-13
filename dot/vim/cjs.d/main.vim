@@ -109,11 +109,6 @@ autocmd FileType markdown setlocal comments=fb:*,fb:-,b:>
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.yml   setlocal sw=4
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.yaml  setlocal sw=4
 
-" ===== Disassemblies =================================================
-"   .dis files are generated, not edited
-
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.dis   setlocal ro autoread iskeyword-=-
-
 " ===== C mode ========================================================
 
 function! SetCCodeSettings()
@@ -142,7 +137,7 @@ autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   so ~/.vim/haskell.vim
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal so ~/.vim/haskell.vim
 autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   so ~/.vim/haskell.vim
 
-" ===== Assembly language mode ========================================
+" ===== Assembly language modes ========================================
 
 function! SetAsmCodeSettings()
     " Maybe should set filetype=asm and/or call s:FTasm?
@@ -150,7 +145,31 @@ function! SetAsmCodeSettings()
     setlocal textwidth=75
 endfunction
 "   Probably we should use `setf asm` here....
-autocmd! BufReadPre,FileReadPre      *.a6[589]      call SetAsmCodeSettings()
+autocmd! BufReadPre,FileReadPre
+    \ *.{asm,i80,i85,z80,a68,a69,a65}
+    \ call SetAsmCodeSettings()
+
+"   'asm' syntax highlighting doesn't work very well for me
+autocmd! BufReadPost
+    \ *.{asm,i80,i85,z80,a68,a69,a65}
+    \ setlocal filetype=
+
+"   These files are generated, not edited:
+"   • .lst  Listing output from assemblers
+"   • .dis  Disassembler output
+function! SetListCodeSettings()
+    setlocal readonly
+    setlocal autoread
+    setlocal nolist
+    setlocal iskeyword-=-
+endfunction
+autocmd! BufReadPre,FileReadPre
+    \ *.{lst,dis}
+    \ call SetListCodeSettings()
+
+"   'asm' syntax highlighting doesn't work very well with listing files.
+autocmd! BufReadPost *.{lst,dis}  setlocal filetype=
+
 
 " ===== Encrypted file editing  =======================================
 
