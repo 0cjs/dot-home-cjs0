@@ -158,9 +158,8 @@ autocmd! BufReadPost
 "   • .lst  Listing output from assemblers
 "   • .dis  Disassembler output
 function! SetListCodeSettings()
-    setlocal readonly
-    setlocal autoread
-    setlocal nolist
+    setlocal readonly autoread
+    setlocal nolist nowrap
     setlocal iskeyword-=-
 endfunction
 autocmd! BufReadPre,FileReadPre
