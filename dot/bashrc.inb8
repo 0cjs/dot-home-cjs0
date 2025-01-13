@@ -2,7 +2,10 @@
 
 #   Ensure that ~/.local/bin is at the front of the path,
 #   even if other stuff got put in front of it during setup.
-prepath -f -n -q $HOME/.local/bin
+__0iscommand prepath \
+    && prepath -f -n -q $HOME/.local/bin \
+    || echo 1>&2 \
+        'WARNING: prepath not found: ~/.local/bin/ not moved to front of path'
 
 #   My most commonly-used and -missed functions, but we don't override
 #   them if they have already been set by previous configuration.
@@ -15,7 +18,4 @@ prepath -f -n -q $HOME/.local/bin
 #   without the parent environment's aliases, it will not generate a parse
 #   error.
 #
-#   Note we do not use the `-t` option here (as we used to) because this
-#   is not supported by MacOS zsh.
-#
-type lf >/dev/null 2>&1 || . <(echo 'lf() { command ls -CF "$@"; }')
+__0iscommand lf || . <(echo 'lf() { command ls -CF "$@"; }')

@@ -1,5 +1,11 @@
 # cjs minimal early bash config
 
+#   Compatible with Bourne shell, Bash and Zsh.
+#   We need and should not suppress stderr because correct usage will never
+#   produce an error message; only stdout is used when an alias, function
+#   or command exists.
+__0iscommand() { command >/dev/null -v "$@"; }
+
 #   Bash will generate an error if you define a function of the same name
 #   as an existing alias, so we need to ensure those aliases do not exist.
 #   Further, the unalias command must not happen on the same line, as later
