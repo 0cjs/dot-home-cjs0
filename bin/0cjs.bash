@@ -47,9 +47,9 @@ _u sp
 sp() { local i=0; while [ $i -lt ${1:-5} ]; do echo; i=$(($i+1)); done; }
 
 _u lf lfa ll lla llt llth
-lf()            { ls -CF "$@"; }       # also configured by cjs0
+lf()            { command ls -FC "$@"; }       # also configured by cjs0
 lfa()           { lf -a "$@"; }
-ll()            { ls -lh "$@"; }
+ll()            { command ls -lh "$@"; }
 lla()           { ll -a "$@"; }
 llt()           { ll -t "$@"; }
 llth()          { ll -t "$@" | head; }
