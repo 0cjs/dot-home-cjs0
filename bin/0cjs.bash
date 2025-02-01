@@ -1,7 +1,5 @@
 #   `source` this file
 
-bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
-
 ####################################################################
 #   Utility functions and aliases
 
@@ -17,22 +15,25 @@ __cjs0_checkexist() {
     return 1
 }
 
+__cjs0_dhrepo() {
+    [[ -d $1 ]] && return 0
+    echo 1>&2 "NOTE: cloning $1 from GitHub $2"
+    git clone -q "https://github.com/$2.git" "$1"
+}
+
 ####################################################################
 #   Setup and sourcing of dot-home, gitcmd-abbrev, cjs0
 
 #   Ensure we have all repos, to make initial setup easy. We check/clone even
 #   .home/cjs0 because this 0cjs.bashrc may be running from elsewhere.
 mkdir -p ~/.home
-__cjs0_checkexist ~/.home/dot-home/ \
-    || git clone https://github.com/dot-home/dot-home.git ~/.home/dot-home
-__cjs0_checkexist ~/.home/cjs0/ \
-    || git clone https://github.com/0cjs/dot-home-cjs0.git ~/.home/cjs0
-__cjs0_checkexist ~/.home/gitcmd-abbrev/ \
-    || git clone https://github.com/dot-home/gitcmd-abbrev.git \
-        ~/.home/gitcmd-abbrev
+__cjs0_dhrepo  ~/.home/dot-home/        dot-home/dot-home
+__cjs0_dhrepo  ~/.home/cjs0/            0cjs/dot-home-cjs0
+__cjs0_dhrepo  ~/.home/gitcmd-abbrev/   dot-home/gitcmd-abbrev
 
 source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
 
+bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
 for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
 #   XXX should be replaced by multi-config vim wrapper
 source ~/.home/cjs0/dot/vim/cjs
