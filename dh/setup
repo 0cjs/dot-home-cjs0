@@ -7,3 +7,6 @@ trap 'echo 1>&2 "INTERNAL ERROR: ec=$? cmd=$BASH_COMMAND line=$LINENO"' ERR
     git checkout main
     git rebase
 } || true
+
+chmod    go+X ../.. ..  # Others can search ~ and ~/.home/
+chmod -R go+rX .        # Others can read all of cjs0
