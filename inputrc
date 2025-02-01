@@ -1,0 +1,65 @@
+#   This file is not read by default; it must be read with
+#   `$include FILE` in ~/.inputrc or `bind -f FILE` in Bash.
+#
+#   In bash, use `bind` to examine and change bindings.
+#   • https://www.gnu.org/software/bash/manual/html_node/Readline-Init-File.html
+#   • https://www.gnu.org/software/bash/manual/html_node/Bindable-Readline-Commands.html
+
+set editing-mode vi
+
+# Unfortunately, ins-mode-string doesn't work in Bash 4.3
+#set show-mode-in-prompt on
+#set vi-ins-mode-string ""
+#set vi-ins-mode-string "EDIT>"
+
+set match-hidden-files off
+set completion-ignore-case on
+
+####################################################################
+#   Insert mode bindings
+
+set keymap vi-insert
+set keyseq-timeout 3000
+
+#   Limited Emacs-compatibility.
+"\C-a": beginning-of-line
+"\C-e": end-of-line
+
+#   Commands
+"\er": re-read-init-file
+Control-l: redraw-current-line
+
+#   ^Og error handling: any ^OgX that's not bound consumes the non-matching
+#   character after the g and generates an error, aborting the ^Og sequence.
+"\C-og\e":  abort                   # generate error
+"\C-og\b":  skip-csi-sequence       # consume next char, even if PgUp etc.
+"\C-og":    "\C-og\e\C-og\b"        # consume char and generate error
+
+#   Completion
+#   • https://www.gnu.org/software/bash/manual/html_node/Commands-For-Completion.html
+Tab: complete
+#   Tab in Bash 5.x (unlike 4.x) uses glob-complete-word (ignore patterns,
+#   add implicit `*` at end). These DTRT with glob patterns before the end.
+"\C-o8":   glob-list-expansions     # <C-x *>  List all glob expansions
+"\C-o*":   glob-expand-word         # <C-x g>  Insert all glob expansions
+
+# Ctrl-O-Ctrl-I: Macros that insert text (similar to my vimrc)
+"\C-o\C-ib":    "~/.local/bin/"     # b  - ~/.local/bin/
+"\C-o\C-id":    "$(i-date)"         # d  - date, ISO format: YYYY-MM-DD
+"\C-o\C-i\C-d": "$(idat)"           # ^D - date, short format: YYMMDD
+"\C-o\C-il":    "LD_LIBRARY_PATH"
+"\C-o\C-im":    "$(mbase)"          # get merge base
+"\C-o\C-i\C-m": "main@{u}"
+"\C-o\C-iM":    "master@{u}"
+"\C-o\C-is":    "SSH_AUTH_SOCK"
+"\C-o\C-i\C-u": "@{u}"
+"\C-o\C-iv":    "vim/cjs.d/"
+"\C-o\C-iw":    "--word-diff=color "
+
+####################################################################
+#   Command-mode bindings
+
+set keymap vi-command
+
+"\er": re-read-init-file            # But leaves one in insert mode
+Control-l: redraw-current-line

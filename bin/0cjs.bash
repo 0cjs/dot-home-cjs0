@@ -1,6 +1,6 @@
 #   `source` this file
 
-set -o vi
+bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
 
 ####################################################################
 #   Basic aliases and functions
