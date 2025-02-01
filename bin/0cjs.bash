@@ -3,7 +3,7 @@
 bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
 
 ####################################################################
-#   Basic aliases and functions
+#   Utility functions and aliases
 
 #   Bash will generate an error if you define a function of the same name
 #   as an existing alias, so we need to ensure those aliases do not exist.
@@ -17,21 +17,30 @@ __cjs0_checkexist() {
     return 1
 }
 
+####################################################################
+#   Setup and sourcing of dot-home, gitcmd-abbrev, cjs0
+
+#   Ensure we have all repos, to make initial setup easy. We check/clone even
+#   .home/cjs0 because this 0cjs.bashrc may be running from elsewhere.
+mkdir -p ~/.home
 __cjs0_checkexist ~/.home/dot-home/ \
-    && source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
+    || git clone https://github.com/dot-home/dot-home.git ~/.home/dot-home
+__cjs0_checkexist ~/.home/cjs0/ \
+    || git clone https://github.com/0cjs/dot-home-cjs0.git ~/.home/cjs0
+__cjs0_checkexist ~/.home/gitcmd-abbrev/ \
+    || git clone https://github.com/dot-home/gitcmd-abbrev.git \
+        ~/.home/gitcmd-abbrev
 
-__cjs0_checkexist ~/.home/cjs0/ && {
-    for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
-    #   XXX should be replaced by multi-config vim wrapper
-    source ~/.home/cjs0/dot/vim/cjs
-    #   If in a tmate session, reconfig for C-a prefix etc.
-    [[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
-}
+source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
 
-__cjs0_checkexist ~/.home/gitcmd-abbrev/ && {
-    source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
-    st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
-}
+for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
+#   XXX should be replaced by multi-config vim wrapper
+source ~/.home/cjs0/dot/vim/cjs
+#   If in a tmate session, reconfig for C-a prefix etc.
+[[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
+
+source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
+st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 
 ####################################################################
 #   From ~/.home/cjs1 files, so we don't need to clone it.
@@ -46,6 +55,8 @@ __cjs0_checkexist ~/.home/gitcmd-abbrev/ && {
 _u sp
 sp() { local i=0; while [ $i -lt ${1:-5} ]; do echo; i=$(($i+1)); done; }
 
+#   These do not disable colour, though perhaps they should since dark
+#   vs. light backgrounds can cause issues.
 _u lf lfa ll lla llt llth
 lf()            { command ls -FC "$@"; }       # also configured by cjs0
 lfa()           { lf -a "$@"; }
