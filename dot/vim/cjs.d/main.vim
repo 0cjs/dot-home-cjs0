@@ -524,12 +524,16 @@ vnoremap g/  y/\V<C-R>"<CR>
 "       grN: find previous use of reference
 "       grp: alias for `grN`; saves a shift keystroke
 "       gru: copy URL of reference
+"       grl: copy link; alias of `gru`
 "       gri: copy in-line reference version of reference ("[…](…)")
+"       gro: open URL in browser (with xdg-open)
 nnoremap grn :call MarkdownRefLabelSearch('/')<CR>
 nnoremap grN :call MarkdownRefLabelSearch('?')<CR>
 nnoremap grp :call MarkdownRefLabelSearch('?')<CR>
 nnoremap gru :call MarkdownRefDefinitionSearch('url')<CR>
+nnoremap grl :call MarkdownRefDefinitionSearch('url')<CR>
 nnoremap gri :call MarkdownRefDefinitionSearch('inline')<CR>
+nnoremap gro :call MarkdownRefDefinitionSearch('open')<CR>
 nnoremap gr  :call ConsumeError('Unknown gr command')<CR>
 
 "   Markdown reference label search.
@@ -595,7 +599,7 @@ function! MarkdownRefDefinitionSearch(copy)
     endif
 
     "                   echom "DEBUG copy arg " . a:copy
-    if a:copy == 'url'
+    if a:copy == 'url' || a:copy == 'open'
         normal! l
         normal! "+y$
         execute "normal \<c-O>"
@@ -610,6 +614,16 @@ function! MarkdownRefDefinitionSearch(copy)
     else
         call DisplayError("MarkdownRefDefinitionSearch: bad copy arg " . a:copy)
         return
+    endif
+
+    if a:copy == 'open'
+        "   This unfortunately hides errors. The stdout redirect is unrelated
+        "   to that; it just suppresses the "Opening in existing browser
+        "   session" message that appears in the background shortly after
+        "   xdg-open exits.
+        execute ":silent !xdg-open >/dev/null '" .. getreg('') .. "'"
+        "   :silent skips the Press Enter prompt, but messes up the screen.
+        redraw!
     endif
 
     "   Need a redraw *before* we echo anything, maybe because of all the
