@@ -16,6 +16,8 @@ let g:colors_name = 'cjs'
 "   For the moment, I need to `:syntax off` and `:syntax on` again to
 "   get my colours for the 2nd and subsequent files in arge.
 
+highlight Visual ctermbg=LightGreen ctermfg=Black
+
 " editing
 highlight NonText ctermfg=DarkGray
 highlight Search ctermfg=DarkBlue ctermbg=White cterm=bold
