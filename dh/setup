@@ -8,5 +8,7 @@ trap 'echo 1>&2 "INTERNAL ERROR: ec=$? cmd=$BASH_COMMAND line=$LINENO"' ERR
     git rebase
 } || true
 
-chmod    go+X ../.. ..  # Others can search ~ and ~/.home/
-chmod -R go+rX .        # Others can read all of cjs0
+[[ -w ~/.home/cjs0 ]] && {      # This may not be writable in dent containers.
+    chmod    go+X ../.. ..      # Others can search ~ and ~/.home/
+    chmod -R go+rX .            # Others can read all of cjs0
+} || true
