@@ -184,8 +184,9 @@ autocmd  BufWritePost,FileWritePost  *.asc  setlocal nobin
 
 " ===== Settings from .vim/cjs.d/tiny.vim =============================
 "   XXX Possibly this should be reading that file instead.
-noremap s :w<CR>
-noremap S :wa<CR>
+noremap s       :w<CR>
+noremap S       :wa<CR>
+noremap <C-S>   :checktime<CR>  " synchronize: reload files saved outside of Vim
 
 " ===== Basic Settings ================================================
 " nvi and vim
@@ -440,7 +441,8 @@ noremap qd      :set fileformats=unix,dos<CR>:e<CR>
 noremap qe      :set fileencoding=UTF-8<CR>
 noremap qE      :set fileencoding
 noremap qK      :setlocal iskeyword-=
-noremap qs      :checktime<CR>          " reload files saved outside vim
+noremap qs      :split<CR>
+noremap qS      :only<CR>   " close all windows but the current one
 noremap qt      :set filetype?<CR>
 noremap qT      :set filetype=
 noremap qq      :call DisplayError("qq: use `qw` to close window")<CR>
