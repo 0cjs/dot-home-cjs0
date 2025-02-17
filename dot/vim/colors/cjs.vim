@@ -1,37 +1,36 @@
-highlight clear
-if exists("syntax_on")
-    syntax reset
-endif
-let g:colors_name = 'cjs'
+"   XXX (The following no longer applies now that I have my own color scheme?)
+"   This doesn't do what I want; it ends up overriding my color scheme. I
+"   think I need to set up a separate, proper color scheme somehow. For the
+"   moment, I need to `:syntax off` and `:syntax on` again to get my
+"   colours for the 2nd and subsequent files in arge.
 
 "   Testing:
 "   ??? Open two+ terminals, one `TERM=xterm` and others `TERM=*-256color`.
 "     Each should have the test file opened with `:set autoread`.
 "   ??? Save this config file and `qz` in test terminals.
 
+highlight clear
+if exists("syntax_on")
+    syntax reset
+endif
+let g:colors_name = 'cjs'
+
 " Available ctermfg colors, in DarkFoo and LightFoo versions:
 "     Black Blue Green Cyan Red Magenta Yellow Grey White
 " See them with `:runtime syntax/colortest.vim`
-"
-"   XXX This doesn't do what I want; it ends up overriding my color scheme.
-"   I think I need to set up a separate, proper color scheme somehow.
-"   For the moment, I need to `:syntax off` and `:syntax on` again to
-"   get my colours for the 2nd and subsequent files in arge.
-"   XXX Above no longer applies?
-
-
-" Editing.
+" Color notes:
 "   • Using reverse not only swaps fg/bg colours, but will swap them
 "     for overlapping highlights. E.g., Visual highlight fg/bg will be
 "     swapped when over a Search area. (We actually don't want this,
 "     but leave it until we can think of a better example.)
 "   • But WARNING: some terminals (DOS console) cannot have both a
 "     cterm and a ctermfg/bg setting.
-"
-"   (Light) Cyan on DarkBlue works great in 256C, but is barely passible
-"   in 16C. Not much we can do about this; there are are no good dark
-"   on DarkBlue combinations, and dark on Black is hardly better.
-hi Search       cterm=reverse       ctermfg=White       ctermbg=Black
+"   • (Light) Cyan on DarkBlue works great in 256C, but is barely passible
+"     in 16C. But very much stands out.
+
+" Editing.
+hi Search       cterm=NONE          ctermfg=Black       ctermbg=White
+"hi Search       cterm=underline     ctermfg=Black       ctermbg=NONE
 hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
 hi ColorColumn                                          ctermbg=LightYellow
 hi NonText                          ctermfg=DarkGray
