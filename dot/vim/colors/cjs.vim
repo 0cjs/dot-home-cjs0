@@ -31,7 +31,7 @@ let g:colors_name = 'cjs'
 "   (Light) Cyan on DarkBlue works great in 256C, but is barely passible
 "   in 16C. Not much we can do about this; there are are no good dark
 "   on DarkBlue combinations, and dark on Black is hardly better.
-hi Search       cterm=bold,reverse  ctermfg=DarkBlue    ctermbg=Cyan
+hi Search       cterm=reverse       ctermfg=White       ctermbg=Black
 hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
 hi ColorColumn                                          ctermbg=LightYellow
 hi NonText                          ctermfg=DarkGray
