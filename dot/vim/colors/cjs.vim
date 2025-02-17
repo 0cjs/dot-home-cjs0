@@ -4,26 +4,39 @@ if exists("syntax_on")
 endif
 let g:colors_name = 'cjs'
 
+"   Testing:
+"   ??? Open two+ terminals, one `TERM=xterm` and others `TERM=*-256color`.
+"     Each should have the test file opened with `:set autoread`.
+"   ??? Save this config file and `qz` in test terminals.
+
 " Available ctermfg colors, in DarkFoo and LightFoo versions:
 "     Black Blue Green Cyan Red Magenta Yellow Grey White
 " See them with `:runtime syntax/colortest.vim`
 "
-" N.B.: cterm settings must come after the ctermfg and ctermbg settings
-" because subsequent color settings wipe out cterm settings.
-
 "   XXX This doesn't do what I want; it ends up overriding my color scheme.
 "   I think I need to set up a separate, proper color scheme somehow.
 "   For the moment, I need to `:syntax off` and `:syntax on` again to
 "   get my colours for the 2nd and subsequent files in arge.
+"   XXX Above no longer applies?
 
 
-" editing
-hi Search       cterm=bold      ctermfg=DarkBlue    ctermbg=White
-hi Visual                       ctermfg=Black       ctermbg=LightGreen
-hi ColorColumn                                      ctermbg=lightyellow
-hi NonText                      ctermfg=DarkGray
-hi Pmenu                        ctermfg=4           ctermbg=NONE
-hi PmenuSel     cterm=reverse   ctermfg=4           ctermbg=NONE
+" Editing.
+"   • Using reverse not only swaps fg/bg colours, but will swap them
+"     for overlapping highlights. E.g., Visual highlight fg/bg will be
+"     swapped when over a Search area. (We actually don't want this,
+"     but leave it until we can think of a better example.)
+"   • But WARNING: some terminals (DOS console) cannot have both a
+"     cterm and a ctermfg/bg setting.
+"
+"   (Light) Cyan on DarkBlue works great in 256C, but is barely passible
+"   in 16C. Not much we can do about this; there are are no good dark
+"   on DarkBlue combinations, and dark on Black is hardly better.
+hi Search       cterm=bold,reverse  ctermfg=DarkBlue    ctermbg=Cyan
+hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
+hi ColorColumn                                          ctermbg=LightYellow
+hi NonText                          ctermfg=DarkGray
+hi Pmenu                            ctermfg=4           ctermbg=NONE
+hi PmenuSel     cterm=reverse       ctermfg=4           ctermbg=NONE
 
 " syntax
 if &t_Co > 8
