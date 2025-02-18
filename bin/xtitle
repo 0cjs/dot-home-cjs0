@@ -56,14 +56,17 @@ usage() {
     cat >&2 <<____
 $(basename "$0") [-e] [NAME]
   Sets xterm terminal title to "[NAME] HOST DIR".
-  NAME defaults to contents of the \$XTITLE environment variable.
+  NAME defaults to contents of the \$LC_NOTLC_XTITLE environment variable.
+  (This is a "clever" (read: utter hack) way of having this variable
+  passed through ssh connections to other hosts; most sshd configurations
+  allow only `LC_*` environment variables to be passed through.)
 
   This is normally used through the \`xt()\` function (printed with
-  \`-x\`) to set \$XTITLE=NAME in the environment so that subsequent
+  \`-x\`) to set \$LC_NOTLC_XTITLE=NAME in the environment so that subsequent
   calls that don't specify a name keep the previously set one, but
   update the host and current directory.
 
-  -e  print XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
+  -e  print LC_NOTLC_XTITLE=... for evaluation in a shell (usually by \`xt()\` function)
   -k  don't get keyinfo; this may be much faster on slow networks
   -x  print definition of \`xt()\` function
 ____
@@ -104,7 +107,7 @@ while [[ $# -gt 0 ]]; do case "$1" in
     -*) echo 2>&1 "$(basename $0): Unkown option: $1"; usage;;
      *) break;;
 esac; done
-[[ $# -gt 0 ]] && XTITLE="$*"
+[[ $# -gt 0 ]] && LC_NOTLC_XTITLE="$*"
 
 keyinfo='?'
 $get_keyinfo && set_ckssh_keyinfo
@@ -113,6 +116,6 @@ esc=$(echo -n _ | tr _ '\033')
 bel=$(echo -n _ | tr _ '\007')
 
 blank='        '
-echo >/dev/tty -n "$esc]0;${XTITLE:-$blank} | $host | $keyinfo | $dir$bel"
-$echo_xtitle && echo "export XTITLE='$XTITLE'"
+echo >/dev/tty -n "$esc]0;${LC_NOTLC_XTITLE:-$blank} | $host | $keyinfo | $dir$bel"
+$echo_xtitle && echo "export LC_NOTLC_XTITLE='$LC_NOTLC_XTITLE'"
 exit 0

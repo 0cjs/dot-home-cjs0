@@ -36,7 +36,7 @@ tmc_add() {
         echo "Updated $line"
     fi
 
-    #   XXX Doesn't work because we can't change $XTITLE in parent.
+    #   XXX Doesn't work because we can't change $LC_NOTLC_XTITLE in parent.
     #eval $(xtitle -x 2>/dev/null)   # define xt() function
     #xt "$session_name"
 }
