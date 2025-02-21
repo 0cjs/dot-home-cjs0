@@ -32,7 +32,7 @@ let g:colors_name = 'cjs'
 hi Search       cterm=NONE          ctermfg=Black       ctermbg=White
 "hi Search       cterm=underline     ctermfg=Black       ctermbg=NONE
 hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
-hi ColorColumn                                          ctermbg=LightYellow
+hi ColorColumn                                          ctermbg=LightMagenta
 hi NonText                          ctermfg=DarkGray
 hi Pmenu                            ctermfg=4           ctermbg=NONE
 hi PmenuSel     cterm=reverse       ctermfg=4           ctermbg=NONE
