@@ -1,5 +1,9 @@
 #   `source` this file
 
+#   TODO:
+#   • Use ~cjs/.home/cjs0/ if $HOME/.home/cjs0/ does not exist.
+#   • Do not auto-clone w/__cjs0_dhrepo() if ~cjs/ repo exists?
+
 ####################################################################
 #   Utility functions and aliases
 
@@ -35,8 +39,7 @@ source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
 
 bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
 for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
-#   XXX should be replaced by multi-config vim wrapper
-source ~/.home/cjs0/dot/vim/cjs
+export EDITOR=~/.home/cjs0/bin/vi; unset VISUAL
 #   If in a tmate session, reconfig for C-a prefix etc.
 [[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
 

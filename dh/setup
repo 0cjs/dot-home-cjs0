@@ -12,3 +12,9 @@ trap 'echo 1>&2 "INTERNAL ERROR: ec=$? cmd=$BASH_COMMAND line=$LINENO"' ERR
     chmod    go+X ../.. ..      # Others can search ~ and ~/.home/
     chmod -R go+rX .            # Others can read all of cjs0
 } || true
+
+#  Vim spelling dictionary
+spadd=vim/spell/en.utf-8.add
+[[ -L $spadd.spl ]] && rm -f ~/.vim/spell/en.utf-8.add.spl
+vim -es -T dumb -c "mkspell! $spadd" -c 'quitall!' \
+    || echo 1>&2 "WARNING: vim mkspell failed: $spadd"

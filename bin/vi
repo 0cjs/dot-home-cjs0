@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+#
+#   This runs cjs's stand-alone Vim configuration; if you want your
+#   own config you should run `vim` instead.
+#
+set -Eeuo pipefail
+trap 'ec=$?; echo 1>&2 "INTERNAL ERROR: ec=$ec line=$LINENO cmd=$BASH_COMMAND";
+      exit $ec;' ERR
+
+#   TODO:
+#   • Handle systems without `vim`, such Debian with `vim-minimal` where
+#     there's no /usr/bin/vim, but just /usr/bin/vi.
+#   • Handle configuration with `vim-minimal`. Probably better to deal
+#     with this in the vimrc than here.
+
+#   • If the current user has the `cjs0` dot-home module installed, we use
+#     the vimconfig from that, allowing easy local editing of that config.
+#   • We also try the `dot-home-cjs0` dot-home module in case they cloned
+#     that without changing the name it lives on in GitHub.
+#   • If this user doesn't have a copy, we see if a local `cjs` user has
+#     one. This normally configured by cjs to have ~cjs/ and ~cjs/.home/
+#     a+x and and ~cjs/.home/cjs0/ a+rX.
+for vimconfig in \
+    "$HOME"/.home/cjs0/vim \
+    "$HOME"/.home/dot-home-cjs0/vim \
+    ~cjs/.home/cjs0/vim \
+; do
+    #   When given the -u option, Vim does not set $MYVIMRC to that rc file,
+    #   as it does when it does the search. Therefore we (when we run vim)
+    #   export it into the environment that Vim is started with, and Vim
+    #   will pick that up.
+    MYVIMRC="$vimconfig"/main.vim
+    [[ -r "$MYVIMRC" ]] || next     # exists and readable, or try next
+
+    #   -U NONE: no gvim initialisation
+    #   -u NONE: no gvim initialisation
+    [[ -d $vimconfig ]] \
+        && MYVIMRC="$MYVIMRC" exec vim -U none -u "$vimconfig/main.vim" "$@"
+done
+
+#   We cannot find the cjs vimconfig; simply use the normal one, but warn
+#   about this so that the user understands what's going on.
+echo 1>&2 "WARNING: no cjs0/vim/ configuration found; using user vim config" \
+    "(press Enter to continue)"
+read anything
+vim "$@"

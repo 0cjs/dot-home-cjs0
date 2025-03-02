@@ -1,2 +1,3 @@
 /.pytest_cache
 /t/**/__pycache__
+/vim/spell/*.spl

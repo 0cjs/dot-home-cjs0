@@ -1,3 +1,79 @@
+" ===== cjs vim configuration =========================================
+"
+"   This is a completely separate configuration from the standard ~/.vimrc
+"   and is expected to be run with -u from the bin/vi script in this
+"   directory. This configuration avoids using ~/.vimrc, /etc/vimrc or any
+"   other user- or system-local configuration, but does use the $VIMRUNTIME
+"   supplied with Vim.
+
+" ===== env vars pointing to configuration  ===========================
+
+"   $MYVIMRC is automatically set by Vim on startup when it searches for a
+"   vimrc file (see `:help iniitialization`). It is not set when the -u
+"   option is supplied, which this is expected to be run with; our `bin/vi`
+"   file sets $MYVIMRC in the environment and this inherits it.
+
+"   $VIMRUNTIME (`:help $VIMRUNTIME`) uses the env var, if set, or
+"   $VIM/vim{version} if it exists, or $VIM/runtime, or (for backwards
+"   compatibility) $VIM, or `helpfile` with doc/help.txt removed from the
+"   end. We keep this; it points to the standard config that comes with Vim
+"   itself. (It's caclulated using the default $VIM value from before set
+"   set it below.
+
+"   $VIM is not entirely clear; on non-Unix systems this is used to find
+"   the user vimrc (`:help startup`), but on Unix systems it seems to fall
+"   back to /usr/share/vim/ if it was not specified in the environment
+"   (`:help $VIM`). But on Debian that contains stuff from extra
+"   'expansion' packages that are not part of standard Vim, so we set this
+"   to our own configuration dir.
+let $VIM=fnamemodify($MYVIMRC,':h')
+
+" ===== 'runtimepath' =================================================
+
+"   Even with  `-u rcfile`, Vim will still set a default runtimepath that
+"   includes $HOME/.vim and the like.
+"
+"   The documented (standard) default is:
+"     $HOME/.vim,$VIM/vimfiles,$VIMRUNTIME,$VIM/vimfiles/after,$HOME/.vim/after
+"   We use this, replacing $HOME with our config.
+"
+"   Debian overrides this to:
+"     $HOME/.vim,/var/lib/vim/addons,/etc/vim,/usr/share/vim/vimfiles,
+"     /usr/share/vim/vim90,/usr/share/vim/vimfiles/after,/etc/vim/after,
+"     /var/lib/vim/addons/after,$HOME/.vim/after
+"   We ignore the extra stuff Debian adds (/usr/share/vim/vimfiles for
+"   Debian-supplied packages like 'vim-scripts' and, apparently, sysadmin-
+"   suplied things in /var/lib/vim/addons), as we do with any other
+"   distribution-supplied config.
+"
+"echo "old runtimepath=".&runtimepath
+set runtimepath=$VIM,$VIMRUNTIME,$VIM/after
+
+"   It's easier for the moment just to disable packages since I don't
+"   use them anyway, but in the long run we should probably deal with
+"   this as we do with 'runtimepath'.
+set packpath=
+
+" ===== Startup Debugging =============================================
+
+if getenv('VIMRC_DEBUG') != v:null
+    echo '$MYVIMRC='.$MYVIMRC
+    echo '$VIM='.$VIM
+    echo '$VIMRUNTIME='.$VIMRUNTIME
+    echo 'runtimepath='.&runtimepath
+    echo 'packpath='.&packpath
+endif
+
+"   At this point we're still running just this initial rc file, so running
+"   `:scr`/`:scriptnames` above will not show anything useful. But you can
+"   use it later, after full startup, to see exactly what got executed.
+
+"   To figure out what lines in this file are causing other files to be
+"   sourced, create an empty file named as below, enable this line at any
+"   point in this file, and then use :scriptnames or :scr to see where it
+"   is shown in the order of scripts that were run.
+"source ~/tmp/checkpoint0.vim
+
 " ===== General Notes =================================================
 
 "   We try here to avoid clobbering useful standard key mappings.
@@ -9,12 +85,6 @@
 "   ∙ Vim scripting cheatsheet: https://devhints.io/vimscript
 
 " ===== Debugging Notes  ==============================================
-
-"   To figure out what lines in this file are causing other files to
-"   be sourced, create an empty file named as below, enable this line
-"   at any point in this file, and then use :scriptnames or :scr to see
-"   where it is shown in the order of scripts that were run.
-"source ~/.vim/checkpoint0.vim
 
 " ===== Settings ======================================================
 " XXX This should gracefully degrade, a la
