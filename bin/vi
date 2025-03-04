@@ -30,7 +30,7 @@ for vimconfig in \
     #   export it into the environment that Vim is started with, and Vim
     #   will pick that up.
     MYVIMRC="$vimconfig"/main.vim
-    [[ -r "$MYVIMRC" ]] || next     # exists and readable, or try next
+    [[ -r "$MYVIMRC" ]] || continue     # exists and readable, or try next
 
     #   -U NONE: no gvim initialisation
     #   -u NONE: no gvim initialisation
