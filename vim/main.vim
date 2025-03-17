@@ -230,6 +230,10 @@ autocmd! BufReadPost
 function! SetListCodeSettings()
     setlocal readonly autoread
     setlocal nolist nowrap
+    "   Note that we do _not_ change isident because that affects the
+    "   way that vim expands environment variables. If you're searching
+    "   for identifiers where `-` is a legal char, you'll just need to
+    "   use `\k` instead of `\i`.
     setlocal iskeyword-=-
 endfunction
 autocmd! BufReadPre,FileReadPre
