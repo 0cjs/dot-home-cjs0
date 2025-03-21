@@ -1,5 +1,10 @@
 # cjs useful core bash aliases/functions; may be overridden
 
+become() {
+    [[ -z $1 ]] && { echo 1>&2 "Usage: become USERNAME"; return 1; }
+    sudo -u "$1" -i bash --rcfile ~cjs/.home/cjs0/full-env.bash
+}
+
 cjsguest()  {
     source ~/.bashrc    # in case there are any updates we need to bring in
     source ~/.home/cjs0/guest-setup
