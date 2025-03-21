@@ -441,3 +441,5 @@ virtualenv
 OAuth
 OpenSSH
 Grafana
+Dockerfile
+journalctl
