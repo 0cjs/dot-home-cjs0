@@ -285,16 +285,28 @@ set splitbelow equalalways
 noremap <C-N> :next<CR>
 noremap <C-P> :previous<CR>
 
+" ===== 'q' Prefix ====================================================
+
 "   We take over `q` as a prefix for all the stuff in this section.
 "   Thus, disable `q` alone or with an unknown char following to avoid
 "   accidentally turning on the 'record typed chars to register' mode
 "   because sometimes doing that would be very confusing. (It's a
 "   lesser-used command that we move elsewhere.)
-noremap q :     call ConsumeError("Use `Q@` to record to register")<CR>
+noremap q       :call ConsumeError("Use `q'` to record to register")<CR>
 "   Having done this, we now restore some of the original qX commands.
+"     q:        Open command line history window
+"     q/ q?     Open search history window
 noremap q:      q:
 noremap q/      q/
 noremap q?      q?
+
+"   Recording for repeat (register name follows command)
+"     q;    Execute commands in register
+"     q'    Record to register
+"     q"    Edit register
+noremap q;      @
+noremap q'      q
+noremap q"      :call DisplayError("edit register not yet written")<CR>
 
 "   Window create/move commands
 "   These tend to follow `q` with a right-hand key.
