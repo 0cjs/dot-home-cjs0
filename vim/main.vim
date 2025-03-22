@@ -411,14 +411,19 @@ function! GitCommit(...)
     execute '!git commit -v -a'
 endfunction
 
-"   Misc. commands on `q`
-"
-"   q8      Disable colorcolumn (should really be flip setting)
-"   q;      Switch to ex (line editor) mode
-"   qz      Re-read .vimrc file.
-noremap q8      :set colorcolumn=<CR>
-noremap q;      gQ
-noremap qz      :source $HOME/.vimrc<CR>
+"   Reload command
+noremap qz      :call CjsReloadConfig()<CR>
+if !exists('*CjsReloadConfig')
+    "   We can't redefine this when we're reloading becasue we're currently
+    "   running the function. So instead we just skip; that means that
+    "   changes to this function can't be reloaded by calling it, but
+    "   must be done with `source ~/.home/cjs0/vim/main.vim`.
+    function CjsReloadConfig()
+        let l:main = split(&runtimepath, ',')[0] . '/main.vim'
+        echo "RELOAD! from " . l:main
+        execute 'source '. l:main
+    endfunction
+endif
 
 
 " ===== Misc. Key Mappings ==================================================
