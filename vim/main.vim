@@ -52,7 +52,9 @@ set runtimepath=$VIM,$VIMRUNTIME,$VIM/after
 "   It's easier for the moment just to disable packages since I don't
 "   use them anyway, but in the long run we should probably deal with
 "   this as we do with 'runtimepath'.
-set packpath=
+if has('packages')
+    set packpath=
+endif
 
 " ===== Startup Debugging =============================================
 
@@ -84,33 +86,12 @@ endif
 "   ∙ Vim scripting help: :help eval
 "   ∙ Vim scripting cheatsheet: https://devhints.io/vimscript
 
-" ===== Debugging Notes  ==============================================
-
 " ===== Settings ======================================================
 " XXX This should gracefully degrade, a la
 " http://blog.sanctum.geek.nz/gracefully-degrading-vimrc
 
 set nocompatible
 :scriptencoding utf-8
-
-" ===== Reset Environment =============================================
-"
-"   It's not entirely clear how to deal with using my environment in
-"   accounts where the user brings in a ton of very aggressive stuff, such
-"   as the "airline" package that  overrides any other status line. For the
-"   moment I just clear 'packpath' and leave it at that. I _don't_ clean up
-"   'runtimepath' because that blocks access to some of my own stuff as
-"   well, and I don't want to stop others from :runtime'ing in a
-"   bit of their own stuff from time to time.
-"
-"   Certain user's use of symlinks make this even more complex because if
-"   ~/.vim is a symlink, dot-home will not be able to place my files in it.
-"   Probably for that I need to add paths into ~/.home/cjs0/.
-"
-"set runtimepath=$VIMRUNTIME    " XXX would cut out my own stuff!
-if has('packages')
-    set packpath=               " Avoid autoloading another user's packages.
-endif
 
 " ===== File Type Setup ===============================================
 
