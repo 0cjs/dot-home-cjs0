@@ -80,6 +80,7 @@ case "$TERM" in
     linux*)     : ;;
     xterm*)     : ;;
     rxvt*)      : ;;
+    alacritty)  : ;;
     screen*)    : ;;
     tmux*)      : ;;
     *)          echo 1>&2 "$(basename $0): unknown terminal: $TERM"; exit 0;;
