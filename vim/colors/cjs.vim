@@ -29,8 +29,26 @@ let g:colors_name = 'cjs'
 "   • (Light) Cyan on DarkBlue works great in 256C, but is barely passible
 "     in 16C. But very much stands out.
 
+
+"   For `#rrggbb`, give colour index in &t_Co that's geometrically nearest.
+function! s:nc(rgb)
+    "   XXX should check that first char is '#', etc.
+    let l:r = strpart(a:rgb, 1, 2)
+    let l:g = strpart(a:rgb, 3, 2)
+    let l:b = strpart(a:rgb, 5, 2)
+    let l:color = l:r . l:g . l:b
+    echo color
+    let l:colors = range(0, &t_Co - 1)
+    echo colors
+    let l:distances = map(l:colors, 'abs(str2nr(matchstr(synIDattr(v:val, "bg"), ''^\x\{6}\'''), 16) - str2nr(l:color, 16))')
+    echo distances
+    return min(l:distances)
+endfunction
+
+echo s:nc('#ff2288')
+
 " Editing.
-hi Search       cterm=NONE          ctermfg=Black       ctermbg=White
+hi Search       cterm=NONE          ctermfg=Black       ctermbg=`s:nc('#FFFFFF')`
 "hi Search       cterm=underline     ctermfg=Black       ctermbg=NONE
 hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
 hi ColorColumn                                          ctermbg=LightMagenta
