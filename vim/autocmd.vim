@@ -94,10 +94,10 @@ autocmd! BufEnter                           *.go    call SetGoCodeSettings()
 " ===== Haskell mode ==================================================
 
 "   XXX This should be in a syntax/ directory, no?
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.hs    so ~/.home/cjs0/vim/haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   so ~/.home/cjs0/vim/haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal so ~/.home/cjs0/vim/haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   so ~/.home/cjs0/vim/haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.hs    so haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   so haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal so haskell.vim
+autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   so haskell.vim
 
 " ===== Assembly language modes ========================================
 
