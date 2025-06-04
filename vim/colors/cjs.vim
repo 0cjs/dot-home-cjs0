@@ -5,9 +5,10 @@
 "   colours for the 2nd and subsequent files in arge.
 
 "   Testing:
-"   ??? Open two+ terminals, one `TERM=xterm` and others `TERM=*-256color`.
+"   • Open two+ terminals, one `TERM=xterm` and others `TERM=*-256color`.
 "     Each should have the test file opened with `:set autoread`.
-"   ??? Save this config file and `qz` in test terminals.
+"   • Load file, or :source $VIMRUNTIME/syntax/colortest.vim
+"   • Save this config file and `qz` in test terminals.
 
 highlight clear
 if exists("syntax_on")
