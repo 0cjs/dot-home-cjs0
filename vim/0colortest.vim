@@ -5,6 +5,8 @@
 
 " edit this file, then do ":source %", and check if the colors match
 
+" test		#000000_on_#FFFFFF	#FFFFFF_on_#000000
+
 " black		black_on_white				white_on_black
 "				black_on_black		black_on_black
 " darkred	darkred_on_white			white_on_darkred
@@ -69,11 +71,20 @@ if expand('%:p') != expand('<sfile>:p')
   unlet s:fname
 endif
 
+"   Use `iskeyword` to match colour descs so we can test with the `*` command.
+"   But then we need to change `expand("<cword>")` which also uses `iskeyword`.
+"set iskeyword-=_
+"set iskeyword+=#
+set iskeyword=@,48-57,#,65-90,97-122	"numbers, uc letters, lc letters
+
 syn clear
 8
 while search("_on_", "W") < 55
-  let col1 = substitute(expand("<cword>"), '\(\a\+\)_on_\a\+', '\1', "")
-  let col2 = substitute(expand("<cword>"), '\a\+_on_\(\a\+\)', '\1', "")
+  let col1 = substitute(expand("<cword>"), '\(\k\+\)_on_\k\+', '\1', "")
+  let col2 = substitute(expand("<cword>"), '\k\+_on_\(\k\+\)', '\1', "")
+  echo col1
+  echo col2
+  exec 'hi col_'.col1.'_'.col2.' ctermfg='.col1.' guifg='.col1.' ctermbg='.col2.' guibg='.col2
   exec 'hi col_'.col1.'_'.col2.' ctermfg='.col1.' guifg='.col1.' ctermbg='.col2.' guibg='.col2
   exec 'syn keyword col_'.col1.'_'.col2.' '.col1.'_on_'.col2
 endwhile
