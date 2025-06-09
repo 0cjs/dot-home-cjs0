@@ -654,8 +654,14 @@ vnoremap <silent> # :<C-U>
 " Formatting
 
 set nojoinspaces
-"   Turn off autowrap (formatoptions=t) so textwidth used only for autoformat.
-set formatoptions=qn
+"   -t: text autowrap off, textwidth used only for `gq` formatting
+"   -c: comment autowrap off, textwidth used only for `gq` formatting
+"   +r: insert comment leader after Enter in insert mode (cancel with Ctrl-U)
+"   +o: insert comment leader when opening line (cancel with Ctrl-U)
+"   +q: `gq` formats comments preserving leader
+"   +n: `gq` formatting recognizes numbered lists or whatever's in `&formatpat`
+"   +2: indent of 2nd line of paragraph, not 1st, used for rest.
+set formatoptions=roqn2
 set textwidth=75
 "   See `gt` mappings for changing textwidth.
 
