@@ -76,6 +76,18 @@ endif
 "   is shown in the order of scripts that were run.
 "source ~/tmp/checkpoint0.vim
 
+" ===== Standard Vim Startup ==========================================
+"   Since we invoke vim with `-u`, the standard startup described by
+"   `:help initialization` is not done, and we need to replicate that
+"   as described there.
+
+"   In particular, point 3.c.V, executing $VIMRUNTIME/defaults.vim,
+"   is essential for e.g. filetype setup to work correctly. But note that
+"   since we weren't using this properly before, we're now getting *lots*
+"   of overrides of our own setting, and may need to add lots of
+"   after/ftplugin/*.vim files to restore things.
+runtime! defaults.vim
+
 " ===== General Notes =================================================
 
 "   We try here to avoid clobbering useful standard key mappings.
@@ -147,7 +159,6 @@ filetype indent off
 " ===== Colors ========================================================
 
 "   Sources  /usr/share/vim/vim80/syntax/nosyntax.vim
-"syntax off
 
 syntax enable
 set background=light
