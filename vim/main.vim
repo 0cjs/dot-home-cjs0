@@ -87,6 +87,8 @@ endif
 "   of overrides of our own setting, and may need to add lots of
 "   after/ftplugin/*.vim files to restore things.
 runtime! defaults.vim
+"   Disable annoying things that the above enabled.
+set mouse=
 
 " ===== General Notes =================================================
 
