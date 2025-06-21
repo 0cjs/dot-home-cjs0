@@ -307,18 +307,19 @@ noremap <C-P> :previous<CR>
 "   lesser-used command that we move elsewhere.)
 noremap q       :call ConsumeError("Use `q'` to record to register")<CR>
 "   Having done this, we now restore some of the original qX commands.
-"     q:        Open command line history window
 "     q/ q?     Open search history window
-noremap q:      q:
 noremap q/      q/
 noremap q?      q?
+"   We do not map the following commands:
+"   • q: (command line history): doesn't save keystrokes over `:^E` and
+"     it's better to have macro record there (see below)
 
 "   Recording for repeat (register name follows command)
 "     q;    Execute commands in register
-"     q'    Record to register
+"     q:    Record to register
 "     q"    Edit register
 noremap q;      @
-noremap q'      q
+noremap q:      q
 noremap q"      :call DisplayError("edit register not yet written")<CR>
 
 "   Window create/move commands
