@@ -119,12 +119,14 @@ inst_ghcup() {
         | BOOTSTRAP_HASKELL_MINIMAL=1 \
           BOOTSTRAP_HASKELL_NONINTERACTIVE=1 \
           sh
-    (cd ~/.local/bin && rm -f ghcup && ln -s ../../.ghcup/bin/ghcup)
 
     #   Use Stack from ghcup, rather than stand-alone. The install below
     #   will also automatically set `stack` to `stack-N.M.p`, which is
     #   fine because we want that anyway.
     ghcup install stack latest
+
+    echo '━━━━━ Post-install: updating bin links and hooks'
+    (cd ~/.local/bin && rm -f ghcup && ln -s ../../.ghcup/bin/ghcup)
     (cd ~/.local/bin && rm -f stack && ln -s ../../.ghcup/bin/stack)
 
     #   The Stack hook will make `stack` use GHCup to fetch its GHC
@@ -138,12 +140,10 @@ inst_ghcup() {
     #   • https://github.com/haskell/ghcup-hs/blob/master/scripts/bootstrap/bootstrap-haskell
     hook_exe="${STACK_ROOOT:-$HOME/.stack}"/hooks/ghc-install.sh
     hook_url="https://www.haskell.org/ghcup/sh/hooks/stack/ghc-install.sh"
-    if [[ -e $hook_exe ]]; then
-        echo 1>&2 'WARNING: not overriding existing stack hook'
-    else
-        mkdir -p "$(dirname "$hook_exe")"
-        curl -Lf ${GHCUP_CURL_OPTS:-} -o "${hook_exe}" "${hook_url}"
-    fi
+    [[ -e $hook_exe ]] && \
+        echo 1>&2 "WARNING: overriding existing stack hook $hook_exe"
+    mkdir -p "$(dirname "$hook_exe")"
+    curl --no-progress-meter -Lf ${GHCUP_CURL_OPTS:-} -o "${hook_exe}" "${hook_url}"
 }
 
 inst_rust() {
