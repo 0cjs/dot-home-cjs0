@@ -144,6 +144,7 @@ inst_ghcup() {
         echo 1>&2 "WARNING: overriding existing stack hook $hook_exe"
     mkdir -p "$(dirname "$hook_exe")"
     curl --no-progress-meter -Lf ${GHCUP_CURL_OPTS:-} -o "${hook_exe}" "${hook_url}"
+    chmod +x "$hook_exe"
 }
 
 inst_rust() {
