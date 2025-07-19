@@ -390,6 +390,9 @@ noremap qq      :call DisplayError("qq: use `qw` to close window")<CR>
 noremap qw      <C-W>c
 noremap qX      :!chmod +x '%'<CR>
 
+"   Other window-related commands
+noremap qz      :set scrolloff=
+
 "   Version control commands
 "
 "   qvb     blame current file
@@ -438,7 +441,7 @@ function! GitCommit(...)
 endfunction
 
 "   Reload command
-noremap qz      :call CjsReloadConfig()<CR>
+noremap qZ      :call CjsReloadConfig()<CR>
 if !exists('*CjsReloadConfig')
     "   We can't redefine this when we're reloading becasue we're currently
     "   running the function. So instead we just skip; that means that
