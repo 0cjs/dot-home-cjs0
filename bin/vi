@@ -43,4 +43,4 @@ done
 echo 1>&2 "WARNING: no cjs0/vim/ configuration found; using user vim config" \
     "(press Enter to continue)"
 read anything
-vim "$@"
+command vim "$@"
