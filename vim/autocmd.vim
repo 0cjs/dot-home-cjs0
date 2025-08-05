@@ -49,6 +49,13 @@ function! TXTFile()
     edit
 endfunction
 
+" ===== Mail messages (via Mutt, etc.)  ==============================
+
+"   Disable automatic insertion of '>` when opening below a quoted
+"   paragraph; I never want to be typing additional material into
+"   a quote from someone else.
+autocmd FileType mail setlocal formatoptions-=ro
+
 " ===== Git Commit Messages ==========================================
 
 autocmd FileType gitcommit setlocal textwidth=75 fileencoding=UTF-8
