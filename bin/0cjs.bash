@@ -37,7 +37,14 @@ __cjs0_dhrepo  ~/.home/gitcmd-abbrev/   dot-home/gitcmd-abbrev
 
 source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
 
-bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
+if [[ -z $ZSH_VERSION ]]; then
+    bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
+else
+    #   ZSH does not support `bind` or even use readline, apparently.
+    #   This quick hack does a bit of what my inputrc does.
+    bindkey -v
+    bindkey '^R' history-incremental-search-backward
+fi
 for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
 export EDITOR=~/.home/cjs0/bin/vi; unset VISUAL
 #   If in a tmate session, reconfig for C-a prefix etc.
