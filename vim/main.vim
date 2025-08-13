@@ -49,12 +49,20 @@ let $VIM=fnamemodify($MYVIMRC,':h')
 "echo "old runtimepath=".&runtimepath
 set runtimepath=$VIM,$VIMRUNTIME,$VIM/after
 
-"   It's easier for the moment just to disable packages since I don't
-"   use them anyway, but in the long run we should probably deal with
-"   this as we do with 'runtimepath'.
+"echo 'old packpath='.&packpath
+"   Vim by default adds user package paths (~/.vim/ etc.) to packpath:
+"   remove these from our configuration. We keep the system-supplied paths
+"   (/usr/share/vim/vimfiles etc.) because when we later execute the system
+"   setup `runtime! defaults.vim` that may expect to be able to load
+"   packages. (We may not want these packages, but it's not curently clear
+"   how to ensure we don't load them while still loading all our filetype
+"   setup, unless we just do everything ourselves.)
 if has('packages')
-    set packpath=
+    let s:pp_parts = filter(split(&packpath, ','), 'v:val !~ "^" . expand("~")')
+    let &packpath = join(s:pp_parts, ',')
+    unlet s:pp_parts
 endif
+"echo 'new packpath='.&packpath
 
 " ===== Startup Debugging =============================================
 
