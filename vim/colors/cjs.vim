@@ -2,7 +2,7 @@
 "   This doesn't do what I want; it ends up overriding my color scheme. I
 "   think I need to set up a separate, proper color scheme somehow. For the
 "   moment, I need to `:syntax off` and `:syntax on` again to get my
-"   colours for the 2nd and subsequent files in arge.
+"   colors for the 2nd and subsequent files in arge.
 
 "   Testing:
 "   • Open two+ terminals, one `TERM=xterm` and others `TERM=*-256color`.
@@ -20,7 +20,7 @@ let g:colors_name = 'cjs'
 "     Black Blue Green Cyan Red Magenta Yellow Grey White
 " See them with `:runtime syntax/colortest.vim`
 " Color notes:
-"   • Using reverse not only swaps fg/bg colours, but will swap them
+"   • Using reverse not only swaps fg/bg colors, but will swap them
 "     for overlapping highlights. E.g., Visual highlight fg/bg will be
 "     swapped when over a Search area. (We actually don't want this,
 "     but leave it until we can think of a better example.)
@@ -30,51 +30,77 @@ let g:colors_name = 'cjs'
 "     in 16C. But very much stands out.
 
 
-"   For `#rrggbb`, give colour index in &t_Co that's geometrically nearest.
-function! s:nc(rgb)
-    "   XXX should check that first char is '#', etc.
-    let l:r = strpart(a:rgb, 1, 2)
-    let l:g = strpart(a:rgb, 3, 2)
-    let l:b = strpart(a:rgb, 5, 2)
-    let l:color = l:r . l:g . l:b
-    echo color
-    let l:colors = range(0, &t_Co - 1)
-    echo colors
-    let l:distances = map(l:colors, 'abs(str2nr(matchstr(synIDattr(v:val, "bg"), ''^\x\{6}\'''), 16) - str2nr(l:color, 16))')
-    echo distances
-    return min(l:distances)
+" ----------------------------------------------------------------------"
+"  RGB color specification support.
+"  This seemed like a good idea originally, but it turns out to be much
+"  easier to select from https://robotmoon.com/256-colors/ instead. (But
+"  RGB values are also at https://github.com/linrock/256-colors .)
+"
+"   "Import" RgbHighlight and RgbTo256.
+source <sfile>:h/rgb256.vim
+function! s:C(rgb_color)
+    return RgbTo256(a:rgb_color)
+endfunction
+"echo 'C='.s:C('#808080')
+function! s:hi(...)
+    call call('RgbHighlight', a:000)
 endfunction
 
-echo s:nc('#ff2288')
+" ----------------------------------------------------------------------
+"   New 256-color scheme.
+if &t_Co > 16
 
-" Editing.
-hi Search       cterm=NONE          ctermfg=Black       ctermbg=`s:nc('#FFFFFF')`
-"hi Search       cterm=underline     ctermfg=Black       ctermbg=NONE
+"   Editing
+hi Search       cterm=bold      ctermfg=255     ctermbg=33
+hi Visual       cterm=NONE      ctermfg=Black   ctermbg=82
+hi ColorColumn                                  ctermbg=222
+hi NonText                      ctermfg=166
+hi Pmenu                        ctermfg=4       ctermbg=255
+hi PmenuSel     cterm=reverse   ctermfg=4       ctermbg=255
+
+"   Syntax Highlighting
+hi Comment                      ctermfg=246
+
+" ----------------------------------------------------------------------
+"   Old 8/16-color scheme. This probably will not work well because it was
+"   designed for a terminal with custom color settings for some of the
+"   16 colors. If we spend much time working on 16-color terminals again,
+"   this should be tweaked to work better with the standard 16 colors.
+else
+
+"   Editing
+hi Search       cterm=NONE          ctermfg=Black       ctermbg=White
 hi Visual       cterm=NONE          ctermfg=Black       ctermbg=LightGreen
 hi ColorColumn                                          ctermbg=LightMagenta
 hi NonText                          ctermfg=DarkGray
 hi Pmenu                            ctermfg=4           ctermbg=NONE
 hi PmenuSel     cterm=reverse       ctermfg=4           ctermbg=NONE
 
-" syntax
+"   Syntax Highlighting
 if &t_Co > 8
     let g:highlight_grey = "DarkGrey"
 else
     let g:highlight_grey = "Grey"
 endif
 execute 'highlight Comment ctermfg=' . g:highlight_grey
-highlight Underlined ctermfg=Black      " Remove magenta on Underlined text
-highlight Constant ctermfg=DarkBlue
-highlight Special ctermfg=Black
-highlight Identifier ctermfg=DarkBlue
-highlight Statement ctermfg=Black
-highlight PreProc ctermfg=Black
-highlight Type ctermfg=Black
-highlight Title ctermfg=Blue cterm=bold
-highlight Subtitle ctermfg=Blue
-highlight Error term=reverse ctermfg=Black ctermbg=Red
 
-" diffs
+" ----------------------------------------------------------------------
+"   Common colours for all schemes, all from the 8-color palette.
+endif
+
+"   Syntax Highlighting
+hi Underlined               ctermfg=Black " Remove magenta on underlined text.
+hi Constant                     ctermfg=DarkBlue
+hi Special                      ctermfg=Black
+hi Identifier                   ctermfg=DarkBlue
+hi Statement                    ctermfg=Black
+hi PreProc                      ctermfg=Black
+hi Type                         ctermfg=Black
+hi Title        cterm=bold      ctermfg=Blue
+hi Subtitle                     ctermfg=Blue
+hi Error        term=reverse    ctermfg=Black ctermbg=Red
+
+"   Diffs
 highlight diffAdded     ctermfg=DarkBlue
 highlight diffRemoved   ctermfg=DarkRed
 highlight diffFile      ctermfg=DarkGreen
@@ -94,7 +120,7 @@ highlight link htmlH4 Subtitle
 highlight link htmlH5 Subtitle
 highlight link htmlH6 Subtitle
 
-"   markdown
+"   Markdown
 highlight markdownCode  ctermfg=Brown
 highlight link markdownCodeBlock markdownCode
 highlight link markdownHeadingDelimiter Subtitle
@@ -111,13 +137,9 @@ highlight link markdownUrl htmlLink
 "   "\w\@<=_\w\@=", which is the one thing we don't consider an error.
 highlight link markdownError Normal
 
-" spelling
+"   Spelling
 highlight SpellBad      ctermfg=DarkRed ctermbg=none
 highlight SpellCap      ctermfg=none ctermbg=none
 highlight SpellRare     ctermfg=none ctermbg=none
 highlight SpellLocal    ctermfg=none ctermbg=none
-
-if &term == "kterm"
-    set highlight=sb,Sb,lu
-endif
 
