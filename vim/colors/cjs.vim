@@ -41,7 +41,7 @@ source <sfile>:h/rgb256.vim
 function! s:C(rgb_color)
     return RgbTo256(a:rgb_color)
 endfunction
-"echo 'C='.s:C('#808080')
+"echo 'C='.s:C('#FFFFE0') " lightyellow
 function! s:hi(...)
     call call('RgbHighlight', a:000)
 endfunction
@@ -49,6 +49,20 @@ endfunction
 " ----------------------------------------------------------------------
 "   New 256-color scheme.
 if &t_Co > 16
+
+"   'Normal' overrides the terminal's default FG/BG, so that people who
+"   normally use black backgrounds don't end up with invisible text,
+"   instead being forced to use my dark text on light BG style.
+"
+"   Curiously, 231 is closer to white than 15 (which is very grey, though
+"   it's apparently supposed to be white). 230 is a little darker than my
+"   standard 'lightyellow' (#ffffe0), but I don't see any obvious way to
+"   fix that, except possibly to set Normal only when pairing with someone.
+"
+"   Note that this is just for 256-color mode; with 8/16-color mode we do
+"   nothing at the moment.
+"
+hi Normal                       ctermfg=Black   ctermbg=230     " ~lightyellow
 
 "   Editing
 hi Search       cterm=bold      ctermfg=255     ctermbg=33
@@ -59,7 +73,7 @@ hi Pmenu                        ctermfg=4       ctermbg=255
 hi PmenuSel     cterm=reverse   ctermfg=4       ctermbg=255
 
 "   Syntax Highlighting
-hi Comment                      ctermfg=246
+hi Comment                      ctermfg=244
 
 " ----------------------------------------------------------------------
 "   Old 8/16-color scheme. This probably will not work well because it was
