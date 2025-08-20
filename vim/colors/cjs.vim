@@ -47,22 +47,32 @@ function! s:hi(...)
 endfunction
 
 " ----------------------------------------------------------------------
+"   If we're in a tmate session, we're probably sharing this terminal
+"   with people who are using terminals defaulting to light text on
+"   a dark background, which can make my highlighting unreadable. To
+"   fix this, we set 'Normal' highlighting to force the Vim session to
+"   dark text on a light background.
+"
+"   Curiously, color 231 is closer to white than 15 (which is very grey,
+"   though it's apparently supposed to be white). 230 is a little darker
+"   than my standard #ffffe8 and even my old 'lightyellow' #ffffe0, but I
+"   don't see any obvious way to fix that.
+"
+if stridx($TMUX, '/tmate-') != -1
+    if &t_Co > 16
+        hi Normal   ctermfg=Black   ctermbg=230
+    else
+        hi Normal   ctermfg=Black   ctermbg=White
+    endif
+    "   Disable the terminal's background color erase capability because
+    "   we want Vim to explicitly set even cells that have no characters
+    "   in them to our Normal background color.
+    set t_ut=
+endif
+
+" ----------------------------------------------------------------------
 "   New 256-color scheme.
 if &t_Co > 16
-
-"   'Normal' overrides the terminal's default FG/BG, so that people who
-"   normally use black backgrounds don't end up with invisible text,
-"   instead being forced to use my dark text on light BG style.
-"
-"   Curiously, 231 is closer to white than 15 (which is very grey, though
-"   it's apparently supposed to be white). 230 is a little darker than my
-"   standard 'lightyellow' (#ffffe0), but I don't see any obvious way to
-"   fix that, except possibly to set Normal only when pairing with someone.
-"
-"   Note that this is just for 256-color mode; with 8/16-color mode we do
-"   nothing at the moment.
-"
-hi Normal                       ctermfg=Black   ctermbg=230     " ~lightyellow
 
 "   Editing
 hi Search       cterm=bold      ctermfg=255     ctermbg=33
