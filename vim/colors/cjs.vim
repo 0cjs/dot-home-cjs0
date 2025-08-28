@@ -1,3 +1,8 @@
+"   XTerm 256 colour palette:
+"   • table: https://robotmoon.com/256-colors/ 
+"   • w/RGB: https://www.ditig.com/256-colors-cheat-sheet
+"   • alternate text db RGB source: https://github.com/linrock/256-colors 
+
 "   XXX (The following no longer applies now that I have my own color scheme?)
 "   This doesn't do what I want; it ends up overriding my color scheme. I
 "   think I need to set up a separate, proper color scheme somehow. For the
@@ -33,8 +38,7 @@ let g:colors_name = 'cjs'
 " ----------------------------------------------------------------------"
 "  RGB color specification support.
 "  This seemed like a good idea originally, but it turns out to be much
-"  easier to select from https://robotmoon.com/256-colors/ instead. (But
-"  RGB values are also at https://github.com/linrock/256-colors .)
+"  easier to select directly from the XTerm 256 colour palette above.
 "
 "   "Import" RgbHighlight and RgbTo256.
 source <sfile>:h/rgb256.vim
@@ -75,7 +79,8 @@ endif
 if &t_Co > 16
 
 "   Editing
-hi Search       cterm=bold      ctermfg=255     ctermbg=33
+"   Blueish opts for search: 195=v.light, 123, 153, 159
+hi Search       cterm=NONE      ctermfg=Black   ctermbg=195
 hi Visual       cterm=NONE      ctermfg=Black   ctermbg=82
 hi ColorColumn                                  ctermbg=222
 hi NonText                      ctermfg=166
