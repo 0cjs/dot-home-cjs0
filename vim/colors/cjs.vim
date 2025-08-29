@@ -1,7 +1,11 @@
 "   XTerm 256 colour palette:
-"   • table: https://robotmoon.com/256-colors/ 
+"   • table, including RGB tuples:
+"     https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+"   • table: https://robotmoon.com/256-colors/
 "   • w/RGB: https://www.ditig.com/256-colors-cheat-sheet
-"   • alternate text db RGB source: https://github.com/linrock/256-colors 
+"   • alternate text db RGB source: https://github.com/linrock/256-colors
+"
+"   Also see: https://stackoverflow.com/a/27777189/107294
 
 "   XXX (The following no longer applies now that I have my own color scheme?)
 "   This doesn't do what I want; it ends up overriding my color scheme. I
