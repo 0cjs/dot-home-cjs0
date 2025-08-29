@@ -79,8 +79,11 @@ endif
 if &t_Co > 16
 
 "   Editing
-"   Blueish opts for search: 195=v.light, 123, 153, 159
-hi Search       cterm=NONE      ctermfg=Black   ctermbg=195
+"   Color opts for search:
+"   • Baby-blue:  195=v.light 159=light 123=medium
+"   • Light blue: 153=lighter 117=light  75=medium-dark
+"   • Dark blue:  153=light   111=dark
+hi Search       cterm=NONE      ctermfg=Black   ctermbg=153
 hi Visual       cterm=NONE      ctermfg=Black   ctermbg=82
 hi ColorColumn                                  ctermbg=222
 hi NonText                      ctermfg=166
