@@ -576,11 +576,15 @@ function! MarkdownRefDefinitionSearch(copy)
     endif
 
     if a:copy == 'open'
+        "   Ensure that the arg is quoted properly both for Vim (to avoid '#'
+        "   and '%' being replaced by by the previous and current filenames)
+        "   and for the shell.
+        let l:openarg = shellescape(fnameescape(getreg('+')))
         "   This unfortunately hides errors. The stdout redirect is unrelated
         "   to that; it just suppresses the "Opening in existing browser
         "   session" message that appears in the background shortly after
         "   xdg-open exits.
-        execute ":silent !xdg-open >/dev/null '" .. getreg('') .. "'"
+        execute ":silent !xdg-open >/dev/null " .. l:openarg
         "   :silent skips the Press Enter prompt, but messes up the screen.
         redraw!
     endif
