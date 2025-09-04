@@ -2,7 +2,9 @@
 
 #   TODO:
 #   • Use ~cjs/.home/cjs0/ if $HOME/.home/cjs0/ does not exist.
+#     (Ensure we can read it first!)
 #   • Do not auto-clone w/__cjs0_dhrepo() if ~cjs/ repo exists?
+#   • Once the above is done, remove the warning and abort option.
 
 ####################################################################
 #   Utility functions and aliases
@@ -27,6 +29,23 @@ __cjs0_dhrepo() {
 
 ####################################################################
 #   Setup and sourcing of dot-home, gitcmd-abbrev, cjs0
+
+[[ -d ~/.home/ ]] || {
+    echo -n "\
+You are not using dot-home. This will create a ~/.home/ directory and clone
+some public dot-home modules into it; this will *not* affect your user
+configuration in any way. Enter 'y' to proceed, anything else to exit: "
+    read __0cjs_bash_y
+    echo $__0cjs_bash_y
+    case "$__0cjs_bash_y" in
+        y|Y)    unset __0cjs_bash_y
+                ;;
+        *)      unset __0cjs_bash_y
+                echo "Aborting."
+                return 0
+                ;;
+    esac
+}
 
 #   Ensure we have all repos, to make initial setup easy. We check/clone even
 #   .home/cjs0 because this 0cjs.bashrc may be running from elsewhere.
