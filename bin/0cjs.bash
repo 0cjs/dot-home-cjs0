@@ -69,7 +69,7 @@ export EDITOR=~/.home/cjs0/bin/vi; unset VISUAL
 #   If in a tmate session, reconfig for C-a prefix etc.
 [[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
 echo "Current TERM=$TERM"
-eval $(tset -I -s '?rxvt-unicode-256color')
+eval $(tset -I -s \?xterm-256color)
 
 source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
 st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
