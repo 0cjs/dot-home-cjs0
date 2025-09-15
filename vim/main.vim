@@ -208,11 +208,16 @@ else
     set guifont=Noto\ Mono\ 8
 endif
 
-"   gg - Graphical settings prefix
-"   Overrides: `gg`; use `0G` or `g<C-M>` instead.
+"   XXX Mysteriously, this does not move to the start of the first line,
+"   as `gg`, but several columns into it. (Try it on this file.)
 noremap g<C-M>  gg      " kinda parallel to z<C-M>
-noremap ggfn :set guifont=Noto\ Mono\ 8<CR>
-noremap ggfi :set guifont=Inconsolata\ Medium\ 9<CR>
+
+"   gG - Graphical settings prefix
+"   `gg` is easier, but other use this standard 'jump to top' command,
+"   and we don't use these GUI commands very much. (But probably we
+"   should change this to something more typable anyway.)
+noremap gGfn :set guifont=Noto\ Mono\ 8<CR>
+noremap gGfi :set guifont=Inconsolata\ Medium\ 9<CR>
 
 " ===== Window/Tab Management ====================================
 
