@@ -47,10 +47,14 @@ Tab: complete
 "\C-o\C-ib":    "~/.local/bin/"     # b  - ~/.local/bin/
 "\C-o\C-id":    "$(i-date)"         # d  - date, ISO format: YYYY-MM-DD
 "\C-o\C-i\C-d": "$(idat)"           # ^D - date, short format: YYMMDD
-"\C-o\C-il":    "LD_LIBRARY_PATH"
+"\C-o\C-ig":    "~/co/public/gh/"     #  g - GitHub public repos
+"\C-o\C-iG":    "~/co/sensitive/gh/"  # ^G - GitHub sensitive repos
+"\C-o\C-il":    "~/co/public/gl/"     #  l - GitLab public repos
+"\C-o\C-iL":    "~/co/sensitive/gl/"  # ^L - GitLab public repos
 "\C-o\C-im":    "$(mbase)"          # get merge base
 "\C-o\C-i\C-m": "main@{u}"
 "\C-o\C-iM":    "master@{u}"
+"\C-o\C-ip":    "LD_LIBRARY_PATH"     #  p - LD_LIBRARY_PATH
 "\C-o\C-is":    "SSH_AUTH_SOCK"
 "\C-o\C-i\C-u": "@{u}"
 "\C-o\C-iv":    "vim/cjs.d/"
@@ -61,5 +65,5 @@ Tab: complete
 
 set keymap vi-command
 
-"\er": re-read-init-file            # But leaves one in insert mode
+"\eZ": re-read-init-file            # But leaves one in insert mode
 Control-l: redraw-current-line
