@@ -71,6 +71,14 @@ export EDITOR=~/.home/cjs0/bin/vi; unset VISUAL
 echo "Current TERM=$TERM"
 eval $(tset -I -s \?xterm-256color)
 
+#   Remove common aliases that conflict with gitcmd-abbrev.
+_u st0 st9
+_u log logs logp logpr logp1 slp1 logb logab logd logh logm logmn logbr
+_u gauthors blame dif difs dift ggrep gfgrep gk
+_u co cond add com coma cam cpick cpcontinue clean iclean sm gpack
+_u lr lrg lrh br mbase mergeff
+_u gr grmu grabort grcontinue grskip gri grim grwhere gre grehard greupstream
+_u stash gurl rem fetch pfetch pull push pushf pushu
 source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
 st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 
