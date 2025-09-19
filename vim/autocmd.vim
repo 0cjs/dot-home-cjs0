@@ -98,14 +98,6 @@ autocmd! BufNewFile,BufReadPre,FileReadPre  *.go    call SetGoCodeSettings()
 " Override the changes made by ExpandTabCheck:
 autocmd! BufEnter                           *.go    call SetGoCodeSettings()
 
-" ===== Haskell mode ==================================================
-
-"   XXX This should be in a syntax/ directory, no?
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.hs    ru haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.hsc   ru haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.cabal ru haskell.vim
-autocmd! BufNewFile,BufReadPre,FileReadPre  *.erl   ru haskell.vim
-
 " ===== Assembly language modes ========================================
 
 function! SetAsmCodeSettings()
