@@ -47,8 +47,8 @@ Tab: complete
 "\C-o\C-ib":    "~/.local/bin/"     # b  - ~/.local/bin/
 "\C-o\C-id":    "$(i-date)"         # d  - date, ISO format: YYYY-MM-DD
 "\C-o\C-i\C-d": "$(idat)"           # ^D - date, short format: YYMMDD
-"\C-o\C-ig":    "~/co/public/gh/"     #  g - GitHub public repos
-"\C-o\C-iG":    "~/co/sensitive/gh/"  # ^G - GitHub sensitive repos
+"\C-o\C-ih":    "~/co/public/gh/"     #  g - GitHub public repos
+"\C-o\C-iH":    "~/co/sensitive/gh/"  # ^G - GitHub sensitive repos
 "\C-o\C-il":    "~/co/public/gl/"     #  l - GitLab public repos
 "\C-o\C-iL":    "~/co/sensitive/gl/"  # ^L - GitLab public repos
 "\C-o\C-im":    "$(mbase)"          # get merge base
