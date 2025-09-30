@@ -343,8 +343,8 @@ noremap q"      :call DisplayError("edit register not yet written")<CR>
 "   q{rR}   resize larger/smaller
 "   qf      Toggle fixed window vsize (won't change when splitting/closing)
 "   qF      Toggle equalways (resizing all windows on new window)
-"   qm      Maximize this window
-"   qM      Set all windows equal size ('maximize all', of a sort)
+"   qm      Set all windows equal size ('maximize all', of a sort)
+"   qM      Maximize this window
 "   q^J     split below and move to next file in arg list
 "   q^K     split above and move to previous file in arg list
 "
@@ -359,9 +359,9 @@ noremap qR      :resize -
 noremap q<C-R>  :resize 
 noremap qf      :set invwinfixheight\|set winfixheight?<CR>
 noremap qF      :set invequalalways\|set equalalways?<CR>
-noremap qm      :resize +999<CR>
+noremap qM      :resize +999<CR>
 "               Careful to preserve current equalalways settings
-noremap qM      :set invequalalways\|set invequalalways<CR>
+noremap qm      :setlocal invequalalways\|setlocal invequalalways<CR>
 noremap q<C-J>  :split +next<CR>
 noremap q<C-K>  :above split +previous<CR>
 
