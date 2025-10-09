@@ -455,6 +455,7 @@ endfunction
 
 "   Reload command
 noremap qZ      :call CjsReloadConfig()<CR>
+noremap QZ      :call CjsReloadConfig()<CR>
 if !exists('*CjsReloadConfig')
     "   We can't redefine this when we're reloading becasue we're currently
     "   running the function. So instead we just skip; that means that
@@ -481,8 +482,8 @@ endif
 noremap ge  6<C-E>
 noremap gy  6<C-Y>
 noremap gS  /\s\+$<CR>
-"            yank, start search, insert " register contents
-vnoremap g/  y/\V<C-R>"<CR>
+"   Ctrl-U gets rid of the auto-inserted :'<,'>, though it's not really nesc.
+vnoremap g/  :<C-u>call VisualSelectionSearch()<CR>
 "   gr commands: Markdown references under cursor
 "       grn: find next use of reference
 "       grN: find previous use of reference
@@ -499,6 +500,24 @@ nnoremap grl :call MarkdownRefDefinitionSearch('url')<CR>
 nnoremap gri :call MarkdownRefDefinitionSearch('inline')<CR>
 nnoremap gro :call MarkdownRefDefinitionSearch('open')<CR>
 nnoremap gr  :call ConsumeError('Unknown gr command')<CR>
+
+function! VisualSelectionSearch()
+    let [line_start, col_start] = getpos("'<")[1:2]
+    let [line_end, col_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0 | return | endif
+    let lines[-1] = lines[-1][:col_end - 1]     " trim to selection boundaries
+    let lines[0] = lines[0][col_start - 1:]
+    let search_text = join(lines, "\n")
+
+    let search_text = escape(search_text, '\')
+    let search_text = escape(search_text, '/')
+    let @/ = '\V' . search_text                 " very-nomagic search
+
+    call histadd('/', @/)
+    set hlsearch
+    normal! n
+endfunction
 
 "   Markdown reference label search.
 "   This does not add the pattern to the search history, but instead
