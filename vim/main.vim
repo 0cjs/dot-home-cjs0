@@ -95,8 +95,14 @@ endif
 "   of overrides of our own setting, and may need to add lots of
 "   after/ftplugin/*.vim files to restore things.
 runtime! defaults.vim
-"   Disable annoying things that the above enabled.
-set mouse=
+
+"   The standard Vim config is fine, but Debian (and perhaps other distros)
+"   add annoying things that we need to disable.
+
+set mouse=      "   Un-enable mouse in terminal windows.
+
+"   Disable 'You discovered the command-line window!' message.
+:augroup vimHints | exe 'au!' | augroup END
 
 " ===== General Notes =================================================
 
