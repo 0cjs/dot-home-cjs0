@@ -115,6 +115,10 @@ set mouse=
 set nocompatible
 :scriptencoding utf-8
 
+set nomodeline
+"set secure
+runtime cjs/modeline.vim
+
 " ===== File Type Setup ===============================================
 
 runtime autocmd.vim
