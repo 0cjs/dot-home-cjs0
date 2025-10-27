@@ -93,6 +93,9 @@ hi ColorColumn                                  ctermbg=222
 hi NonText                      ctermfg=166
 hi Pmenu                        ctermfg=4       ctermbg=255
 hi PmenuSel     cterm=reverse   ctermfg=4       ctermbg=255
+"   Status line black BG for current window; grey for others.
+hi StatusLine   cterm=bold      ctermfg=230     ctermbg=black
+hi StatusLineNC cterm=NONE      ctermfg=230     ctermbg=243
 
 "   Syntax Highlighting
 hi Comment                      ctermfg=244
