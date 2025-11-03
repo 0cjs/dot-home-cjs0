@@ -321,7 +321,10 @@ set splitbelow equalalways
 noremap <C-N> :next<CR>
 noremap <C-P> :previous<CR>
 
-" ===== 'q' Prefix ====================================================
+" ===== 'Q' and 'q' Prefix ====================================================
+
+"   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
+map     Q  :call ConsumeError("Unknown Q command")<CR>
 
 "   We take over `q` as a prefix for all the stuff in this section.
 "   Thus, disable `q` alone or with an unknown char following to avoid
@@ -329,20 +332,25 @@ noremap <C-P> :previous<CR>
 "   because sometimes doing that would be very confusing. (It's a
 "   lesser-used command that we move elsewhere.)
 noremap q       :call ConsumeError("Use `q'` to record to register")<CR>
+
 "   Having done this, we now restore some of the original qX commands.
 "     q/ q?     Open search history window
 noremap q/      q/
 noremap q?      q?
-"   We do not map the following commands:
+
+"   We do not override the following commands:
+"   • Q to go into record mode
 "   • q: (command line history): doesn't save keystrokes over `:^E` and
 "     it's better to have macro record there (see below)
 
 "   Recording for repeat (register name follows command)
 "     q;    Execute commands in register
 "     q:    Record to register
+"     Q@    Record to register (this could be replaced)
 "     q"    Edit register
 noremap q;      @
 noremap q:      q
+noremap Q@      q
 noremap q"      :call DisplayError("edit register not yet written")<CR>
 
 "   Window create/move commands
@@ -678,12 +686,6 @@ noremap g<C-N>  :call DisplayError("gr: Use `q^N` instead")<CR>
 
 " Esc-s we leave undefined so that an accidental use of it in command
 " mode still saves the file.
-
-"   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
-"   Q@ - (followed by register) record for later execution with `@<reg`>`/`@@`
-"   Overrides: Q (alone) to go into record mode
-map     Q  :call ConsumeError("Unknown Q command")<CR>
-noremap Q@ q
 
 "-----------------------------------------------------------------------
 " Visual mode
