@@ -323,9 +323,6 @@ noremap <C-P> :previous<CR>
 
 " ===== 'Q' and 'q' Prefix ====================================================
 
-"   Q  - unmapped to avoid going into ex-mode (use better `gQ` for that)
-map     Q  :call ConsumeError("Unknown Q command")<CR>
-
 "   We take over `q` as a prefix for all the stuff in this section.
 "   Thus, disable `q` alone or with an unknown char following to avoid
 "   accidentally turning on the 'record typed chars to register' mode
@@ -338,19 +335,19 @@ noremap q       :call ConsumeError("Use `q'` to record to register")<CR>
 noremap q/      q/
 noremap q?      q?
 
-"   We do not override the following commands:
-"   • Q to go into record mode
+"   We override the following commands:
+"   • Q  (enter ex mode): `gQ` is a better version of that
 "   • q: (command line history): doesn't save keystrokes over `:^E` and
 "     it's better to have macro record there (see below)
 
 "   Recording for repeat (register name follows command)
 "     q;    Execute commands in register
+"     Q     Repeat last `q;` command <count> times
 "     q:    Record to register
-"     Q@    Record to register (this could be replaced)
 "     q"    Edit register
 noremap q;      @
+noremap Q       @@
 noremap q:      q
-noremap Q@      q
 noremap q"      :call DisplayError("edit register not yet written")<CR>
 
 "   Window create/move commands
@@ -473,7 +470,6 @@ endfunction
 
 "   Reload command
 noremap qZ      :call CjsReloadConfig()<CR>
-noremap QZ      :call CjsReloadConfig()<CR>
 if !exists('*CjsReloadConfig')
     "   We can't redefine this when we're reloading becasue we're currently
     "   running the function. So instead we just skip; that means that
