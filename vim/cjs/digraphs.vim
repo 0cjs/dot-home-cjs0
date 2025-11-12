@@ -1,6 +1,9 @@
 " ===== Digraphs =====================================================
 "   Input with Ctrl-K followed by two chars.
 "   (Ctrl-K space CHAR enters CHAR with high bit set.)
+"
+"   :digraph takes only decimal values, but you can convert hex in input
+"   mode with <C-R>=0xNNNN<CR>.
 
 "   Commonly used digraphs to remember:
 "
@@ -70,6 +73,7 @@ digraph  nS 8319    " ⁿ  Latin Superscript Small Letter N
 digraph  oS 7506    " ᵒ  Latin Superscript Small Letter O
 
 "   Subscripts
+digraph  bs 7526    " ᵦ  Greek Subscript Small Letter Beta
 digraph  is 7522    " ᵢ  Latin Subscript Small Letter I
 digraph  ns 8345    " ₙ  Latin Subscript Small Letter N
 digraph  xs 8339    " ₓ  Latin Subscript Small Letter X
