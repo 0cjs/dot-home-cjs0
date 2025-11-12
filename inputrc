@@ -48,14 +48,13 @@ Tab: complete
 "\C-o\C-id":    "$(i-date)"         # d  - date, ISO format: YYYY-MM-DD
 "\C-o\C-i\C-d": "$(idat)"           # ^D - date, short format: YYMMDD
 "\C-o\C-ih":    "~/co/public/gh/"     #  g - GitHub public repos
-"\C-o\C-iH":    "~/co/sensitive/gh/"  # ^G - GitHub sensitive repos
 "\C-o\C-il":    "~/co/public/gl/"     #  l - GitLab public repos
-"\C-o\C-iL":    "~/co/sensitive/gl/"  # ^L - GitLab public repos
 "\C-o\C-im":    "$(mbase)"          # get merge base
 "\C-o\C-i\C-m": "main@{u}"
 "\C-o\C-iM":    "master@{u}"
-"\C-o\C-ip":    "LD_LIBRARY_PATH"     #  p - LD_LIBRARY_PATH
-"\C-o\C-is":    "SSH_AUTH_SOCK"
+"\C-o\C-iP":    "LD_LIBRARY_PATH"     #  P
+"\C-o\C-is":    "~/co/sensitive/"     #  s - sensitive (non-public) repos
+"\C-o\C-iS":    "SSH_AUTH_SOCK"       #  S
 "\C-o\C-i\C-u": "@{u}"
 "\C-o\C-iv":    "vim/cjs.d/"
 "\C-o\C-iw":    "--word-diff=color "
