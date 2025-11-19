@@ -103,6 +103,7 @@ inst_nvm() {
     #   Use the head of `main` for bugfixes not in latest v0.40.3 release.
     local url='https://github.com/nvm-sh/nvm/raw/refs/heads/master/install.sh'
     curl -L -o- "$url" | bash
+    chmod -R go+rX ~/.nvm/
 }
 
 inst_ghcup() {
