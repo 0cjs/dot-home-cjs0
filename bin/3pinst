@@ -98,6 +98,13 @@ inst_pythonz() {
     curl -L https://raw.github.com/saghul/pythonz/master/pythonz-install | bash
 }
 
+inst_nvm() {
+    no_additional_args "$@"
+    #   Use the head of `main` for bugfixes not in latest v0.40.3 release.
+    local url='https://github.com/nvm-sh/nvm/raw/refs/heads/master/install.sh'
+    curl -L -o- "$url" | bash
+}
+
 inst_ghcup() {
     no_additional_args "$@"
 
