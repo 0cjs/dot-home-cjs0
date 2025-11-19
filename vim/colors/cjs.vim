@@ -66,6 +66,8 @@ endfunction
 "   than my standard #ffffe8 and even my old 'lightyellow' #ffffe0, but I
 "   don't see any obvious way to fix that.
 "
+"   XXX This doesn't appear to work in Vim 8.x. Debug it.
+"
 if stridx($TMUX, '/tmate-') != -1
     if &t_Co > 16
         hi Normal   ctermfg=Black   ctermbg=230
