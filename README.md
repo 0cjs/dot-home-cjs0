@@ -30,6 +30,19 @@ deactivated configuration in this repo.
 Details
 -------
 
+### Directories
+
+- `conf/`: Contains configuration code that does not get installed under
+  $HOME to help avoid polluting other people's environments when they are
+  using this dot-home module. Programs under `bin/` first try to load this
+  configuration from `$(dirname "$0")/../conf/` (which works if the files
+  are run directly from `bin/` here because they've not been installed)
+  and fall back to `~/.home/cjs0/conf/`.
+
+- `vim/`: Vim configuration used by `bin/vi`; see below.
+
+### inb4 Fragments
+
 The following configuration files must be built from inb4 fragments,
 since this repo includes inb4 fragments for them.
 
@@ -47,17 +60,16 @@ since this repo includes inb4 fragments for them.
 
 ### Vim Configuration
 
-This contains my full Vim configuration in deacativated form; activate
-it with `:ru cjs` (the [`cjs1`][cjs1] module adds this to `.vimrc`) or
-persist it for a shell session with:
+This contains my full Vim configuration in deacativated form; activate it
+by running `bin/vi`. (Neither this nor the [`cjs1`][cjs1] create/edit a
+`~/.vimrc`.
 
-    alias vi='vim -c "runtime cjs"'
-
-Without the above activation, the only change to the standard vim
-configuration is that the little-used `s` and `S` commands now save
-the current buffer and all changed buffers, respectively. (The
-functionality of `s` and `S` are still available under synonyms `cl`
-and `cc`.)
+Previously, without activiation this still changed the standard Vim
+configuration to set the little-used `s` and `S` commands to save the
+current buffer and all changed buffers, respectively. (The functionality of
+`s` and `S` remain available under synonyms `cl` and `cc`.) It's not clear
+how to continue to do this in the new `bin/vi` configuration system, but
+perhaps it's no longer necessary.
 
 This configuration also includes a patch to the Markdown syntax
 highlighting (`dot/vim/after/syntax/markdown.vim`) to fix a problem
