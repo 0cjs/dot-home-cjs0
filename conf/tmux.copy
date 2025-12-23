@@ -1,0 +1,14 @@
+#####################################################################
+#   Copy mode
+
+#   Easier/faster scrollback.
+bind-key -T prefix      u       copy-mode -eu
+
+#   More Vim-like selection, which frees up Space to page forward.
+bind-key -t vi-copy     v       begin-selection
+bind-key -t vi-copy     V       select-line
+bind-key -t vi-copy     C-V     rectangle-toggle
+
+#   Quicker/easier keys for paging, the most common operation.
+bind-key -t vi-copy     Space   page-down
+bind-key -t vi-copy     p       page-up
