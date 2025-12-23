@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-#   tmset - switch to Ctrl-A etc. in remote tmate
+#   tmaconf - switch to Ctrl-A etc. in remote tmate
 #
 #   Though my tmux config file changes the prefix to C-a, this of course
 #   has no effect when ssh'ing into a tmate session started on someone
@@ -14,8 +14,13 @@
 #   hack it by just running `tmate` multiple times, giving it each command
 #   in turn.
 #
-set -euo pipefail
+set -Eeuo pipefail
 
+CONF=$(dirname "$0")/../conf/tmux.copy
+[[ -r $CONF ]] || CONF=~/.home/cjs0/conf/tmux.copy
+tmate source-file "$CONF"
+
+#   XXX these should be moved to conf/tmux.prefix-CtrlA and sourced.
 tmate set-option -g prefix C-a
 tmate unbind-key C-b
 tmate bind-key C-a send-prefix
