@@ -720,7 +720,15 @@ set textwidth=75
 
 " ===== g commands
 
-" g[67] - insert separation comment
+"   g[678] - insert separation comment
+"   XXX `g8` overrides the show-UTF-8-hex command, and `g*` would override
+"   the `*`-without-word-delimiters command. All this stuff should be put
+"   under a prefix (`g7` is available), and we also want a way to insert
+"   these in insert mode without it popping back to command mode. (Maybe
+"   make it a function that checks the current mode on entry, if we can
+"   distinguish `^O^I` from 'regular' normal mode?)
+"
+map g8 O/*<ESC>71a*<ESC>a*/<ESC>
 map g7 O<ESC>70i-<ESC>0
 map g& O<ESC>75i-<ESC>0
 map g6 O<ESC>68A#<ESC>0
