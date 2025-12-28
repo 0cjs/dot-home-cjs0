@@ -37,7 +37,7 @@ build   libgnutls28-dev     Debian.*
 build   libreadline-dev     Debian.*
 build   libssl-dev          Debian.*
 build   pkg-config          Debian.*
-build   python3-distutils   Debian.*
+build   python3-distutils   Debian.8 Debian.9 Debian.10 Debian.11 Debian.12
 build   zlib1g-dev          Debian.*
 
 #   Stuff usually wanted when doing software development.
