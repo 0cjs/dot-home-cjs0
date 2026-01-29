@@ -435,11 +435,15 @@ noremap qz      :set scrolloff=
 
 "   Create command to open a new scratch buffer.
 command! Scratch :new | :set buftype=nofile bufhidden=delete
-noremap qvd :Scratch<CR>:r!dif #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
-noremap qvD :Scratch<CR>:r!dif<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
-noremap qvs :Scratch<CR>:r!dif --staged #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
-noremap qvS :Scratch<CR>:r!dif --staged<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
-noremap qvw :Scratch<CR>:r!dif --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+"   XXX These don't work if the CWD is not in a repo, and while "$(dirname #)"
+"   gives a path in the repo, the file path is also taken relative to the
+"   repo and is thus wrong, e.g., git diff -C ../gmk/doc doc/github.md.
+"   Not sure how to work this out.
+noremap qvd :Scratch<CR>:r!git diff #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvD :Scratch<CR>:r!git diff<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvs :Scratch<CR>:r!git diff --staged #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvS :Scratch<CR>:r!git diff --staged<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvw :Scratch<CR>:r!git diff --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>:normal gg<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>:set nolist<CR>:normal gg<CR>
 noremap qvC :call GitCommit()<CR>
