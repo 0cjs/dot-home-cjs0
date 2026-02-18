@@ -431,6 +431,7 @@ noremap qz      :set scrolloff=
 "   qvl     log current file
 "   qvs     diff staged changes for current file
 "   qvS     diff staged changes for all files from current dir down
+"   qvt     run `gt` for commit message trailer generation (default 'c' opt)
 "   qvw     word diff
 
 "   Create command to open a new scratch buffer.
@@ -443,6 +444,8 @@ noremap qvd :Scratch<CR>:r!git diff #<CR>:normal gg<CR>:runtime syntax/diff.vim<
 noremap qvD :Scratch<CR>:r!git diff<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvs :Scratch<CR>:r!git diff --staged #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvS :Scratch<CR>:r!git diff --staged<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
+noremap qvT :r!gt 
+noremap qvt :r!gt co 
 noremap qvw :Scratch<CR>:r!git diff --word-diff=plain #<CR>:normal gg<CR>:runtime syntax/diff.vim<CR>
 noremap qvb :Scratch<CR>:r!blame #<CR>:normal gg<CR>
 noremap qvl :Scratch<CR>:r!log --follow #<CR>:set nolist<CR>:normal gg<CR>
