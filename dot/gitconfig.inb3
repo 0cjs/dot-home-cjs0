@@ -13,3 +13,11 @@
     # push a commit that uses a submodule commit not yet available to
     # anybody else.
     recurseSubmodules = check
+
+;----------------------------------------------------------------------
+;   Pushing large commits (to GitLab, maybe others) via SSH can fail with:
+;   • send-pack: unexpected disconnect while reading sideband packet
+;   For some reason, the following fixes this; nobody knows why.[1]
+;   [1]: https://stackoverflow.com/a/76437493/107294
+[http]
+;   version = HTTP/1.1
