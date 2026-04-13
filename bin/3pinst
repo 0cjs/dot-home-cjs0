@@ -57,6 +57,12 @@ inst_discord() {
 }
 
 inst_slack() {
+    #   Slack also has an apt repo at
+    #     deb https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+    #   but this is apparently old and dead.[1] We just download and install
+    #   the .deb file from the website.
+    #   [1]: https://claude.ai/chat/02978d63-2e28-4be6-a062-f81631350a0e
+
     no_additional_args "$@"
     #   XXX not actually a $HOME install!
     #   It's actually the 'try again' link on this page, to be parsed out:
