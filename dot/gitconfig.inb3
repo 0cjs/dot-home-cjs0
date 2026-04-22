@@ -6,6 +6,13 @@
 
 [merge]
     defaultToUpstream = true    # Now default in Git >= 2.1 or so
+    #   `diff3` gives more information than `merge` because it includes not
+    #   just the current and merging data, but also the version from the
+    #   parent of the two commits. However, it also produces unnecessarily
+    #   large diffs (contianing a lot of duplication) where the current and
+    #   merge both add many lines that are the same, but not in the parent.
+    #   Work around this by using e.g.:
+    #       git -c merge.conflictstyle=merge cherry-pick d50b2a48
     conflictstyle = diff3
 
 [push]
