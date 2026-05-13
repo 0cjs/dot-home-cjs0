@@ -23,4 +23,8 @@ unset __0cjs_prev_home __0cjs_nofortune
 unset GOPATH PYTHONPYCACHEPREFIX
 
 #   This env var is set in the sudo command line.
-command cd "$__cjs0_become_pwd"
+if [[ -n ${__cjs0_become_pwd:-} ]]; then
+    command cd "$__cjs0_become_pwd"
+else
+    echo 1>&2 '(cjs) full-env.bash: $__cjs0_become_pwd not set; PWD='"$PWD"
+fi
