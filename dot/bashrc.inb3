@@ -2,7 +2,7 @@
 
 become() {
     [[ -z $1 ]] && { echo 1>&2 "Usage: become USERNAME"; return 1; }
-    sudo -u "$1" -i \
+    sudo -u "$1" --login \
         __cjs0_become_pwd="$PWD" \
         bash --rcfile ~cjs/.home/cjs0/full-env.bash
 }
