@@ -479,3 +479,4 @@ rclone
 pyinfra
 idempotently
 parsable
+plaintext
