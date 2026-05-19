@@ -78,6 +78,17 @@ inst_slack() {
 ####################################################################
 #   Development tools
 
+#   This replaces pythonz, nvm (if you want), ghcup maybe, etc.
+inst_mise() {
+    #   This installs just ~/.local/bin/mise, with no environment
+    #   modifications, giving us access to `mise install python@3.10`
+    #   and similar `where`, `exec`, etc. commands.
+    curl https://mise.run | sh
+    #   You could do `eval "$(mise activate bash)"` once this is present,
+    #   but that is overrides on your `cd` command to modify the environment
+    #   based on `mise.toml` files in CWD up. Not wanted normally.
+}
+
 #   XXX We no longer use this, but use pae/pactivate instead.
 inst_pip() {
     no_additional_args "$@"
