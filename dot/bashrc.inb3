@@ -6,6 +6,7 @@ become() {
         __cjs0_become_pwd="$PWD" \
         bash --rcfile ~cjs/.home/cjs0/full-env.bash
 }
+ber()   { become root "$@"; }
 
 cjsguest()  {
     source ~/.bashrc    # in case there are any updates we need to bring in
