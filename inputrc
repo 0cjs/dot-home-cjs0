@@ -7,6 +7,17 @@
 
 set editing-mode vi
 
+#   With the default setting of `revert-all-at-newline off`, if you edit a
+#   history line and then move to another and accept that new one, the
+#   earlier edit will be maintained in the history. You can go back and
+#   undo it, if you can find the line, but that's difficult if you did e.g.
+#   a `dd` so it's now blank. (Typically you'd use `history` to find edited
+#   entires marked with a '*' and `<ESC>nG` to move to entry _n_.)
+#       Instead, set this `on` so we just abandon all edits except those
+#   on the one line we're accepting. If we want to edit and keep the edit
+#   without executing, we should use the `#` command.
+set revert-all-at-newline on
+
 # Unfortunately, ins-mode-string doesn't work in Bash 4.3
 #set show-mode-in-prompt on
 #set vi-ins-mode-string ""
