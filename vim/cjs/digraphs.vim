@@ -75,7 +75,11 @@ digraph  oS 7506    " ᵒ  Latin Superscript Small Letter O
 "   Subscripts
 digraph  bs 7526    " ᵦ  Greek Subscript Small Letter Beta
 digraph  is 7522    " ᵢ  Latin Subscript Small Letter I
+digraph  ls 8343    " ₗ  Latin Subscript Small Letter L
+digraph  ms 8344    " ₘ  Latin Subscript Small Letter M
 digraph  ns 8345    " ₙ  Latin Subscript Small Letter N
+"digraph ss 8347    " ₛ  XXX blocks ß
+digraph  ts 8348    " ₜ  Latin Subscript Small Letter T
 digraph  xs 8339    " ₓ  Latin Subscript Small Letter X
 
 "   Misc
