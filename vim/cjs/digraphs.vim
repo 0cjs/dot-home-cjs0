@@ -50,7 +50,8 @@ digraph  >m 10217   " ⟩  Mathematical Right Angle Bracket
 
 "   Graphic and Engineering Symbols
 digraph  -^ 8593    " ↑  Upwards Arrow (alternative to -!)
-digraph  CR 8629    " ↵  Keyboard Enter or carriage return key symbol
+digraph  DL 8629    " ↵  Downwards Arrow with Corner Leftwards 
+digraph  CR 9166    " ⏎  Return Symbol (keyboard Enter key; note not ↵!)
 digraph  cm 8984    " ⌘  Place of Interest Sign (Mac Command Key)
 digraph  om 8997    " ⌥  Option Key (Mac)
 digraph  cl 8452    " ℄ Centre Line Symbol
