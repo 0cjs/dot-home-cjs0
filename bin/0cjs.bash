@@ -95,6 +95,8 @@ st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
 _u sp
 sp() { local i=0; while [ $i -lt ${1:-5} ]; do echo; i=$(($i+1)); done; }
 
+#   XXX duplication from from cjs1:dot/bashrc.inb6
+#
 #   These do not disable colour, though perhaps they should since dark
 #   vs. light backgrounds can cause issues.
 _u lf lfa ll lla llt llth
@@ -102,8 +104,12 @@ lf()            { command ls -FC "$@"; }       # also configured by cjs0
 lfa()           { lf -a "$@"; }
 ll()            { command ls -lh "$@"; }
 lla()           { ll -a "$@"; }
-llt()           { ll -t "$@"; }
-llth()          { ll -t "$@" | head; }
+llt() {
+    #   XXX should check if we don't have --time-style (non-Gnu ls)
+    local ts='%Y-%m-%d %H:%M:%S'
+    ll -t --time-style="+$ts" "$@"
+}
+llth()          { llt "$@" | head; }
 
 _u mdcd
 mdcd() {
