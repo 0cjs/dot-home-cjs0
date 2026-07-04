@@ -175,6 +175,28 @@ inst_ghcup() {
     chmod +x "$hook_exe"
 }
 
+inst_go() {
+    no_additional_args "$@"
+    #   XXX fixed version and platform.
+    local ver=go1.26.4
+    local filename=$ver.linux-amd64.tar.gz
+    local dldir=~/Downloads
+    local dlpath="$dldir/$filename"
+    local instpath="/opt/$ver"
+    [[ -x $instpath/bin/go ]] && {
+        echo "Already installed: $instpath"; return 0; }
+    if [[ ! -e $dlpath ]]; then
+        mkdir -p "$dldir"
+        curl -L --output-dir "$dldir" -O "https://go.dev/dl/$filename"
+    else
+        echo "Skipping download: $filename"
+    fi
+    sudo mkdir -p "$instpath"
+    sudo chown $(id -u) "$instpath"
+    tar -C "$instpath" --strip-components=1 -xf "$dlpath"
+    sudo chmod -R go+rX "$instpath"
+}
+
 inst_rust() {
     no_additional_args "$@"
     #   Defaults:  CARGO_HOME=~/.cargo  RUSTUP_HOME=~/.rustup
