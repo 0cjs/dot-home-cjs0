@@ -75,9 +75,9 @@ print_separator() {
     #   Deliberately 1 shorter than total no. of printable cols
     local line=$(for ((i=1; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done)
 
-    local statusline=$(printf "┏━━ exit=%-d %s ━━┓" "$exitcode" "$timing")
+    local statusline=$(printf "┃ exit=%-d %s ┃" "$exitcode" "$timing")
+    echo -n ┏; print_n_of_s $((${#statusline} - 2)) ━; echo ┓
     echo "$statusline"
-
     echo -n "┗"
     print_n_of_s $((${#statusline} - 2)) "━"
     echo -n "┻"
