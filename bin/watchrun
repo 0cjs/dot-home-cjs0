@@ -28,16 +28,9 @@ EX_USAGE=64     # sysexits.h
 warn() { echo >&2 -e "$(basename $0):" "$@"; }
 die()  { warn "$@"; exit 1; }
 
-print_separator() {
-    local cols=$(tput cols)
-    echo
-    #   Not that we care much about efficiency here,
-    #   but the following uses only Bash built-ins.
-    for ((i=0; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done; echo
-}
-
 run() {
     $separator echo
+    elapsed_start=$(date +%s)
 
     #   Very fast machines, on seeing file creation or rewrite, may try
     #   to start using that file before the editor has finished writing
@@ -56,6 +49,7 @@ run() {
     #   environment do not remain in effect after the command completes,"
     #   and this does seem to apply to the redirections as well.
     (exec </dev/tty >/dev/tty 2>/dev/tty && . ~/.bashrc && "$@")
+    local exitcode=$?
 
     #   After the first event that triggered the command run there may
     #   have immediately been further events if multiple files were
@@ -69,7 +63,23 @@ run() {
         $quiet echo "#  Ignoring: $event"
     done
 
-    $separator print_separator
+    local timing=$(( $(date +%s) - $elapsed_start ))s
+    $separator print_separator $exitcode $timing
+}
+
+print_separator() {
+    local exitcode=$1;  shift
+    local timing=$1;    shift
+
+    local cols=$(tput cols)
+    #   Deliberately 1 shorter than total no. of printable cols
+    local line=$(for ((i=1; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done)
+
+    printf  "┏━━━━━━━━━━━━━━━━━┓\n"
+    printf  "┃ exit=%-4d %-4s  ┃\n" "$exitcode" "$timing"
+    echo -n "┗━━━━━━━━━━━━━━━━━┻"
+    for ((i=1; i<$((${cols:-80} - 26)); ++i)); do echo -n '━'; done
+    echo
 }
 
 ####################################################################
