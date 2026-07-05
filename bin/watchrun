@@ -83,6 +83,7 @@ Usage: $(basename $0) [-v] [-f FILE] ...  COMMAND ...
     -f FILE, --file FILE  Add FILE (directories recursively) to watch list.
                           May be used multiple times.
                           Default list is files tracked by Git in/under CWD.
+    -o, --once            Run COMMAND only once and exit.
     -s, --no-separator    Suppress the separator lines between runs.
     -v, --verbose         Show events and other information.
     COMMAND               Command to run; interpted by shell.
@@ -91,10 +92,12 @@ ____
 }
 
 quiet=:
+once=false
 separator=
 watchlist=()
 while true; do case "$1" in
     -f|--file)          shift; watchlist+=("$1"); shift ;;
+    -o|--once)          shift; once=true;;
     -v|--verbose)       shift; quiet= ;;
     -s|--no-separator)  shift; separator=: ;;
     -*)                 warn "Unknown option: $1\n"; usage;;
@@ -105,6 +108,7 @@ esac; done
 [[ "${#watchlist}" -gt 0 ]] || watchlist+=(.)
 
 run "$@" </dev/null     # Do an initial run before we start waiting for events.
+$once && exit 0
 
 $quiet echo "Watching: ${watchlist[@]}"
 inotifywait --monitor ${quiet:+--quiet} --event close_write \
