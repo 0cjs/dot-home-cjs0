@@ -36,18 +36,6 @@ print_separator() {
     for ((i=0; i<$((${cols:-80} - 1)); ++i)); do echo -n '━'; done; echo
 }
 
-usage() {
-    cat >&2 <<____
-Usage: $(basename $0) [-v] [-f FILE] ...  COMMAND ...
-    -f FILE     Add a file to watch (directories recursively); multiple allowed.
-                Default list is files tracked by Git in/under CWD.
-    -s          Suppress the separator lines between runs.
-    -v          Verbose; show events and other information.
-    COMMAND     Command to run; interpted by shell.
-____
-    exit $EX_USAGE
-}
-
 run() {
     $separator echo
 
@@ -89,15 +77,28 @@ run() {
 type inotifywait >/dev/null \
     || die "Can't run inotifywait. Install inotify-tools?"
 
+usage() {
+    cat >&2 <<____
+Usage: $(basename $0) [-v] [-f FILE] ...  COMMAND ...
+    -f FILE, --file FILE  Add FILE (directories recursively) to watch list.
+                          May be used multiple times.
+                          Default list is files tracked by Git in/under CWD.
+    -s, --no-separator    Suppress the separator lines between runs.
+    -v, --verbose         Show events and other information.
+    COMMAND               Command to run; interpted by shell.
+____
+    exit $EX_USAGE
+}
+
 quiet=:
 separator=
 watchlist=()
 while true; do case "$1" in
-    -f)     shift; watchlist+=("$1"); shift ;;
-    -v)     shift; quiet= ;;
-    -s)     shift; separator=: ;;
-    -*)     warn "Unknown option: $1\n"; usage;;
-    *)      break;;
+    -f|--file)          shift; watchlist+=("$1"); shift ;;
+    -v|--verbose)       shift; quiet= ;;
+    -s|--no-separator)  shift; separator=: ;;
+    -*)                 warn "Unknown option: $1\n"; usage;;
+    *)                  break;;
 esac; done
 [ -z "$1" ] && usage
 
