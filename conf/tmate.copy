@@ -1,5 +1,5 @@
 #####################################################################
-#   Copy mode
+#   Copy mode for tmate 2.4.0 (not compatible with tmux 3.x)
 
 #   Easier/faster scrollback.
 bind-key -T prefix      u       copy-mode -eu

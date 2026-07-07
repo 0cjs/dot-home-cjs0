@@ -16,11 +16,11 @@
 #
 set -Eeuo pipefail
 
-CONF=$(dirname "$0")/../conf/tmux.copy
-[[ -r $CONF ]] || CONF=~/.home/cjs0/conf/tmux.copy
+CONF=$(dirname "$0")/../conf/tmate.copy
+[[ -r $CONF ]] || CONF=~/.home/cjs0/conf/tmate.copy
 tmate source-file "$CONF"
 
-#   XXX these should be moved to conf/tmux.prefix-CtrlA and sourced.
+#   XXX these should be moved to conf/tmate.prefix-CtrlA and sourced.
 tmate set-option -g prefix C-a
 tmate unbind-key C-b
 tmate bind-key C-a send-prefix
