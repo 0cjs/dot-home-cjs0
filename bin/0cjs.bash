@@ -9,12 +9,6 @@
 ####################################################################
 #   Utility functions and aliases
 
-#   Bash will generate an error if you define a function of the same name
-#   as an existing alias, so we need to ensure those aliases do not exist.
-#   Further, the unalias command must not happen on the same line, as later
-#   in that line the alias will already have been substituted.
-_u() { unalias "$@" >/dev/null 2>&1 || true; }
-
 __cjs0_checkexist() {
     [[ -e $1 ]] && return 0
     echo 1>&2 "WARNING: $1 not found"
@@ -54,7 +48,8 @@ __cjs0_dhrepo  ~/.home/dot-home/        dot-home/dot-home
 __cjs0_dhrepo  ~/.home/cjs0/            0cjs/dot-home-cjs0
 __cjs0_dhrepo  ~/.home/gitcmd-abbrev/   dot-home/gitcmd-abbrev
 
-source ~/.home/dot-home/dot/bashrc.inb1     # for prepath()
+source ~/.home/dot-home/dot/bashrc.inb1 # prepath()
+source ~/.home/cjs0/dot/bashrc.inb1     # __0iscommand() _u()
 
 if [[ -z $ZSH_VERSION ]]; then
     bind -f ~/.home/cjs0/inputrc    # vi bindings, etc.
@@ -64,12 +59,18 @@ else
     bindkey -v
     bindkey '^R' history-incremental-search-backward
 fi
+
+#   This is strictly necessary only when we've done a fresh dot-home setup,
+#   as otherwise these are in the user's ~/.bashrc.
 for i in ~/.home/cjs0/dot/bashrc.*; do source "$i"; done
+
 export EDITOR=~/.home/cjs0/bin/vi; unset VISUAL
 #   If in a tmate session, reconfig for C-a prefix etc.
 [[ -n ${TMUX:-} ]] && ~/.home/cjs0/bin/tmaconf
-echo "Current TERM=$TERM"
-eval $(tset -I -s \?xterm-256color)
+[[ $TERM = xterm-256color ]] || {
+    echo "Current TERM=$TERM"
+    eval $(tset -I -s \?xterm-256color)
+}
 
 #   Remove common aliases that conflict with gitcmd-abbrev.
 _u st0 st9
@@ -80,57 +81,11 @@ _u lr lrg lrh br mbase mergeff
 _u gr grmu grabort grcontinue grskip gri grim grwhere gre grehard greupstream
 _u stash gurl rem fetch pfetch pull push pushf pushu
 source ~/.home/gitcmd-abbrev/bin/gitcmd-abbrev.bash
-st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }
-
-####################################################################
-#   From ~/.home/cjs1 files, so we don't need to clone it.
-#
-#   Simpler functions etc. that I sometimes want to source alone
-#   when I'm a guest in someone else's environment.
+st() { ~/.home/gitcmd-abbrev/bin/st "$@"; }     # in case not in path
 
 #   If less(1) is using default options, stop it from switching to alt screen.
 [[ -n $LESS ]] || export LESS='-aeFimsXR -j.15'
 
-#   Blank lines make following text easier to find in terminal scrollback.
-_u sp
-sp() { local i=0; while [ $i -lt ${1:-5} ]; do echo; i=$(($i+1)); done; }
-
-#   XXX duplication from from cjs1:dot/bashrc.inb6
-#
-#   These do not disable colour, though perhaps they should since dark
-#   vs. light backgrounds can cause issues.
-_u lf lfa ll lla llt llth
-lf()            { command ls -FC "$@"; }       # also configured by cjs0
-lfa()           { lf -a "$@"; }
-ll()            { command ls -lh "$@"; }
-lla()           { ll -a "$@"; }
-llt() {
-    #   XXX should check if we don't have --time-style (non-Gnu ls)
-    local ts='%Y-%m-%d %H:%M:%S'
-    ll -t --time-style="+$ts" "$@"
-}
-llth()          { llt "$@" | head; }
-
-_u mdcd
-mdcd() {
-    [[ ${#@} -eq 1 ]] || { echo 1>&2 "Usage: mdcd PATH"; return 2; }
-    mkdir -p "$1" && cd "$1"
-}
-
-_u findf
-findf() {
-    [ -z "$1" ] && {
-        echo 1>&2 "Usage: findf DIR ... [NAME-FRAGMENT [FIND-OPS ...]]"
-        return 2;
-    }
-    local roots=() namefrag
-    #   -d is true for symlinks to dirs as well as directories.
-    while [[ -d "$1" ]]; do roots+=("$1"); shift; done
-    local name_frag="$1"; shift
-    [[ -z $name_frag && ${#roots[@]} -gt 1 ]] \
-        && { echo 1>&2 "Warning: last arg is a dir, not name-frag"; sleep 1; }
-    [[ $name_frag == -- ]] && { name_frag="$1"; shift; }
-    local predicate=-iname
-    [[ $name_frag =~ / ]] && predicate=-ipath
-    find -L "${roots[@]}" -type f $predicate "*$name_frag*" "$@" 2>/dev/null
-}
+#   Simpler functions etc. that I sometimes want to source alone
+#   when I'm a guest in someone else's environment.
+source 0cjs-funcs.bash
