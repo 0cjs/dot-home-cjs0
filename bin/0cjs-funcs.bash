@@ -90,3 +90,18 @@ ad()   {   # Run provided command in each directory specified with `ads`.
         ( command cd "$dir"; "$@" )
     done
 }
+
+#   `pj` is handy if you don't have `jq` around. (We can't use `jp` because
+#   that's taken by a JMESPath tool that seems to be pretty popular.)
+#   pj --help for options, or see:
+#   • https://docs.python.org/3/library/json.html#module-json.tool
+pj()    {
+    #   We want to default to --no-ensure-ascii (do not translate non-ASCII
+    #   to \uNNNN sequences), but so that we still can, we add our own
+    #   --ensure-ascii arg to reverse it. This *must* be the first arg.
+    local arg=--no-ensure-ascii
+    [[ ${1:-} == --ensure-ascii ]]  && { shift; arg=; }
+    [[ ${1:-} == --ascii ]]         && { shift; arg=; }
+    [[ ${1:-} == -a ]]              && { shift; arg=; }
+    python3 -m json.tool $arg "$@";
+}
