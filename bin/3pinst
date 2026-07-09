@@ -126,6 +126,10 @@ inst_nvm() {
     chmod -R go+rX ~/.nvm/
 }
 
+inst_claude() {
+    curl -fsSL https://claude.ai/install.sh | bash
+}
+
 inst_ghcup() {
     no_additional_args "$@"
 
