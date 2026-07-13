@@ -1,5 +1,8 @@
 #####################################################################
 #   Copy mode for tmate 2.4.0 (not compatible with tmux 3.x)
+#
+#   Some of these (scroll-top) are valid only in post-2.4.0 versions.
+#   But tmate carries on after printing a message at startup.
 
 #   Easier/faster scrollback.
 bind-key -T prefix      u       copy-mode -eu
@@ -8,6 +11,8 @@ bind-key -T prefix      u       copy-mode -eu
 bind-key -t vi-copy     v       begin-selection
 bind-key -t vi-copy     V       select-line
 bind-key -t vi-copy     C-V     rectangle-toggle
+#   `=` is `+` w/o shift.
+bind-key -t vi-copy     =       scroll-top
 
 #   Quicker/easier keys for paging, the most common operation.
 bind-key -t vi-copy     Space   page-down
