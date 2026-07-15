@@ -1,0 +1,63 @@
+#!/usr/bin/env python3
+''' Render a Claude Code session transcript (JSONL) as readable text.
+
+    claude-transcript [TRANSCRIPT.jsonl] [--tools]
+
+    With no path, uses the newest transcript for the current project.
+    Prefixes are User '-' for user and '+' for Claude, so piping it into
+    `vim -` and enabling diff syntax highlighting tells them apart at a
+    glance. --tools also shows each tool call's name and arguments.
+    (Thinking blocks are always omitted.)
+'''
+
+import json, sys, glob, os
+
+#   Where Claude Code stores project directories.
+PROJECTS_DIR = os.path.expanduser('~/.claude/projects')
+
+def main(argv):
+    tools = '--tools' in argv
+    args = [a for a in argv if a != '--tools']
+    path = args[0] if args else newest_transcript()
+    for line in open(path):
+        try:
+            r = json.loads(line)
+        except ValueError:
+            continue
+        kind = r.get('type')
+        if kind not in ('user', 'assistant'):
+            continue
+        parts = [t for t in texts(r.get('message', {}).get('content'), tools) if t]
+        txt = '\n'.join(parts).strip()
+        if txt:
+            #   Diff-style prefix so `diff` syntax highlighting tells user
+            #   ('-') from assistant ('+'). Every line of the turn is prefixed,
+            #   blank lines included, so each turn is one contiguous block.
+            sign = '-' if kind == 'user' else '+'
+            print()
+            for ln in txt.split('\n'):
+                print(f'{sign}{ln}')
+
+def newest_transcript():
+    xs = glob.glob(os.path.join(PROJECTS_DIR, '*', '*.jsonl'))
+    if not xs:  sys.exit(f'no transcripts under {PROJECTS_DIR}/*')
+    return max(xs, key=os.path.getmtime)
+
+def texts(content, tools):
+    " Yield the printable strings from one message's content. "
+    if isinstance(content, str):
+        yield content
+        return
+    if not isinstance(content, list):
+        return
+    for b in content:
+        if not isinstance(b, dict):
+            continue
+        k = b.get('type')
+        if k == 'text':
+            yield b.get('text', '')
+        elif k == 'tool_use' and tools:
+            yield f"[tool: {b.get('name')}] {json.dumps(b.get('input', {}))}"
+
+if __name__ == '__main__':
+    main(sys.argv[1:])
