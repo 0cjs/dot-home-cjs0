@@ -419,7 +419,7 @@ noremap qw      <C-W>c
 noremap qX      :!chmod +x '%'<CR>
 
 "   Other window-related commands
-noremap qz      :set scrolloff=
+noremap qz      :setlocal scrolloff=
 
 "   Version control commands
 "
